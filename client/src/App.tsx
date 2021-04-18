@@ -1,9 +1,10 @@
 import React from 'react';
+import StartPage from './components/layouts/StartPage/Start';
 
 function App() {
   return (
     <div className="App">
-      ChiCha
+      <StartPage/>
     </div>
   );
 }
