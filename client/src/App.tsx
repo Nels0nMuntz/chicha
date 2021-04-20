@@ -1,12 +1,15 @@
 import React from 'react';
-import StartPage from './components/layouts/StartPage/Start';
+import { BrowserRouter } from 'react-router-dom';
+import StartPage from './components/layouts/StartPage/StartPage';
 
 function App() {
   return (
-    <div className="App">
-      <StartPage/>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <StartPage />
+      </div>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

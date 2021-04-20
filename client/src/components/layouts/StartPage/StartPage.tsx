@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginForm from '../../../containers/LoginForm/LoginForm';
 
-import style from "./Start.module.scss"
+import style from "./StartPage.module.scss"
 
 const StartPage = () => {
     return (
