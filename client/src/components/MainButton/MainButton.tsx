@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 
 type MainButtonPropsType = {
+    type: "button" | "submit" | "reset" | undefined
     text: string
 }
 
@@ -23,9 +24,9 @@ const Button = styled.button`
     }
 `;
 
-const MainButton: React.FC<MainButtonPropsType> = ({ text }) => {
+const MainButton: React.FC<MainButtonPropsType> = ({ type, text }) => {
     return (
-        <Button type="submit">
+        <Button type={type}>
             {text}
         </Button>
     );
