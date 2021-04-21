@@ -1,14 +1,15 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import StartPage from './components/layouts/StartPage/StartPage';
+import { Switch, Route } from "react-router-dom";
 
-function App() {
+import { publicRoutes } from './routes';
+
+const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <StartPage />
-      </div>
-    </BrowserRouter>
+    <div className="App">
+      <Switch>
+        {publicRoutes.map((routeProps, index) => <Route {...routeProps} key={index} />)}
+      </Switch>
+    </div>
   );
 };
 

@@ -1,24 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import FormTextField from '../../components/TextField/FormTextField';
-import MainButton from './../../components/MainButton/MainButton';
 
-import { validate } from "../../shared/helpers"
+import FormTextField from '../TextField/FormTextField';
+import MainButton from '../MainButton/MainButton';
+import { validator } from '../../shared/helpers'
 
-import style from "./LoginForm.module.scss";
+const validate = validator.signin;
 
-
-export interface ILoginFormFields {
-    email: string
-    password: string
-}
-export interface ILoginFormErrors {
-    email?: string
-    password?: string
-}
-
-const LoginForm : React.FC = () => {
+const SigninForm : React.FC = () => {
 
     const formik = useFormik({
         initialValues: {
@@ -30,12 +20,9 @@ const LoginForm : React.FC = () => {
     });        
 
     return (
-        <form
-            className={style.loginForm}
-            onSubmit={formik.handleSubmit}
-        >
+        <form onSubmit={formik.handleSubmit}>
             <FormTextField
-                id="login-input-email"
+                id="login-email"
                 type="text"
                 label="E-mail"
                 helperText={formik.touched.email && formik.errors.email ? formik.errors.email : " "}
@@ -44,7 +31,7 @@ const LoginForm : React.FC = () => {
                 {...formik.getFieldProps("email")}
             />
             <FormTextField
-                id="login-input-password"
+                id="login-password"
                 type="password"
                 label="Пароль"
                 helperText={formik.touched.password && formik.errors.password ? formik.errors.password : " "}
@@ -54,11 +41,16 @@ const LoginForm : React.FC = () => {
             />
             <MainButton 
                 type="submit"
-                text="Зарегистрироваться" 
+                text="Войти в аккаунт" 
             />
-            <Link to="/signin" className="form-redirect-link">Войти в аккаунт</Link>
+            <Link 
+                to="/signup" 
+                className="form-redirect-link"
+            >
+                Зарегистрироваться
+            </Link>
         </form>
     );
 };
 
-export default LoginForm;
+export default SigninForm;
