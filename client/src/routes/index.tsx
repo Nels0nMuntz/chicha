@@ -1,5 +1,10 @@
-import { urls } from "./urls";
-import { Signin, Signup } from "../containers";
+import { Signin, Signup, Home } from "../containers";
+
+const urls = {
+    signin: "/signin",
+    signup: "/signup",
+    home: "/im"
+};
 
 export const publicRoutes = [
     {
@@ -12,4 +17,12 @@ export const publicRoutes = [
         exact: true,
         component: Signup,
     },
+];
+
+export const privateRoutes = [
+    {
+        path: urls.home,
+        exact: true,
+        component: Home
+    }
 ];

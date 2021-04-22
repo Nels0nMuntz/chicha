@@ -1,0 +1,81 @@
+.home_wrapper{
+    background-color: #F2F2F2;
+}
+.header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #F7F7F7;
+    .header_sidebar{
+        width: 320px;
+        padding: 18px 17px;
+        .header_sidebarWrapper{
+            display: flex;
+            align-items: center;
+        }
+        .header_sidebarSuffix img{
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+        }
+        .header_sidebarTitle{
+            flex: 1 1 0;
+            line-height: 1.1;
+            opacity: 0.65;
+            margin: 0 15px 0 8px;
+        }
+        .header_sidebarPrefix{
+            opacity: 0.65;
+            cursor: pointer;
+        }
+    }
+    .header_main{
+        position: relative;
+        height: 100%;
+        flex: 1 1 0;
+        border-left: 1px solid #F7F7F7;
+        .user_info{
+            height: 100%;
+            margin: 0 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .user_fullname{
+            font-weight: 500;
+        }
+        .user_status{
+            position: relative;
+            color: rgba($color: #202020, $alpha: 0.3);
+            padding-left: 13px;
+            &::before{
+                content: '';
+                position: absolute;
+                top: 50%;
+                transform: translateY(-45%);
+                left: 3px;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background-color: #00C980;
+            }
+        }
+        .filter_btn{
+            position: absolute;
+            top: 50%;
+            right: 35px;
+            transform: translateY(-50%);
+            width: 20px;
+            display: flex;
+            justify-content: space-between;
+            span{
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background-color: #AAAAAA;
+            }
+        }
+    }
+}
