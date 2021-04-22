@@ -27,10 +27,7 @@ const LoginForm : React.FC = () => {
         },
         validate,
         onSubmit: values => console.log(values)
-    });    
-
-    // console.log(formik);
-    
+    });        
 
     return (
         <form
@@ -55,7 +52,6 @@ const LoginForm : React.FC = () => {
                 isValid={formik.errors.password ? false : true}
                 {...formik.getFieldProps("password")}
             />
-
             <MainButton 
                 type="submit"
                 text="Зарегистрироваться" 

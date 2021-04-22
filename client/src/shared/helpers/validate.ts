@@ -28,7 +28,7 @@ const validate = (values: ILoginFormFields): ILoginFormErrors => {
         errors.email = messages.email.empty;
     }else if(!patterns.email.test(values.email)){
         errors.email = messages.email.error;
-    }else errors.email = " ";
+    };
 
     if(!values.password){
         errors.password = messages.password.empty;
@@ -36,7 +36,7 @@ const validate = (values: ILoginFormFields): ILoginFormErrors => {
         errors.password = messages.password.error.wrongLenght;
     }else if(!patterns.password.test(values.password)){
         errors.password = messages.password.error.wrongChar
-    }else errors.password = " ";
+    };
 
     return errors;
 };

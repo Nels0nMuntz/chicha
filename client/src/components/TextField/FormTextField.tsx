@@ -32,7 +32,12 @@ const useStyles = makeStyles({
             marginBottom: '5px',
             lineHeight: '1.25',
             fontStyle: 'italic',
-            color: '#f44336'
+            color: '#f44336',
+            '&.Mui-focused': {
+                color: 'transparent',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+            }
         },
         '& .MuiOutlinedInput-adornedEnd': {
             paddingRight: "15px",
@@ -60,24 +65,23 @@ type FormTextFieldPropsType = {
 };
 
 const FormTextField: React.FC<FormTextFieldPropsType> = ({ id, type, label, name, value, helperText, isTouched, isValid, onChange, onBlur }) => {
-    
-    const classes = useStyles();
-    const [isFocused, setIsFocused] = React.useState(false);
-    
-    const handleFocus = () => setIsFocused(!isFocused);
 
+    const classes = useStyles();
+    const [isVisiblePassword, setIsVisiblePassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setIsVisiblePassword(!isVisiblePassword);
+ 
     return (
         <TextField
             id={id}
             name={name}
-            type={type}
+            type={type === "password" ? isVisiblePassword ? "text" : "password" : type }
             label={label}
             value={value}
             helperText={helperText}
             onChange={onChange}
             onBlur={onBlur}
-            onFocus={handleFocus}
-            error={!isValid && !isFocused && isTouched}
+            error={!isValid && isTouched}
             variant="outlined"
             fullWidth
             className={classes.root}
@@ -89,19 +93,20 @@ const FormTextField: React.FC<FormTextFieldPropsType> = ({ id, type, label, name
                         {type === "password" && (
                             <IconButton
                                 aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
                                 edge="end"
                             >
-                                {true ? <Visibility /> : <VisibilityOff />}
+                                {isVisiblePassword ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
                         )}
                         {
-                            // !isTouched ? null : (
-                            //     !isValid ? (
-                            //         <img className={style.endImage} src={errorImg} alt="error" />
-                            //     ) : (
-                            //         <img className={style.endImage} src={successImg} alt="success" />
-                            //     )
-                            // )
+                            !isTouched ? null : (
+                                isValid ? (
+                                    <img className={style.endImage} src={successImg} alt="success" />
+                                ) : (
+                                    <img className={style.endImage} src={errorImg} alt="error" />
+                                )
+                            )
                         }
                     </InputAdornment>
             }}

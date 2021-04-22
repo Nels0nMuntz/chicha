@@ -1,3 +1,5 @@
+
+
 .wrapper{
     min-height: 100vh;
     background-color: white;
@@ -40,4 +42,12 @@
             }
         }
     }   
+}
+@media screen and (max-width: 450px) {
+    .content .content_subtitle{
+        font-size: 16px;
+    }
+    .content .content_formWrapper{
+        padding: 35px 15px 35px;
+    }
 }
