@@ -1,6 +1,9 @@
 import React from 'react';
 
 import SearchInput from '../../SearchInput/SearchInput';
+import Dialog from '../../Dialog/Dialog';
+import Message from '../../Message/Message';
+import SendForm from '../../SendForm/SendForm';
 
 import style from "./HomePage.module.scss";
 import EditIcon from '@material-ui/icons/Edit';
@@ -36,11 +39,24 @@ const HomePage: React.FC = () => {
                     </header>
                     <aside className={style.home_dialogs}>
                         <div className={style.dialogs_searchWrapper}>
-                            <SearchInput/>
+                            <SearchInput />
+                        </div>
+                        <div className={style.dialogs_track}>
+                            <Dialog />
+                            <Dialog />
+                            <Dialog />
+                            <Dialog />
                         </div>
                     </aside>
                     <main className={style.home_main}>
-                        f
+                        <div className={style.massages_track}>
+                            <Message />
+                        </div>
+                        <div className={style.massages_sendWrapper}>
+                            <div className={style.send_panel}>
+                                <SendForm/>
+                            </div>
+                        </div>
                     </main>
                 </div>
             </div>

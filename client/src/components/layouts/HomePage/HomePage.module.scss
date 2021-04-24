@@ -98,11 +98,38 @@
 }
 .home_dialogs{
     border-top: 1px solid #E8EAEC;
+    .dialogs_track{
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 10px;
+        max-height: calc(100vh - 60px - 78px - 10px - 20px);
+        overflow-y: auto;
+    }
 }
 .home_main{
+    display: grid;
+    grid-template-rows: 1fr auto;
     border-left: 2px solid #E8EAEC;
     border-top: 1px solid #E8EAEC;
+    .massages_track{
+        padding: 0px 35px;
+        overflow-y: auto;
+    }
 }
 .dialogs_searchWrapper{
-    padding: 22px 15px 22px 20px;    
+    position: relative;
+    padding: 20px 15px 20px 20px;    
+    &::before{
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        right: 0;
+        height: 10px;
+    }
+}
+.send_panel{
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 10px 15px 30px;
 }
