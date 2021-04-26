@@ -31,3 +31,12 @@
     font-weight: 500;
     font-style: normal;
 }
+@font-face {
+    font-family: "Prompt";
+    src: local("Prompt Medium"), local("Prompt-Medium"),
+        url("../fonts/Prompt-medium/Prompt-Medium.woff2") format("woff2"),
+        url("../fonts/Prompt-medium/Prompt-Medium.woff") format("woff"),
+        url("../fonts/Prompt-medium/Prompt-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}

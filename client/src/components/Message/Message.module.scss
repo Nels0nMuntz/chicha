@@ -1,0 +1,27 @@
+.wrapper{
+    max-width: 450px;
+    &:not(:last-of-type){
+        margin-bottom: 20px;
+    }
+}
+.message_grid{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 53px 1fr auto;
+    align-items: flex-end;
+}
+.message_avatar{
+    img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+}
+.message_content{
+    
+}
+.message_date{
+    grid-column: 2 / 3;
+    font-size: 12px;
+    opacity: 0.4;
+}
