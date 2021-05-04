@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 
-const connectDB = (processEnv: NodeJS.ProcessEnv) => {
-    const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = processEnv;
+const connectDB = async () => {
+    const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH } = process.env;
     try {
         const db = mongoose.connection;
         db.on('error', () => { throw new Error("Connection to MongoDB faild") });
         db.once('open', () => console.log('We are connected ot MongoDB'));
-        mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`, {
+        await mongoose.connect(`mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}${MONGO_PATH}`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,

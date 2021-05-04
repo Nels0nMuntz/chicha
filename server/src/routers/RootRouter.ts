@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import authRouter from './authRouter';
+import authRouter from './AuthRouter';
 
 
 class RootRouter {
@@ -14,7 +14,7 @@ class RootRouter {
     }
 
     initRouters(){
-        this._router.use('/', authRouter)
+        this._router.use('/auth', authRouter)
     }
 }
 

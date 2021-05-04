@@ -1,10 +1,14 @@
-import { model, Document, Schema } from 'mongoose';
+import { model, Document, Schema, Model } from 'mongoose';
 
-interface IUser extends Document{
+export interface IUserDocument extends Document{
     email: string
     firstname: string
     lastname: string
     password: string
+}
+
+interface IUserModel extends Model<IUserDocument>{
+    findOneByEmail(email: string): Promise<IUserDocument>
 }
 
 const UserSchema : Schema = new Schema({
@@ -27,6 +31,10 @@ const UserSchema : Schema = new Schema({
     },
 });
 
-const UserModel = model<IUser>("User", UserSchema);
+UserSchema.statics.findOneByEmail = async function(this: Model<IUserDocument>, email: string) {
+    return await this.findOne({ email }).exec()
+};
+
+const UserModel = model<IUserDocument, IUserModel>("User", UserSchema);
 
 export default UserModel;
