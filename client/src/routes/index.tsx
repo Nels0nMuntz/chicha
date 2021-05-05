@@ -1,8 +1,8 @@
 import { Signin, Signup, Home } from "../containers";
 
 const urls = {
-    signin: "/signin",
-    signup: "/signup",
+    signin: "/auth/signin",
+    signup: "/auth/signup",
     home: "/im"
 };
 

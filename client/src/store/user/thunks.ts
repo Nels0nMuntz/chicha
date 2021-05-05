@@ -11,7 +11,7 @@ export const fetchUserDataThunk = (): ThunkAction<Promise<void>, RootState, unkn
         dispatch(setUserDataAC(userData));
     } catch (error) {
         console.log(error);
-        window.location.pathname = '/auth/signin'
+        // window.location.pathname = '/auth/signin'
     }
 
 }

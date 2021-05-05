@@ -11,8 +11,26 @@ export interface IUser {
     lastSeen?: Date
 }
 
+export class User  {
+    public email: string
+    public firstname: string
+    public lastname?: string
+    public phoneNumber: string
+    public avatar?: string
+    public lastSeen?: Date
 
-interface IUserDocument extends IUser, Document {}
+    constructor(document: IUserDocument){
+        this.email = document.email
+        this.firstname = document.firstname
+        this.lastname = document.lastname
+        this.phoneNumber = document.phoneNumber
+        this.avatar = document.avatar
+        this.lastSeen = document.lastSeen
+    }
+}
+
+
+interface IUserDocument extends IUser, Document { }
 interface IUserModel extends Model<IUserDocument> {
     findOneByEmail(email: string): Promise<IUserDocument>
 }
