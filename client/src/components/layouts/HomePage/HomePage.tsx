@@ -1,5 +1,8 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { RootState } from '../../../store';
+import { fetchUserDataThunk } from '../../../store/user/thunks';
 import SearchInput from '../../SearchInput/SearchInput';
 import Dialog from '../../Dialog/Dialog';
 import Message from '../../Message/Message';
@@ -11,6 +14,14 @@ import userImg from "../../../assets/images/user.svg";
 
 
 const HomePage: React.FC = () => {
+
+    const dispatch = useDispatch();
+    const isAuth = useSelector((state: RootState) => state.user.isAuth);
+
+    React.useEffect(() => {
+        if(!isAuth) dispatch(fetchUserDataThunk())
+    })
+
     return (
         <div className={style.home_wrapper}>
             <div className="container">

@@ -1,37 +1,58 @@
 import { model, Document, Schema, Model } from 'mongoose';
 
-export interface IUserDocument extends Document{
+
+export interface IUser {
     email: string
-    firstname: string
-    lastname: string
     password: string
+    firstname: string
+    lastname?: string
+    phoneNumber: string
+    avatar?: string
+    lastSeen?: Date
 }
 
-interface IUserModel extends Model<IUserDocument>{
+
+interface IUserDocument extends IUser, Document {}
+interface IUserModel extends Model<IUserDocument> {
     findOneByEmail(email: string): Promise<IUserDocument>
 }
 
-const UserSchema : Schema = new Schema({
-    email: {
-        type: String,
-        required: true,
-        index: { unique: true }
+const UserSchema: Schema = new Schema(
+    {
+        email: {
+            type: String,
+            required: true,
+            index: { unique: true }
+        },
+        password: {
+            type: String,
+            required: true
+        },
+        firstname: {
+            type: String,
+            required: true
+        },
+        lastname: {
+            type: String
+        },
+        phoneNumber: {
+            type: String,
+            required: true
+        },
+        avatar: {
+            type: String
+        },
+        lastSeen: {
+            type: Date,
+            default: new Date()
+        }
     },
-    firstname: {
-        type: String,
-        required: true
-    },
-    lastname: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-});
+    {
+        timestamps: true
+    }
+);
 
-UserSchema.statics.findOneByEmail = async function(this: Model<IUserDocument>, email: string) {
+UserSchema.statics.findOneByEmail = async function (this: Model<IUserDocument>, email: string) {
     return await this.findOne({ email }).exec()
 };
 

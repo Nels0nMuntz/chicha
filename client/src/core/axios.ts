@@ -2,10 +2,10 @@ import axios from 'axios';
 import { LocalStorageService } from '../services';
 
 
-const accessToken = LocalStorageService.getAccessToken()
+const accessToken = LocalStorageService.getAccessToken();
 
 const axiosInstance = axios.create({
-    baseURL: process.env.AXIOS_BASE_URL + '/',
+    baseURL: window.location.origin,
     headers: {
         'Content-Type': 'application/json'
     }
@@ -18,3 +18,5 @@ axiosInstance.interceptors.request.use(
     },
     error => Promise.reject(error)
 )
+
+export default axiosInstance;

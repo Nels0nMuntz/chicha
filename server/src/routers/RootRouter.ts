@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import authRouter from './AuthRouter';
+import AuthRouter from './AuthRouter';
+import UserRouter from './UserRouter';
 
 
 class RootRouter {
@@ -14,7 +15,8 @@ class RootRouter {
     }
 
     initRouters(){
-        this._router.use('/auth', authRouter)
+        this._router.use('/', UserRouter);
+        this._router.use('/auth', AuthRouter);
     }
 }
 

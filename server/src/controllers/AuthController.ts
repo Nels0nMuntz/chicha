@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import { UserModel } from '../models';
+import { IUser } from '../models/UserModel';
 
 
 class AuthController {
@@ -15,16 +16,12 @@ class AuthController {
                 return res.status(422).json({ errors: errors.array() })
             };
 
-            const postData : {
-                email: string
-                password: string
-                firstname: string
-                lastname: string
-            } = {
+            const postData : IUser = {
                 email: req.body.email,
                 password: req.body.password,
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
+                phoneNumber: req.body.phoneNumber,
             };
             const doc = await UserModel.findOneByEmail(postData.email);
             if(doc) return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
@@ -51,35 +48,32 @@ class AuthController {
                 email: req.body.email,
                 password: req.body.password
             };
-            const doc = await UserModel.findOneByEmail(postData.email);
-            if(!doc) return res.status(400).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
-            const isPasswordValid = bcrypt.compareSync(postData.password, doc.password);
+            const document = await UserModel.findOneByEmail(postData.email);
+            if(!document) return res.status(400).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
+            const isPasswordValid = bcrypt.compareSync(postData.password, document.password);
             if(!isPasswordValid) return res.status(401).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
-            const accessToken = generateAccessToken(doc._id, doc.email);
-            return res.status(200).json({ token: accessToken });
+            const accessToken = generateAccessToken(document._id, document.email);
+            return res.status(200).json(
+                { 
+                    document,
+                    token: accessToken
+                }
+            );
         } catch (error) {
             console.log(error);
             res.status(400).json({ message: 'Ошибка входа', details: error });
         }
     }
-
-    getUsers = async (req: Request, res: Response) => {
-        try {
-            res.send('list of users')
-        } catch (error) {
-
-        }
-    }
 };
 
-const errorFormatter = (error: ValidationError) => error.msg;
+const errorFormatter = (error: ValidationError) => error;
 
 const generateAccessToken = ( id: string, email: string) => {
     return jwt.sign(
         { id, email }, 
         process.env.JWT_SECRET_KEY || '',
         {
-            expiresIn: process.env.JWT_MAX_AGE,
+            expiresIn: process.env.JWT_MAX_AGE || '24h',
             algorithm: 'HS256'
         }
     );

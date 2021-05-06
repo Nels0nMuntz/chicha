@@ -1,5 +1,9 @@
-declare namespace Express{
-    export interface Request {
-        decodedToken: string | object
+import { IDecodedToken } from './../../src/middlewares/checkAuthMiddleware';
+
+declare global{
+    namespace Express {
+        interface Request {
+            decodedToken: IDecodedToken
+        }
     }
 }

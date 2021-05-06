@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { AuthController } from '../controllers';
-import { authMiddleware } from '../middlewares';
 import { signinValidation, signupValidation } from '../validators/validators';
 
 
@@ -28,12 +27,6 @@ class AuthRouter {
             '/signin',
             signinValidation,
             this._controller.signin
-        )
-
-        this.router.get(
-            '/users',
-            authMiddleware,
-            AuthController.getUsers
         )
     }
 };

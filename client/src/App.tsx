@@ -1,14 +1,16 @@
 import React from 'react';
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import { privateRoutes, publicRoutes } from './routes';
 
+
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <div className='App'>
       <Switch>
-        {publicRoutes.map((routeProps, index) => <Route {...routeProps} key={index + "_public"} />)}
-        {privateRoutes.map((routeProps, index) => <Route {...routeProps} key={index + "_private"}  />)}
+        <Redirect exact from='/' to='/im' />
+        {publicRoutes.map((routeProps, index) => <Route {...routeProps} key={index + '_public'} />)}
+        {privateRoutes.map((routeProps, index) => <Route {...routeProps} key={index + '_private'} />)}
       </Switch>
     </div>
   );

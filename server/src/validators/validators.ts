@@ -16,11 +16,7 @@ export const signupValidation = [
         .matches(/^([A-Z][a-z\-']{1,50})|([А-ЯЁIЇҐЄ][а-яёіїґє\-']{1,50})$/)
         .withMessage("Incorrect first name format"),
     check("lastname")
-        .trim()
-        .escape()
-        .notEmpty()
-        .withMessage("Last name is required")
-        .bail()
+        .optional({ nullable: true })
         .matches(/^([A-Z][a-z\-']{1,50})|([А-ЯЁIЇҐЄ][а-яёіїґє\-']{1,50})$/)
         .withMessage("Incorrect last name format"),
     check("password")
@@ -46,7 +42,15 @@ export const signupValidation = [
         .withMessage('Password must contain uppercase letters')
         .bail()
         .trim()
+        .escape(),
+    check("phoneNumber")
+        .trim()
         .escape()
+        .notEmpty()
+        .withMessage("Phone number is required")
+        .bail()
+        .isMobilePhone(['uk-UA', 'ru-RU'])
+        .withMessage("Incorrect phone number format")   
 ];
 
 export const signinValidation = [
