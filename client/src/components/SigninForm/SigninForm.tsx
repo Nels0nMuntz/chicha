@@ -5,10 +5,15 @@ import { useFormik } from 'formik';
 import FormTextField from '../TextField/FormTextField';
 import MainButton from '../MainButton/MainButton';
 import { validator } from '../../shared/helpers'
+import { ISigninData } from '../../store/auth/types';
 
 const validate = validator.signin;
 
-const SigninForm : React.FC = () => {
+type SigninFormProps = {
+    onSubmitForm: (values: ISigninData) => void;
+};
+
+const SigninForm : React.FC<SigninFormProps> = ({ onSubmitForm }) => {
 
     const formik = useFormik({
         initialValues: {
@@ -16,7 +21,7 @@ const SigninForm : React.FC = () => {
             password: '',
         },
         validate,
-        onSubmit: values => console.log(values)
+        onSubmit: values => onSubmitForm(values)        
     });        
 
     return (

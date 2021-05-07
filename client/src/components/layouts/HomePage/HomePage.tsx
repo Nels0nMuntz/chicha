@@ -4,6 +4,7 @@ import SearchInput from '../../SearchInput/SearchInput';
 import Dialog from '../../Dialog/Dialog';
 import Message from '../../Message/Message';
 import SendForm from '../../SendForm/SendForm';
+import withLoading from './../../HOC/withLoading';
 
 import style from "./HomePage.module.scss";
 import EditIcon from '@material-ui/icons/Edit';

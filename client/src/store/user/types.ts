@@ -2,7 +2,6 @@ type SET_USER_DATA = 'SET_USER_DATA';
 
 export interface IInitialState {
     user: IUser
-    isAuth: boolean
 }
 
 export interface IUser {
@@ -18,10 +17,7 @@ export interface IUser {
 
 export type FetchUserDataAction = {
     type: SET_USER_DATA,
-    payload: {
-        user: IUser,
-        isAuth: boolean
-    }
+    payload: { user: IUser }
 }
 
-export type Action = FetchUserDataAction
+export type Action = FetchUserDataAction;

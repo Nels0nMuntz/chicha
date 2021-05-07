@@ -2,22 +2,21 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState } from '../../store';
-import { fetchUserDataThunk } from '../../store/user/thunks';
 import { HomePage } from './../../components';
+import { updateAuthDataThunk } from './../../store/auth/thunks';
 
 
-const Home : React.FC = () => {
+
+
+const Home: React.FC = () => {
 
     const dispatch = useDispatch();
-    const isAuth = useSelector((state: RootState) => state.user.isAuth);
+    const isAuth = useSelector((state: RootState) => state.auth.isAuth);
 
-    React.useEffect(() => {
-        if(!isAuth) dispatch(fetchUserDataThunk())
+    React.useEffect(() => { if (!isAuth) dispatch(updateAuthDataThunk())
     });
 
-    return (
-        <HomePage/>
-    );
+    return isAuth ? <HomePage/> : <h1>Loading</h1>;
 };
 
 export default Home;

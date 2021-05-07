@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import { UserModel } from '../models';
-import { IUser } from '../models/UserModel';
+import { IUser, User } from '../models/UserModel';
 
 
 class AuthController {
@@ -16,7 +16,7 @@ class AuthController {
                 return res.status(422).json({ errors: errors.array() })
             };
 
-            const postData : IUser = {
+            const postData: IUser = {
                 email: req.body.email,
                 password: req.body.password,
                 firstname: req.body.firstname,
@@ -24,7 +24,7 @@ class AuthController {
                 phoneNumber: req.body.phoneNumber,
             };
             const doc = await UserModel.findOneByEmail(postData.email);
-            if(doc) return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
+            if (doc) return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
 
             const hashPassword = bcrypt.hashSync(postData.password, 7);
             const user = new UserModel({ ...postData, password: hashPassword });
@@ -40,8 +40,8 @@ class AuthController {
         try {
             const errors = validationResult(req).formatWith(errorFormatter);
             if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
-            
-            const postData : {
+
+            const postData: {
                 email: string
                 password: string
             } = {
@@ -49,16 +49,12 @@ class AuthController {
                 password: req.body.password
             };
             const document = await UserModel.findOneByEmail(postData.email);
-            if(!document) return res.status(400).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
+            if (!document) return res.status(400).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
             const isPasswordValid = bcrypt.compareSync(postData.password, document.password);
-            if(!isPasswordValid) return res.status(401).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
+            if (!isPasswordValid) return res.status(401).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
+            const user = new User(document);
             const accessToken = generateAccessToken(document._id, document.email);
-            return res.status(200).json(
-                { 
-                    document,
-                    token: accessToken
-                }
-            );
+            return res.status(200).json({ user, accessToken });
         } catch (error) {
             console.log(error);
             res.status(400).json({ message: 'Ошибка входа', details: error });
@@ -68,9 +64,9 @@ class AuthController {
 
 const errorFormatter = (error: ValidationError) => error;
 
-const generateAccessToken = ( id: string, email: string) => {
+const generateAccessToken = (id: string, email: string) => {
     return jwt.sign(
-        { id, email }, 
+        { id, email },
         process.env.JWT_SECRET_KEY || '',
         {
             expiresIn: process.env.JWT_MAX_AGE || '24h',

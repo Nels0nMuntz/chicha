@@ -1,5 +1,5 @@
-
 import { IInitialState, Action } from './types';
+
 
 const initialState: IInitialState = {
     user: {
@@ -8,20 +8,22 @@ const initialState: IInitialState = {
         firstname: '',
         password: '',
         phoneNumber: '',
-    }
-};
+    },
+    isAuth: false,
+}
 
-const userReducer = (state: IInitialState = initialState, action: Action) : IInitialState => {
+const authReducer = (state: IInitialState = initialState, action: Action) : IInitialState => {
     switch (action.type) {
-        case 'SET_USER_DATA':
-            const { user } = action.payload;
+        case 'SET_AUTH_DATA':
+            const { user, isAuth } = action.payload;
             return {
                 ...state,
-                user
+                user,
+                isAuth
             }
         default:
             return state;
-    };
-};
+    }
+}
 
-export default userReducer;
+export default authReducer;

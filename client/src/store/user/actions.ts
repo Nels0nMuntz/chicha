@@ -5,7 +5,6 @@ export const setUserDataAC = (userData: IUser) : FetchUserDataAction => {
         type: 'SET_USER_DATA',
         payload: {
             user: userData,
-            isAuth: true
         }
     }
 };
