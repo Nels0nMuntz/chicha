@@ -1,0 +1,28 @@
+.preloader-wrapper {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #F4F7FD;
+}
+.preloader-svg {
+    width: 100px;
+    height: 100px;
+    margin: 20px;
+    display: inline-block;
+}
+.preloader-enter{
+    opacity: 0;
+}
+.preloader-enter-active{
+    opacity: 1;
+    transition: opacity 3s linear;
+}
+.preloader-exit{
+    opacity: 1;
+}
+.preloader-exit-active{
+    opacity: 0;
+    transition: opacity 3s linear;
+}

@@ -1,13 +1,15 @@
 class LocalStorageService {
 
-    getAccessToken = () => localStorage.getItem('access_token');
+    getAccessToken = () => localStorage.getItem('access_token')
 
     setAccessToken = (token: string) => {
         localStorage.removeItem('access_token');
         localStorage.setItem('access_token', token);
     }
 
-    removeAccessToken = () => localStorage.removeItem('access_token');
+    hasAccessToken = () => !!localStorage.getItem('access_token')
+
+    removeAccessToken = () => localStorage.removeItem('access_token')
 
 };
 
