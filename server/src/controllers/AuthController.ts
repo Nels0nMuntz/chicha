@@ -49,9 +49,9 @@ class AuthController {
                 password: req.body.password
             };
             const document = await UserModel.findOneByEmail(postData.email);
-            if (!document) return res.status(400).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
+            if (!document) return res.status(401).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
             const isPasswordValid = bcrypt.compareSync(postData.password, document.password);
-            if (!isPasswordValid) return res.status(401).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
+            if (!isPasswordValid) return res.status(400).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
             const user = new User(document);
             const accessToken = generateAccessToken(document._id, document.email);
             return res.status(200).json({ user, accessToken });

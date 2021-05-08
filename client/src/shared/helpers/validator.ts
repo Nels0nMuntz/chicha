@@ -1,22 +1,14 @@
-interface ISigninFormFields {
-    email: string
-    password: string
-};
+import { ISigninData, ISignupData } from '../../store/auth/types';
+
 interface ISigninFormErrors {
     email?: string
     password?: string
-};
-interface ISignupFormFields {
-    email: string,
-    firstName: string,
-    lastName: string,
-    password: string,
-    passwordRepeat: string,
 };
 interface ISignupFormErrors {
     email?: string,
     firstName?: string,
     lastName?: string,
+    phoneNumber?: string,
     password?: string,
     passwordRepeat?: string,
 };
@@ -42,10 +34,13 @@ const messages = {
     name: {
         error: "Неверный формат"
     },
+    phoneNumber: {
+        error: 'Неверный формат номера телефона'
+    }
 };
 
 const validator = {
-    signin: (values: ISigninFormFields): ISigninFormErrors => {
+    signin: (values: ISigninData): ISigninFormErrors => {
 
         const errors: ISigninFormErrors = {};
 
@@ -65,7 +60,7 @@ const validator = {
 
         return errors;
     },
-    signup: (values: ISignupFormFields): ISignupFormErrors => {
+    signup: (values: ISignupData): ISignupFormErrors => {
 
         const errors: ISignupFormErrors = {};
 
@@ -81,11 +76,15 @@ const validator = {
             errors.firstName = messages.name.error;
         };
 
-        if (!values.lastName) {
-            errors.lastName = messages.empty;
-        } else if (!patterns.cyrillic.test(values.lastName)) {
+        if (values.lastName && !patterns.cyrillic.test(values.lastName)) {
             errors.lastName = messages.name.error;
         };
+
+        if (!values.phoneNumber) {
+            errors.phoneNumber = messages.empty;
+        }else if(values.phoneNumber.length < 18){
+            errors.phoneNumber = messages.phoneNumber.error
+        }
 
         if (!values.password) {
             errors.password = messages.empty;

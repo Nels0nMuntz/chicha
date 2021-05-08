@@ -49,7 +49,7 @@ const SigninForm : React.FC<SigninFormProps> = ({ onSubmitForm }) => {
                 text="Войти в аккаунт" 
             />
             <Link 
-                to="/signup" 
+                to="/auth/signup" 
                 className="form-redirect-link"
             >
                 Зарегистрироваться

@@ -1,5 +1,5 @@
 import { axiosInstance } from "../../core";
-import { ISigninData } from "../../store/auth/types";
+import { ISigninData, ISignupData } from "../../store/auth/types";
 import { IUser } from "../../store/user/types";
 
 interface ISigninResponse { 
@@ -8,13 +8,15 @@ interface ISigninResponse {
 }
 
 class AuthService {
+
+    signup = async (signupData: ISignupData) => {
+        let response = await axiosInstance.post<IUser>('/auth/signup', signupData);
+        return response.data;
+    }
+
     signin = async (signinData: ISigninData) => {
-        try {
             let response = await axiosInstance.post<ISigninResponse>('/auth/signin', signinData);
             return response.data;
-        } catch (error) {
-            throw new Error(error.message)
-        }
     }
 
     update = async () => {

@@ -8,7 +8,7 @@ export interface IUser {
     id: string
     email: string
     firstname: string
-    lastname?: string
+    lastname: string | null
     password: string
     phoneNumber: string
     avatar?: string

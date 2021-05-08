@@ -1,4 +1,4 @@
-import { IDecodedToken } from './../../src/middlewares/checkAuthMiddleware';
+import { IDecodedToken } from '../../src/middlewares/checkAuthMW';
 
 declare global{
     namespace Express {

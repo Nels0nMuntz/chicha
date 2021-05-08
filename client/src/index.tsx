@@ -11,10 +11,8 @@ import './index.scss';
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <React.StrictMode>
         <App />
-      </React.StrictMode>
-    </Router>
+    </Router>  
   </Provider>,
   document.getElementById('root')
 );

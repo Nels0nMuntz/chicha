@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { UserController } from '../controllers';
-import { checkAuthMiddleware } from '../middlewares';
+import { checkAuthMW} from '../middlewares';
 
 class UserRouter {
 
@@ -18,7 +18,7 @@ class UserRouter {
     private initRoutes = () => {
         this._router.get(
             '/im',
-            checkAuthMiddleware,
+            checkAuthMW,
             this._controller.getUserData
         )
     }

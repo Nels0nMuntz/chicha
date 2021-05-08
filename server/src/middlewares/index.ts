@@ -1,1 +1,1 @@
-export { default as checkAuthMiddleware } from './checkAuthMiddleware';
+export { default as checkAuthMW } from './checkAuthMW';

@@ -5,24 +5,37 @@ import { useFormik } from 'formik';
 import FormTextField from '../TextField/FormTextField';
 import MainButton from '../MainButton/MainButton';
 import { validator } from '../../shared/helpers';
+import { ISignupData } from '../../store/auth/types';
+import PhoneInput from './../TextField/PhoneInput';
+
 
 const validate = validator.signup;
 
-const SignupForm : React.FC = () => {
+type SignupFormProps = {
+    onSubmitForm: (values: ISignupData) => void
+};
+
+const SignupForm: React.FC<SignupFormProps> = ({ onSubmitForm }) => {
 
     const formik = useFormik({
         initialValues: {
             email: '',
             firstName: '',
             lastName: '',
+            phoneNumber: '',
             password: '',
             passwordRepeat: '',
         },
         validate,
-        onSubmit: values => console.log(values)        
-    })
+        onSubmit: values => onSubmitForm(values)
+    });
+
+    const onChangePhoneInput = (value: string) => {      
+        formik.setFieldValue('phoneNumber', value);
+    };
 
     return (
+
         <form onSubmit={formik.handleSubmit}>
             <FormTextField
                 id="register-email"
@@ -50,6 +63,16 @@ const SignupForm : React.FC = () => {
                 isTouched={formik.touched.lastName ? true : false}
                 isValid={formik.errors.lastName ? false : true}
                 {...formik.getFieldProps("lastName")}
+                // onChange={value => console.log(value)}
+            />
+            <PhoneInput
+                id="register-phoneNumber"
+                label="Номер телефона"
+                helperText={formik.touched.phoneNumber && formik.errors.phoneNumber ? formik.errors.phoneNumber : " "}
+                isTouched={formik.touched.phoneNumber ? true : false}
+                isValid={formik.errors.phoneNumber ? false : true}
+                {...formik.getFieldProps("phoneNumber")}
+                onChange={onChangePhoneInput}
             />
             <FormTextField
                 id="register-password"
@@ -69,12 +92,12 @@ const SignupForm : React.FC = () => {
                 isValid={formik.errors.passwordRepeat ? false : true}
                 {...formik.getFieldProps("passwordRepeat")}
             />
-            <MainButton 
+            <MainButton
                 type="submit"
-                text="Зарегистрироваться" 
+                text="Зарегистрироваться"
             />
-            <Link 
-                to="/signin" 
+            <Link
+                to="/auth/signin"
                 className="form-redirect-link"
             >
                 Войти в аккаунт

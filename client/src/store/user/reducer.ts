@@ -6,6 +6,7 @@ const initialState: IInitialState = {
         id: '',
         email: '',
         firstname: '',
+        lastname: null,
         password: '',
         phoneNumber: '',
     }

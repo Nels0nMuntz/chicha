@@ -9,9 +9,10 @@ export interface IUser {
     phoneNumber: string
     avatar?: string
     lastSeen?: Date
-}
+};
 
 export class User  {
+    public id: string
     public email: string
     public firstname: string
     public lastname?: string
@@ -20,6 +21,7 @@ export class User  {
     public lastSeen?: Date
 
     constructor(document: IUserDocument){
+        this.id = document._id
         this.email = document.email
         this.firstname = document.firstname
         this.lastname = document.lastname
@@ -27,13 +29,13 @@ export class User  {
         this.avatar = document.avatar
         this.lastSeen = document.lastSeen
     }
-}
+};
 
 
-interface IUserDocument extends IUser, Document { }
+interface IUserDocument extends IUser, Document {};
 interface IUserModel extends Model<IUserDocument> {
     findOneByEmail(email: string): Promise<IUserDocument>
-}
+};
 
 const UserSchema: Schema = new Schema(
     {
