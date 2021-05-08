@@ -45,8 +45,8 @@ const theme = {
         cursor: "pointer",
     },
     disabled: {
-        bgcolor: "#A3A3A3",
-        bgcolorHover: "#A3A3A3",
+        bgcolor: "#325577",
+        bgcolorHover: "#325577",
         cursor: "auto"
     },
     loading: {

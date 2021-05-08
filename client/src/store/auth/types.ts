@@ -1,13 +1,16 @@
 import { IUser } from "../user/types";
 import { ThunkActionType, ThunkDispatchType } from "..";
+import { Status } from "../../types/types";
 
 
 type SET_AUTH_DATA = 'SET_AUTH_DATA';
-type SET_AUTH_STATE = 'SET_AUTH_STATE';
+type SET_SIGNIN_STATUS = 'SET_SIGNIN_STATUS';
+type SET_SIGNUP_STATUS = 'SET_SIGNUP_STATUS';
 
 export interface IInitialState {
     user: IUser
-    isAuth: boolean
+    signinStatus: Status
+    signupStatus: Status
 };
 
 export interface ISigninData {
@@ -31,14 +34,21 @@ export type SetAuthDataAction = {
     }
 };
 
-export type SetAuthStateAction = {
-    type: SET_AUTH_STATE,
+export type SetSigninStatusAction = {
+    type: SET_SIGNIN_STATUS,
     payload: {
-        isAuth: boolean
+        signinStatus: Status
     }
 };
 
-export type Action = SetAuthDataAction | SetAuthStateAction;
+export type SetSignupStatusAction = {
+    type: SET_SIGNUP_STATUS,
+    payload: {
+        signupStatus: Status
+    }
+};
+
+export type Action = SetAuthDataAction | SetSigninStatusAction | SetSignupStatusAction;
 
 export type AuthThunkAction = ThunkActionType<Action>;
 

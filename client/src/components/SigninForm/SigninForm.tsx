@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
+import styled from 'styled-components';
 
 import FormTextField from '../TextField/FormTextField';
 import MainButton from '../MainButton/MainButton';
-import { validator } from '../../shared/helpers'
+import { isEmpty, validator } from '../../shared/helpers'
 import { ISigninData } from '../../store/auth/types';
 
 const validate = validator.signin;
@@ -22,7 +23,9 @@ const SigninForm : React.FC<SigninFormProps> = ({ onSubmitForm }) => {
         },
         validate,
         onSubmit: values => onSubmitForm(values)        
-    });        
+    });    
+    
+    const isTouched = !isEmpty(formik.touched);
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -45,8 +48,8 @@ const SigninForm : React.FC<SigninFormProps> = ({ onSubmitForm }) => {
                 {...formik.getFieldProps("password")}
             />
             <MainButton 
-                text="Зарегистрироваться"
-                type={formik.isValid ? "submit" : "button"}
+                text="Войти в аккаунт"
+                type={formik.isValid && isTouched && !formik.isSubmitting ? "submit" : "button"}
                 isLoading={formik.isSubmitting} 
             />
             <Link 

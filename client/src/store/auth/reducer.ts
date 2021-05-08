@@ -1,3 +1,4 @@
+import { Status } from '../../types/types';
 import { IInitialState, Action } from './types';
 
 
@@ -10,18 +11,26 @@ const initialState: IInitialState = {
         password: '',
         phoneNumber: '',
     },
-    isAuth: false,
+    signinStatus: Status.UNKNOWN,
+    signupStatus: Status.UNKNOWN,
 };
 
 const authReducer = (state: IInitialState = initialState, action: Action): IInitialState => {
     switch (action.type) {
         case 'SET_AUTH_DATA':
             return {
-                ...state, user: action.payload.user
+                ...state, 
+                user: action.payload.user
             };
-        case 'SET_AUTH_STATE':
+        case 'SET_SIGNIN_STATUS':
             return {
-                ...state, isAuth: action.payload.isAuth
+                ...state, 
+                signinStatus: action.payload.signinStatus
+            };
+        case 'SET_SIGNUP_STATUS':
+            return {
+                ...state, 
+                signupStatus: action.payload.signupStatus
             };
         default:
             return state;

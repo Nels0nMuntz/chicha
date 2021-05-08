@@ -11,11 +11,11 @@ const Signup : React.FC = () => {
     const dispatch = useDispatch();
 
     const onSubmit = (values: ISignupData) => {
-        const checked = checkEmptyFields(values)
-        console.log(checked);
-        
-        // dispatch(sendAuthDataThunk(checked as ISignupData))
+        const checked = checkEmptyFields(values);        
+        dispatch(sendAuthDataThunk(checked))
     };    
+
+    // React.useEffect(() => )
 
     return (
         <StartPage

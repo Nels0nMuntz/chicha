@@ -1,6 +1,7 @@
+import { Status } from "../../types/types";
 import { AuthService, LocalStorageService } from "../../services";
 import { ISigninData, ISignupData, AuthThunkAction, AuthThunkDispatch } from "./types";
-import { setAuthDataAC, setAuthStateAC } from './actions';
+import { setAuthDataAC, setSigninStatusAC, setSignupStatusAC } from './actions';
 
 
 export const fetchAuthDataThunk = (signinData: ISigninData) : AuthThunkAction => {
@@ -8,9 +9,10 @@ export const fetchAuthDataThunk = (signinData: ISigninData) : AuthThunkAction =>
         try {
             let { user, accessToken } = await AuthService.signin(signinData);
             dispatch(setAuthDataAC(user));
-            dispatch(setAuthStateAC(true));
+            dispatch(setSigninStatusAC(Status.SUCCESS));
             LocalStorageService.setAccessToken(accessToken);
         } catch (error) {
+            dispatch(setSigninStatusAC(Status.FAILD));
             console.log(error.response.data.message);
         }
     }
@@ -20,9 +22,10 @@ export const updateAuthDataThunk = () : AuthThunkAction => async (dispatch: Auth
     try {
         let user = await AuthService.update();        
         dispatch(setAuthDataAC(user));
-        dispatch(setAuthStateAC(false));
+        dispatch(setSigninStatusAC(Status.SUCCESS));
     } catch (error) {
-        console.log(error.response.data.message);        
+        dispatch(setSigninStatusAC(Status.FAILD));
+        console.log(error.response?.data?.message);        
     }
 };
 
@@ -30,8 +33,9 @@ export const sendAuthDataThunk = (signupData: ISignupData) : AuthThunkAction => 
     try {
         let user = await AuthService.signup(signupData);
         dispatch(setAuthDataAC(user));
-        dispatch(setAuthStateAC(false));
+        dispatch(setSignupStatusAC(Status.SUCCESS));
     } catch (error) {
+        dispatch(setSignupStatusAC(Status.FAILD));
         console.log(error.response.data.message);
     }
 };

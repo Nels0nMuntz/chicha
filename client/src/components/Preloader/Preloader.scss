@@ -11,6 +11,8 @@
     height: 100px;
     margin: 20px;
     display: inline-block;
+    fill: #3f547e;
+    animation: loader 5s linear 0s infinite alternate forwards;
 }
 .preloader-enter{
     opacity: 0;
@@ -25,4 +27,25 @@
 .preloader-exit-active{
     opacity: 0;
     transition: opacity 3s linear;
+}
+
+@keyframes loader {
+    0%{
+        fill: #e00038;
+    }
+    20%{
+        fill: #d1ce00;
+    }
+    40%{
+        fill: #15b800;
+    }
+    60%{
+        fill: #00c0b6;
+    }
+    80%{
+        fill: #3f547e;
+    }
+    100%{
+        fill: #c900b8;
+    }
 }
