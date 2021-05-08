@@ -1,10 +1,11 @@
 import { ISignupData } from "../../store/auth/types";
 
 const checkEmptyFields = (fields: ISignupData) => {
-    const obj : {[key: string]: string | null} = {};
-    for(let field in fields){
-        if(!field) obj[field] = null;
-        obj[field] = field;
+    const obj : ISignupData = { ...fields }
+    for(let key of Object.keys(fields)){
+        if(key === 'lastName' && !fields[key]){
+            obj[key] = null;
+        }
     };
     return obj;
 };

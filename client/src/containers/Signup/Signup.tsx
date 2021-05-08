@@ -12,6 +12,8 @@ const Signup : React.FC = () => {
 
     const onSubmit = (values: ISignupData) => {
         const checked = checkEmptyFields(values)
+        console.log(checked);
+        
         // dispatch(sendAuthDataThunk(checked as ISignupData))
     };    
 

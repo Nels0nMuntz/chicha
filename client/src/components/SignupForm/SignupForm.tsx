@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 
 import FormTextField from '../TextField/FormTextField';
 import MainButton from '../MainButton/MainButton';
-import { validator } from '../../shared/helpers';
+import { validator, isEmpty } from '../../shared/helpers';
 import { ISignupData } from '../../store/auth/types';
 import PhoneInput from './../TextField/PhoneInput';
 
@@ -32,7 +32,9 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmitForm }) => {
 
     const onChangePhoneInput = (value: string) => {      
         formik.setFieldValue('phoneNumber', value);
-    };
+    }; 
+    
+    const isTouched = () => !isEmpty(formik.touched);
 
     return (
 
@@ -63,7 +65,6 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmitForm }) => {
                 isTouched={formik.touched.lastName ? true : false}
                 isValid={formik.errors.lastName ? false : true}
                 {...formik.getFieldProps("lastName")}
-                // onChange={value => console.log(value)}
             />
             <PhoneInput
                 id="register-phoneNumber"
@@ -93,8 +94,9 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmitForm }) => {
                 {...formik.getFieldProps("passwordRepeat")}
             />
             <MainButton
-                type="submit"
                 text="Зарегистрироваться"
+                type={formik.isValid && isTouched() && !formik.isSubmitting ? "submit" : "button"}
+                isLoading={formik.isSubmitting}
             />
             <Link
                 to="/auth/signin"

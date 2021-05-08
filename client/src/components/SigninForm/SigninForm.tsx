@@ -45,8 +45,9 @@ const SigninForm : React.FC<SigninFormProps> = ({ onSubmitForm }) => {
                 {...formik.getFieldProps("password")}
             />
             <MainButton 
-                type="submit"
-                text="Войти в аккаунт" 
+                text="Зарегистрироваться"
+                type={formik.isValid ? "submit" : "button"}
+                isLoading={formik.isSubmitting} 
             />
             <Link 
                 to="/auth/signup" 
