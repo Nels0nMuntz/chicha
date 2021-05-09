@@ -12,10 +12,11 @@ import PhoneInput from './../TextField/PhoneInput';
 const validate = validator.signup;
 
 type SignupFormProps = {
+    isAuthUnknown: boolean
     onSubmitForm: (values: ISignupData) => void
 };
 
-const SignupForm: React.FC<SignupFormProps> = ({ onSubmitForm }) => {
+const SignupForm: React.FC<SignupFormProps> = ({ isAuthUnknown, onSubmitForm }) => {
 
     const formik = useFormik({
         initialValues: {
@@ -34,7 +35,11 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmitForm }) => {
         formik.setFieldValue('phoneNumber', value);
     }; 
     
-    const isTouched = () => !isEmpty(formik.touched);
+    const isTouched = !isEmpty(formik.touched);
+
+    React.useEffect(() => {
+        if (!isAuthUnknown) formik.setSubmitting(false);
+    }, [isAuthUnknown, formik.submitCount]);
 
     return (
 
@@ -95,7 +100,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmitForm }) => {
             />
             <MainButton
                 text="Зарегистрироваться"
-                type={formik.isValid && isTouched() && !formik.isSubmitting ? "submit" : "button"}
+                type={formik.isValid && isTouched && !formik.isSubmitting ? "submit" : "button"}
                 isLoading={formik.isSubmitting}
             />
             <Link

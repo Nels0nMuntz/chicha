@@ -4,11 +4,11 @@ import { useHistory } from 'react-router-dom';
 
 import { RootState } from '../../store';
 import { Status } from '../../types/types';
-import { HomePage, Preloader } from './../../components';
-import { updateAuthDataThunk } from './../../store/auth/thunks';
+import { HomePageLayout, Preloader } from '../../components';
+import { updateAuthDataThunk } from '../../store/auth/thunks';
 
 
-const Home: React.FC = () => {
+const HomeContainer: React.FC = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const Home: React.FC = () => {
         }
     }, [isAuthSuccess, isAuthFaild, dispatch, history]);
 
-    return isAuthSuccess ? <HomePage/> : <Preloader/>;
+    return isAuthSuccess ? <HomePageLayout/> : <Preloader/>;
 };
 
-export default Home;
+export default HomeContainer;

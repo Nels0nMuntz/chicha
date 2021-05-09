@@ -1,4 +1,5 @@
-import { Signin, Signup, Home } from "../containers";
+import { HomePage, SigninPage, SignupPage } from "../pages";
+
 
 const urls = {
     signin: "/auth/signin",
@@ -10,12 +11,12 @@ export const publicRoutes = [
     {
         path: urls.signin,
         exact: true,
-        component: Signin,
+        component: SigninPage,
     },
     {
         path: urls.signup,
         exact: true,
-        component: Signup,
+        component: SignupPage,
     },
 ];
 
@@ -23,6 +24,6 @@ export const privateRoutes = [
     {
         path: urls.home,
         exact: true,
-        component: Home
+        component: HomePage
     }
 ];

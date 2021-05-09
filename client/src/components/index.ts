@@ -1,6 +1,6 @@
 export { default as SigninForm } from "./SigninForm/SigninForm";
 export { default as SignupForm } from "./SignupForm/SignupForm";
-export { default as StartPage } from "./layouts/StartPage/StartPage";
-export { default as HomePage } from "./layouts/HomePage/HomePage";
+export { default as StartPageLayout } from "./layouts/StartPageLayout/StartPageLayout";
+export { default as HomePageLayout } from "./layouts/HomePageLayout/HomePageLayout";
 export { default as PrivateRoute } from "./PrivateRoute/PrivateRoute";
 export { default as Preloader } from "./Preloader/Preloader";

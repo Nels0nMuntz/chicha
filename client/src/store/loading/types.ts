@@ -1,4 +1,4 @@
-import { ThunkActionType, ThunkDispatchType } from "..";
+import { ThunkActionType, ThunkDispatchType } from "../../types/types";
 
 type SET_IS_LOADING = 'SET_IS_LOADING';
 

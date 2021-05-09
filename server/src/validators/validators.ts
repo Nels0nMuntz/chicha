@@ -7,7 +7,7 @@ export const signupValidation = [
         .bail()
         .isEmail()
         .withMessage('Incorrect email format'),
-    check("firstname")
+    check("firstName")
         .trim()
         .escape()
         .notEmpty()
@@ -15,7 +15,7 @@ export const signupValidation = [
         .bail()
         .matches(/^([A-Z][a-z\-']{1,50})|([А-ЯЁIЇҐЄ][а-яёіїґє\-']{1,50})$/)
         .withMessage("Incorrect first name format"),
-    check("lastname")
+    check("lastName")
         .optional({ nullable: true })
         .matches(/^([A-Z][a-z\-']{1,50})|([А-ЯЁIЇҐЄ][а-яёіїґє\-']{1,50})$/)
         .withMessage("Incorrect last name format"),
@@ -43,6 +43,11 @@ export const signupValidation = [
         .bail()
         .trim()
         .escape(),
+    check("passwordRepeat")
+        .notEmpty()
+        .withMessage("Password confirmation is required")
+        .custom((value, { req }) => value === req.body.password)
+        .withMessage("Provided password and password confirmation do not match"),
     check("phoneNumber")
         .trim()
         .escape()

@@ -12,16 +12,14 @@ class AuthController {
     signup = async (req: Request, res: Response) => {
         try {
             const errors = validationResult(req).formatWith(errorFormatter);
-            if (!errors.isEmpty()) {
-                return res.status(422).json({ errors: errors.array() })
-            };
+            if (!errors.isEmpty()) return res.status(422).json({ message: errors.array() });
 
             const postData: IUser = {
                 email: req.body.email,
-                password: req.body.password,
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
                 phoneNumber: req.body.phoneNumber,
+                password: req.body.password,
             };
             const doc = await UserModel.findOneByEmail(postData.email);
             if (doc) return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
@@ -39,7 +37,7 @@ class AuthController {
     signin = async (req: Request, res: Response) => {
         try {
             const errors = validationResult(req).formatWith(errorFormatter);
-            if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
+            if (!errors.isEmpty()) return res.status(422).json({ message: errors.array() });
 
             const postData: {
                 email: string
@@ -62,7 +60,7 @@ class AuthController {
     }
 };
 
-const errorFormatter = (error: ValidationError) => error;
+const errorFormatter = (error: ValidationError) => error.msg;
 
 const generateAccessToken = (id: string, email: string) => {
     return jwt.sign(

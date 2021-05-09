@@ -3,10 +3,10 @@ import { model, Document, Schema, Model } from 'mongoose';
 
 export interface IUser {
     email: string
-    password: string
-    firstname: string
-    lastname?: string
+    firstName: string
+    lastName?: string
     phoneNumber: string
+    password: string
     avatar?: string
     lastSeen?: Date
 };
@@ -14,8 +14,8 @@ export interface IUser {
 export class User  {
     public id: string
     public email: string
-    public firstname: string
-    public lastname?: string
+    public firstName: string
+    public lastName?: string
     public phoneNumber: string
     public avatar?: string
     public lastSeen?: Date
@@ -23,8 +23,8 @@ export class User  {
     constructor(document: IUserDocument){
         this.id = document._id
         this.email = document.email
-        this.firstname = document.firstname
-        this.lastname = document.lastname
+        this.firstName = document.firstName
+        this.lastName = document.lastName
         this.phoneNumber = document.phoneNumber
         this.avatar = document.avatar
         this.lastSeen = document.lastSeen
@@ -44,18 +44,18 @@ const UserSchema: Schema = new Schema(
             required: true,
             index: { unique: true }
         },
-        password: {
+        firstName: {
             type: String,
             required: true
         },
-        firstname: {
-            type: String,
-            required: true
-        },
-        lastname: {
+        lastName: {
             type: String
         },
         phoneNumber: {
+            type: String,
+            required: true
+        },
+        password: {
             type: String,
             required: true
         },

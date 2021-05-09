@@ -1,20 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import styled from 'styled-components';
 
 import FormTextField from '../TextField/FormTextField';
 import MainButton from '../MainButton/MainButton';
 import { isEmpty, validator } from '../../shared/helpers'
 import { ISigninData } from '../../store/auth/types';
 
+
 const validate = validator.signin;
 
 type SigninFormProps = {
+    isAuthUnknown: boolean
     onSubmitForm: (values: ISigninData) => void;
 };
 
-const SigninForm : React.FC<SigninFormProps> = ({ onSubmitForm }) => {
+const SigninForm: React.FC<SigninFormProps> = ({ isAuthUnknown, onSubmitForm }) => {
 
     const formik = useFormik({
         initialValues: {
@@ -22,10 +23,14 @@ const SigninForm : React.FC<SigninFormProps> = ({ onSubmitForm }) => {
             password: '',
         },
         validate,
-        onSubmit: values => onSubmitForm(values)        
-    });    
-    
+        onSubmit: values => onSubmitForm(values)
+    });
+
     const isTouched = !isEmpty(formik.touched);
+
+    React.useEffect(() => {
+        if (!isAuthUnknown) formik.setSubmitting(false);
+    }, [isAuthUnknown, formik.submitCount]);
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -47,13 +52,13 @@ const SigninForm : React.FC<SigninFormProps> = ({ onSubmitForm }) => {
                 isValid={formik.errors.password ? false : true}
                 {...formik.getFieldProps("password")}
             />
-            <MainButton 
+            <MainButton
                 text="Войти в аккаунт"
                 type={formik.isValid && isTouched && !formik.isSubmitting ? "submit" : "button"}
-                isLoading={formik.isSubmitting} 
+                isLoading={formik.isSubmitting}
             />
-            <Link 
-                to="/auth/signup" 
+            <Link
+                to="/auth/signup"
                 className="form-redirect-link"
             >
                 Зарегистрироваться

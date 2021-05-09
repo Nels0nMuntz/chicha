@@ -4,14 +4,13 @@ import SearchInput from '../../SearchInput/SearchInput';
 import Dialog from '../../Dialog/Dialog';
 import Message from '../../Message/Message';
 import SendForm from '../../SendForm/SendForm';
-import withLoading from './../../HOC/withLoading';
 
-import style from "./HomePage.module.scss";
+import style from "./HomePageLayout.module.scss";
 import EditIcon from '@material-ui/icons/Edit';
 import userImg from "../../../assets/images/user.svg";
 
 
-const HomePage: React.FC = () => {
+const HomePageLayout: React.FC = () => {
     return (
         <div className={style.home_wrapper}>
             <div className="container">
@@ -65,4 +64,4 @@ const HomePage: React.FC = () => {
     )
 };
 
-export default HomePage;
+export default HomePageLayout;

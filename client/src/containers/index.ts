@@ -1,3 +1,3 @@
-export { default as Signin } from "./Signin/Signin";
-export { default as Signup } from "./Signup/Signup";
-export { default as Home } from "./Home/Home";
+export { default as SigninContainer } from "./SigninContainer/SigninContainer";
+export { default as SignupContainer } from "./SignupContainer/SignupContainer";
+export { default as HomeContainer } from "./HomeContainer/HomeContainer";

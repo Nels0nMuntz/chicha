@@ -1,6 +1,5 @@
 import { IUser } from "../user/types";
-import { ThunkActionType, ThunkDispatchType } from "..";
-import { Status } from "../../types/types";
+import { Status, ThunkActionType, ThunkDispatchType } from "../../types/types";
 
 
 type SET_AUTH_DATA = 'SET_AUTH_DATA';
@@ -48,8 +47,8 @@ export type SetSignupStatusAction = {
     }
 };
 
-export type Action = SetAuthDataAction | SetSigninStatusAction | SetSignupStatusAction;
+export type AuthAction = SetAuthDataAction | SetSigninStatusAction | SetSignupStatusAction;
 
-export type AuthThunkAction = ThunkActionType<Action>;
+export type AuthThunkAction = ThunkActionType<AuthAction>;
 
-export type AuthThunkDispatch = ThunkDispatchType<Action>;
+export type AuthThunkDispatch = ThunkDispatchType<AuthAction>;
