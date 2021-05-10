@@ -1,14 +1,8 @@
 import { Response as ExpressResponse } from 'express';
 
-type ResErrorBody = {
+type ResBody<T> = {
     message: string | string[]
+    data: T 
 };
 
-type ResSuccessBody<T> = ResErrorBody & {
-    data: T
-};
-
-type ResponseError = ExpressResponse<ResErrorBody>;
-type ResponseSuccess<T> = ExpressResponse<ResSuccessBody<T>>;
-
-export type Response<T = {}> = ResponseSuccess<T> | ResponseError;
+export interface Response<T = {}> extends ExpressResponse<ResBody<T>> { };

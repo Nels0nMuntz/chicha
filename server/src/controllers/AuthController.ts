@@ -8,8 +8,8 @@ import { UserModel } from '../models';
 import { IUser, User } from '../models/UserModel';
 
 
+interface SignupResponse extends Response<IUser | {}> { };
 // interface SigninResponse extends Response<SigninResBodyData | {}>{};
-// interface SignupResponse extends Response<IUser | {}>{};
 // type SigninResBodyData = {
 //     user: IUser
 //     accessToken: string
@@ -17,10 +17,10 @@ import { IUser, User } from '../models/UserModel';
 
 class AuthController {
 
-    signup = async (req: Request, res: Response<IUser>) => {
+    signup = async (req: Request, res: SignupResponse) => {
         try {
             const errors = validationResult(req).formatWith(errorFormatter);
-            if (!errors.isEmpty()) return res.status(422).json({ message: 'errors.array()' });
+            if (!errors.isEmpty()) return res.status(422).json({ message: errors.array(), data: {} });
 
             const postData: IUser = {
                 email: req.body.email,
@@ -29,13 +29,13 @@ class AuthController {
                 phoneNumber: req.body.phoneNumber,
                 password: req.body.password,
             };
-            const doc = await UserModel.findOneByEmail(postData.email);
-            if (doc) return res.status(400).json({ message: 'Пользователь с таким email уже существует' });
+            const isExist = !!await UserModel.findOneByEmail(postData.email);
+            if (isExist) return res.status(400).json({ message: 'Пользователь с таким email уже существует', data: {} });
 
             const hashPassword = bcrypt.hashSync(postData.password, 7);
-            const user = new UserModel({ ...postData, password: hashPassword });
-            await user.save();
-            return res.status(201).json({ message: 'Пользователь успешно зарегисрирован' });
+            const userDocument = new UserModel({ ...postData, password: hashPassword });
+            await userDocument.save();
+            return res.status(201).json({ message: 'Пользователь успешно зарегисрирован', data: new User(userDocument) });
         } catch (error) {
             console.log(error);
             res.status(400).json({ message: 'Ошибка регистрации', details: error });
