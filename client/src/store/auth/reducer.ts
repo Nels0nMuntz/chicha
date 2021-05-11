@@ -1,5 +1,5 @@
 import { Status } from '../../types/types';
-import { IInitialState, Action } from './types';
+import { IInitialState, AuthAction } from './types';
 
 
 const initialState: IInitialState = {
@@ -15,7 +15,7 @@ const initialState: IInitialState = {
     signupStatus: Status.UNKNOWN,
 };
 
-const authReducer = (state: IInitialState = initialState, action: Action): IInitialState => {
+const authReducer = (state: IInitialState = initialState, action: AuthAction): IInitialState => {
     switch (action.type) {
         case 'SET_AUTH_DATA':
             return {

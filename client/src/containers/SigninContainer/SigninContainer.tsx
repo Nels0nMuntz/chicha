@@ -14,7 +14,9 @@ const SigninContainer: React.FC = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const onSubmit = (values: ISigninData) => { dispatch(fetchAuthDataThunk(values)) };
+    const onSubmit = (values: ISigninData) => { 
+        dispatch(fetchAuthDataThunk(values));
+    };
 
     const signinStatus = useSelector((state: RootState) => state.auth.signinStatus);
     const isAuthSuccess = signinStatus === Status.SUCCESS;

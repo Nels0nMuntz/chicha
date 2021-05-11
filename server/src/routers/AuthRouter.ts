@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { AuthController } from '../controllers';
-import { signinValidation, signupValidation } from '../validators/validators';
+import { signinValidation, signupValidation } from '../utils/validators/validators';
 
 
 class AuthRouter {

@@ -1,5 +1,6 @@
 import { IUser } from "../user/types";
 import { Status, ThunkActionType, ThunkDispatchType } from "../../types/types";
+import { SwitchNotificationAction, ConfigureNotificationAction } from "../notification/types";
 
 
 type SET_AUTH_DATA = 'SET_AUTH_DATA';
@@ -47,7 +48,7 @@ export type SetSignupStatusAction = {
     }
 };
 
-export type AuthAction = SetAuthDataAction | SetSigninStatusAction | SetSignupStatusAction;
+export type AuthAction = SetAuthDataAction | SetSigninStatusAction | SetSignupStatusAction | SwitchNotificationAction | ConfigureNotificationAction;
 
 export type AuthThunkAction = ThunkActionType<AuthAction>;
 

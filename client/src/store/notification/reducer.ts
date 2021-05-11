@@ -1,9 +1,10 @@
+import { Status } from "../../types/types";
 import { IInitialState, NotificationAction } from "./types";
 
 const initialState: IInitialState = {
-    statusCode: 0,
+    status: Status.UNKNOWN,
     message: '',
-    isOpen: true,
+    isOpen: false,
 };
 
 const notificationReducer = (state: IInitialState = initialState, action: NotificationAction): IInitialState => {
@@ -14,10 +15,10 @@ const notificationReducer = (state: IInitialState = initialState, action: Notifi
                 isOpen: action.payload.isOpen
             };
         case 'CONFIGURE_NOTIFICATION':
-            const { statusCode, message, isOpen } = action.payload;
+            const { status, message, isOpen } = action.payload;
             return {
                 ...state,
-                statusCode,
+                status,
                 message,
                 isOpen,
             }

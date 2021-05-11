@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
 import { PrivateRoute } from './components';
+import { Notification } from './components';
 
 import { privateRoutes, publicRoutes } from './routes';
 
@@ -14,6 +15,7 @@ const App: React.FC = () => {
         {publicRoutes.map((routeProps, index) => <Route {...routeProps} key={index + '_public'} />)}
         {privateRoutes.map((routeProps, index) => <PrivateRoute {...routeProps} key={index + '_private'} />)}
       </Switch>
+      <Notification />
     </div>
   );
 };

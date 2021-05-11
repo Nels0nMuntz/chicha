@@ -1,18 +1,26 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { ValidationError, validationResult } from 'express-validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+import { Response } from '../types/types';
 import { UserModel } from '../models';
 import { IUser, User } from '../models/UserModel';
 
 
+// interface SigninResponse extends Response<SigninResBodyData | {}>{};
+// interface SignupResponse extends Response<IUser | {}>{};
+// type SigninResBodyData = {
+//     user: IUser
+//     accessToken: string
+// }
+
 class AuthController {
 
-    signup = async (req: Request, res: Response) => {
+    signup = async (req: Request, res: Response<IUser>) => {
         try {
             const errors = validationResult(req).formatWith(errorFormatter);
-            if (!errors.isEmpty()) return res.status(422).json({ message: errors.array() });
+            if (!errors.isEmpty()) return res.status(422).json({ message: 'errors.array()' });
 
             const postData: IUser = {
                 email: req.body.email,
@@ -34,7 +42,7 @@ class AuthController {
         }
     }
 
-    signin = async (req: Request, res: Response) => {
+    signin = async (req: Request, res: SigninResponse) => {
         try {
             const errors = validationResult(req).formatWith(errorFormatter);
             if (!errors.isEmpty()) return res.status(422).json({ message: errors.array() });

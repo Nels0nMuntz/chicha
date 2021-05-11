@@ -9,6 +9,11 @@ export enum Status {
     UNKNOWN = 'Unknown'
 };
 
-export type ThunkActionType<T extends AnyAction> = ThunkAction<Promise<void>, RootState, unknown, T>
+export type ThunkActionType<T extends AnyAction> = ThunkAction<Promise<void>, RootState, unknown, T>;
 
-export type ThunkDispatchType<T extends AnyAction> = ThunkDispatch<RootState, unknown, T>
+export type ThunkDispatchType<T extends AnyAction> = ThunkDispatch<RootState, unknown, T>;
+
+export type AxiosResponse = {
+    message: string
+    data: {}
+};

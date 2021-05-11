@@ -1,21 +1,16 @@
-import { ThunkActionType, ThunkDispatchType } from "../../types/types";
+import { Status, ThunkActionType, ThunkDispatchType } from "../../types/types";
 
 type SWITCH_NOTIFICATION = 'SWITCH_NOTIFICATION';
 type CONFIGURE_NOTIFICATION = 'CONFIGURE_NOTIFICATION';
 
-export enum StatusCode {
-    Unknown = 0,
-    Success = 1,
-    Error = 2,
-};
-
 type NotificationConfig = {
-    statusCode: StatusCode
+    status: Status
     message: string
+    isOpen: boolean
 };
 
 export interface IInitialState {
-    statusCode: StatusCode
+    status: Status
     message: string
     isOpen: boolean
 };
@@ -32,7 +27,7 @@ export type ConfigureNotificationAction = {
     payload: NotificationConfig
 };
 
-export type SwitchNotificationAC = (status: boolean) => SwitchNotificationAction;
+export type SwitchNotificationAC = (isOpen: boolean) => SwitchNotificationAction;
 
 export type ConfigureNotificationAC = (config: NotificationConfig) => ConfigureNotificationAction;
 
