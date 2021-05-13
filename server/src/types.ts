@@ -7,9 +7,20 @@ type ResBody<T> = {
 
 export interface Response<T = {}> extends ExpressResponse<ResBody<T>> { };
 
-export interface Repo<T> {
+export class ResponseError extends Error {
+    status: number
+    message: string
+    data: object
+    constructor(_status: number, _message: string, _data: object){
+        super(_message);
+        this.status = _status;
+        this.message = _message;
+        this.data = _data;
+    }
+};
+
+export interface IRepository<T> {
     exists(e: T) : Promise<boolean>
-    save(e: T) : Promise<T>
-    update(e: T) :Promise<T>
+    save(e: T) : Promise<any>
     delete(e: T) : Promise<any>
-}
+};

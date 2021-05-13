@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UserModel } from "../models";
-import { IUser, User } from "../models/UserModel";
+import { IUser } from "../models/UserModel";
 
 class UserController {
     getUserData = async (req: Request, res: Response) => {

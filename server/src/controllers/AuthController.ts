@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 import { Response } from '../types/types';
 import { UserModel } from '../models';
-import { IUser, User } from '../models/UserModel';
+import { IUser } from '../models/UserModel';
 
 
 interface SignupResponse extends Response<IUser | {}> { };
@@ -29,11 +29,11 @@ class AuthController {
                 phoneNumber: req.body.phoneNumber,
                 password: req.body.password,
             };
-            const isExist = !!await UserModel.findOneByEmail(postData.email);
+            const isExist = !!await userModel.findOneByEmail(postData.email);
             if (isExist) return res.status(400).json({ message: 'Пользователь с таким email уже существует', data: {} });
 
             const hashPassword = bcrypt.hashSync(postData.password, 7);
-            const userDocument = new UserModel({ ...postData, password: hashPassword });
+            const userDocument = new userModel({ ...postData, password: hashPassword });
             await userDocument.save();
             return res.status(201).json({ message: 'Пользователь успешно зарегисрирован', data: new User(userDocument) });
         } catch (error) {
@@ -54,7 +54,7 @@ class AuthController {
                 email: req.body.email,
                 password: req.body.password
             };
-            const document = await UserModel.findOneByEmail(postData.email);
+            const document = await userModel.findOneByEmail(postData.email);
             if (!document) return res.status(401).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
             const isPasswordValid = bcrypt.compareSync(postData.password, document.password);
             if (!isPasswordValid) return res.status(400).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });

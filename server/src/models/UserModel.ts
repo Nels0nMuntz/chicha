@@ -11,7 +11,7 @@ export interface IUser {
     lastSeen?: Date
 };
 
-interface IUserDTO {
+export interface IUserDTO {
     id: string
     email: string
     firstName: string
@@ -21,7 +21,7 @@ interface IUserDTO {
     lastSeen: Date
 };
 
-interface IUserDomain {
+export interface IUserDomain {
     email: string
     firstName: string
     lastName: string | null
@@ -31,32 +31,8 @@ interface IUserDomain {
     lastSeen: Date
 }
 
-class UserMap {
-
-    public static toDomain = (data: IUser): IUserDomain => ({
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName ? data.lastName : null,
-        phoneNumber: data.phoneNumber,
-        password: data.password,
-        avatar: data.avatar ? data.avatar : null,
-        lastSeen: data.lastSeen ? data.lastSeen : new Date()
-    })
-
-    public static toDTO = (data: IUserDocument) : IUserDTO => ({
-        id: data._id,
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName ? data.lastName : '',
-        phoneNumber: data.phoneNumber,
-        avatar: data.avatar ? data.avatar : '',
-        lastSeen: data.lastSeen,
-    })
-
-}
-
-interface IUserDocument extends IUserDomain, Document { };
-interface IUserModel extends Model<IUserDocument> {
+export interface IUserDocument extends IUserDomain, Document { };
+export interface IUserModel extends Model<IUserDocument> {
     findOneByEmail(email: string): Promise<IUserDocument>
 };
 
@@ -76,7 +52,8 @@ const UserSchema: Schema = new Schema(
         },
         phoneNumber: {
             type: String,
-            required: true
+            required: true,
+            index: { unique: true }
         },
         password: {
             type: String,
