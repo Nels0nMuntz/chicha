@@ -4,35 +4,58 @@ import { model, Document, Schema, Model } from 'mongoose';
 export interface IUser {
     email: string
     firstName: string
-    lastName?: string
+    lastName: string
     phoneNumber: string
     password: string
     avatar?: string
     lastSeen?: Date
 };
 
-export class User  {
-    public id: string
-    public email: string
-    public firstName: string
-    public lastName?: string
-    public phoneNumber: string
-    public avatar?: string
-    public lastSeen?: Date
-
-    constructor(document: IUserDocument){
-        this.id = document._id
-        this.email = document.email
-        this.firstName = document.firstName
-        this.lastName = document.lastName
-        this.phoneNumber = document.phoneNumber
-        this.avatar = document.avatar
-        this.lastSeen = document.lastSeen
-    }
+interface IUserDTO {
+    id: string
+    email: string
+    firstName: string
+    lastName: string
+    phoneNumber: string
+    avatar: string
+    lastSeen: Date
 };
 
+interface IUserDomain {
+    email: string
+    firstName: string
+    lastName: string | null
+    phoneNumber: string
+    password: string
+    avatar: string | null
+    lastSeen: Date
+}
 
-interface IUserDocument extends IUser, Document {};
+class UserMap {
+
+    public static toDomain = (data: IUser): IUserDomain => ({
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName ? data.lastName : null,
+        phoneNumber: data.phoneNumber,
+        password: data.password,
+        avatar: data.avatar ? data.avatar : null,
+        lastSeen: data.lastSeen ? data.lastSeen : new Date()
+    })
+
+    public static toDTO = (data: IUserDocument) : IUserDTO => ({
+        id: data._id,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName ? data.lastName : '',
+        phoneNumber: data.phoneNumber,
+        avatar: data.avatar ? data.avatar : '',
+        lastSeen: data.lastSeen,
+    })
+
+}
+
+interface IUserDocument extends IUserDomain, Document { };
 interface IUserModel extends Model<IUserDocument> {
     findOneByEmail(email: string): Promise<IUserDocument>
 };
