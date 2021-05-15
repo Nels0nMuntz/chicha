@@ -3,6 +3,7 @@ import { connectDB } from "./core"
 import dotenv from 'dotenv';
 import RootRouter from './routers/RootRouter';
 import bodyParser from 'body-parser';
+import { exceptionHandlerMW } from './middlewares';
 
 
 dotenv.config();
@@ -18,6 +19,8 @@ app.get("/check", (req: express.Request, res: express.Response) => {
 });
 
 app.use('/', RootRouter);
+
+app.use(exceptionHandlerMW)
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 

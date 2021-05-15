@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { AuthController } from '../controllers';
-import { signinValidation, signupValidation } from '../utils/validators/validators';
+import { validator } from '../utils';
 
 
 class AuthRouter {
@@ -19,13 +19,13 @@ class AuthRouter {
 
         this._router.post(
             '/signup',
-            signupValidation,
+            validator.signup,
             this._controller.signup
         )
 
         this._router.post(
             '/signin',
-            signinValidation,
+            validator.signin,
             this._controller.signin
         )
     }

@@ -90,3 +90,10 @@ export const signinValidation = [
         .trim()
         .escape()
 ];
+
+const validator = {
+    signup: signupValidation,
+    signin: signinValidation
+};
+
+export default validator;

@@ -1,84 +1,72 @@
-import { Request } from 'express';
+import { NextFunction } from 'express';
 import { ValidationError, validationResult } from 'express-validator';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
-import { Response } from '../types/types';
-import { UserModel } from '../models';
-import { IUser } from '../models/UserModel';
+import { Request, Response, Exception } from '../types';
+import { IUser, IUserDTO } from '../models/UserModel';
+import { AuthService } from '../services';
+import { generateAccessToken } from '../utils';
 
 
-interface SignupResponse extends Response<IUser | {}> { };
-// interface SigninResponse extends Response<SigninResBodyData | {}>{};
-// type SigninResBodyData = {
-//     user: IUser
-//     accessToken: string
-// }
+
+export type SigninReqData = {
+    email: string
+    password: string
+};
+
+type SigninResData = {
+    user: IUserDTO,
+    accessToken: string
+};
 
 class AuthController {
 
-    signup = async (req: Request, res: SignupResponse) => {
+    private service: AuthService
+
+    constructor(){
+        this.service = new AuthService();
+    }
+
+    signup = async (req: Request<IUser>, res: Response<IUserDTO>, next: NextFunction) => {
         try {
+
             const errors = validationResult(req).formatWith(errorFormatter);
-            if (!errors.isEmpty()) return res.status(422).json({ message: errors.array(), data: {} });
+            if (!errors.isEmpty()) next(new Exception(422, errors.array(), null));
 
-            const postData: IUser = {
-                email: req.body.email,
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                phoneNumber: req.body.phoneNumber,
-                password: req.body.password,
-            };
-            const isExist = !!await userModel.findOneByEmail(postData.email);
-            if (isExist) return res.status(400).json({ message: 'Пользователь с таким email уже существует', data: {} });
+            const postData = req.body;
 
-            const hashPassword = bcrypt.hashSync(postData.password, 7);
-            const userDocument = new userModel({ ...postData, password: hashPassword });
-            await userDocument.save();
-            return res.status(201).json({ message: 'Пользователь успешно зарегисрирован', data: new User(userDocument) });
+            const user = await this.service.signup(postData);
+
+            return res.status(201).json({ message: 'Пользователь успешно зарегисрирован', data: user });
+              
         } catch (error) {
-            console.log(error);
-            res.status(400).json({ message: 'Ошибка регистрации', details: error });
+            
+            next(new Exception(400, error.message, error.stack));
+
         }
     }
 
-    signin = async (req: Request, res: SigninResponse) => {
+    signin = async (req: Request<SigninReqData>, res: Response<SigninResData>, next: NextFunction) => {
         try {
-            const errors = validationResult(req).formatWith(errorFormatter);
-            if (!errors.isEmpty()) return res.status(422).json({ message: errors.array() });
 
-            const postData: {
-                email: string
-                password: string
-            } = {
-                email: req.body.email,
-                password: req.body.password
-            };
-            const document = await userModel.findOneByEmail(postData.email);
-            if (!document) return res.status(401).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
-            const isPasswordValid = bcrypt.compareSync(postData.password, document.password);
-            if (!isPasswordValid) return res.status(400).json({ message: 'Ошибка авторизации. Указан неверный email или пароль' });
-            const user = new User(document);
-            const accessToken = generateAccessToken(document._id, document.email);
-            return res.status(200).json({ user, accessToken });
+            const errors = validationResult(req).formatWith(errorFormatter);
+            if (!errors.isEmpty()) next(new Exception(422, errors.array(), null));
+
+            const postData = req.body;
+
+            const user = await this.service.signin(postData);
+
+            const accessToken = generateAccessToken(user.id, user.email);
+
+            return res.status(200).json({ message: 'Пользователь успешно аутентифицировался', data: { user, accessToken } });
+
         } catch (error) {
-            console.log(error);
-            res.status(400).json({ message: 'Ошибка входа', details: error });
+
+            next(new Exception(400, error.message, error.stack));
+
         }
     }
 };
 
 const errorFormatter = (error: ValidationError) => error.msg;
-
-const generateAccessToken = (id: string, email: string) => {
-    return jwt.sign(
-        { id, email },
-        process.env.JWT_SECRET_KEY || '',
-        {
-            expiresIn: process.env.JWT_MAX_AGE || '24h',
-            algorithm: 'HS256'
-        }
-    );
-};
 
 export default new AuthController();
