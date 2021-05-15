@@ -5,31 +5,28 @@ import { AxiosResponse } from "../../types/types";
 
 
 type AuthResponse = AxiosResponse & {
-    data: IUser
+    data: { user: IUser }
 };
 
 type SigninResponse = AuthResponse & {
-    accessToken: string
+    data: { accessToken: string }
 };
 
 class AuthService {
 
     signup = async (signupData: ISignupData) => {
-        let response = await axiosInstance.post<AuthResponse>('/auth/signup', signupData);
-        console.log(response.data);        
-        return response.data;
+        const { data } = await axiosInstance.post<AuthResponse>('/auth/signup', signupData);      
+        return data;
     }
 
     signin = async (signinData: ISigninData) => {
-        let response = await axiosInstance.post<SigninResponse>('/auth/signin', signinData);
-        console.log(response.data);
-        return response.data;
+        const { data } = await axiosInstance.post<SigninResponse>('/auth/signin', signinData);
+        return data;
     }
 
     update = async () => {
-        let response = await axiosInstance.get<AuthResponse>('/im');
-        console.log(response.data);
-        return response.data;
+        const { data } = await axiosInstance.get<AuthResponse>('/im');
+        return data;
     }
 };
 

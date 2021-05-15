@@ -8,10 +8,15 @@ import { configureNotificationAC } from "../notification/actions";
 export const fetchAuthDataThunk = (signinData: ISigninData): AuthThunkAction => {
     return async (dispatch: AuthThunkDispatch) => {
         try {
-            let { data, accessToken } = await AuthService.signin(signinData);
-            dispatch(setAuthDataAC(data));
+            let { data, message } = await AuthService.signin(signinData);
+            dispatch(setAuthDataAC(data.user));
             dispatch(setSigninStatusAC(Status.SUCCESS));
-            LocalStorageService.setAccessToken(accessToken);
+            dispatch(configureNotificationAC({
+                status: Status.SUCCESS,
+                message: message,
+                isOpen: true
+            }));
+            LocalStorageService.setAccessToken(data.accessToken);
         } catch (error) {
             const errorMessage = error.response.data.message
             console.log(errorMessage);
@@ -27,13 +32,17 @@ export const fetchAuthDataThunk = (signinData: ISigninData): AuthThunkAction => 
 
 export const updateAuthDataThunk = (): AuthThunkAction => async (dispatch: AuthThunkDispatch) => {
     try {
-        let { data } = await AuthService.update();
-        dispatch(setAuthDataAC(data));
+        let { data, message } = await AuthService.update();
+        dispatch(setAuthDataAC(data.user));
         dispatch(setSigninStatusAC(Status.SUCCESS));
+        dispatch(configureNotificationAC({
+            status: Status.SUCCESS,
+            message: message,
+            isOpen: true
+        }));
     } catch (error) {
         const errorMessage = error.response.data.message
         console.log(errorMessage);
-        console.log(error?.response?.data?.message);
         dispatch(setSigninStatusAC(Status.FAILD));
     }
 };
@@ -41,10 +50,10 @@ export const updateAuthDataThunk = (): AuthThunkAction => async (dispatch: AuthT
 export const sendAuthDataThunk = (signupData: ISignupData): AuthThunkAction => async (dispatch: AuthThunkDispatch) => {
     try {
         let { data, message } = await AuthService.signup(signupData);
-        dispatch(setAuthDataAC(data));
+        dispatch(setAuthDataAC(data.user));
         dispatch(setSignupStatusAC(Status.SUCCESS));
         dispatch(configureNotificationAC({
-            status: Status.FAILD,
+            status: Status.SUCCESS,
             message: message,
             isOpen: true,
         }));
