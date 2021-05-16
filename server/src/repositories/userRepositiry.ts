@@ -10,11 +10,9 @@ class UserRepository implements IUserRepository {
 
     private model: IUserModel = UserModel
 
-    public exists = async (user: IUserDomain): Promise<boolean> => {
-        const documentByEmail = await this.model.findOneByEmail(user.email);
-        if(!!documentByEmail === true) return true;
-        const documentByPhone = await this.model.findOneByPhoneNumber(user.phoneNumber);
-        return !!documentByPhone === true;
+    public exists = async (id: string): Promise<boolean> => {
+        const document = await this.model.findById(id)
+        return !!document === true;
     }
 
     public save = async (user: IUserDomain): Promise<IUserDocument> => {
@@ -25,8 +23,14 @@ class UserRepository implements IUserRepository {
         return await this.model.findOneAndDelete({ email: user.email })
     }
 
+    public findUserById = async (id: string) : Promise<IUserDocument> => {
+        const document = await this.model.findById(id);
+        if(!document) throw new Error('Пользователь не найден');
+        return document;
+    }
+
     public findUserByEmail = async (email: string) : Promise<IUserDocument> => {
-        return await UserModel.findOneByEmail(email);
+        return await this.model.findOneByEmail(email);
     }
 
     public findUserByPhoneNumber = async (phoneNumber: string) : Promise<IUserDocument> => {

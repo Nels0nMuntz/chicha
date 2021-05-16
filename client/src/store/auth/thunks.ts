@@ -34,7 +34,7 @@ export const fetchAuthDataThunk = (signinData: ISigninData): AuthThunkAction => 
 
 export const updateAuthDataThunk = (): AuthThunkAction => async (dispatch: AuthThunkDispatch) => {
     try {
-        let { data, message } = await AuthService.update();
+        let { data, message } = await AuthService.update();        
         dispatch(setAuthDataAC(data.user));
         dispatch(setSigninStatusAC(Status.SUCCESS));
         dispatch(configureNotificationAC({

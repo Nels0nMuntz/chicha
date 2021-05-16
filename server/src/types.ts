@@ -15,7 +15,7 @@ export interface Response<T> extends ExpressResponse<ResBody<T>> { };
 export interface ResponseError extends ExpressResponse<ResBodyError> { };
 
 export interface IRepository<T> {
-    exists(e: T): Promise<boolean>
+    exists(id: string): Promise<boolean>
     save(e: T): Promise<any>
     delete(e: T): Promise<any>
 };

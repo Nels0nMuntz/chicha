@@ -1,18 +1,25 @@
-import { Request, Response } from "express";
+import { NextFunction, Request } from "express";
 import { UserModel } from "../models";
-import { IUser } from "../models/UserModel";
+import { IUser, IUserDTO } from "../models/UserModel";
+import { UserService } from "../services";
+import { Exception, Response } from "../types";
 
 class UserController {
-    getUserData = async (req: Request, res: Response) => {
-        // try {
-        //     const id = req.decodedToken.id;
-        //     let document = await UserModel.findById(id);
-        //     if(!document) return res.status(400).json({ message: 'Пользователь не найден' });
-        //     const user = new User(document);
-        //     return res.status(200).json({ user });
-        // } catch (error) {
-        //     return res.status(400).json({ message: 'Ошибка получения данных', details: { ...error } })
-        // }
+
+    private service: UserService
+
+    constructor(){
+        this.service = new UserService();
+    }
+
+    getUserData = async (req: Request, res: Response<IUserDTO>, next: NextFunction) => {
+        try {
+            const id = req.decodedToken.id;
+            const user = await this.service.getUser(id);
+            return res.status(200).json({ message: 'Пользователь успешно найден', data: user });
+        } catch (error) {
+            next(new Exception(422, error.message, {...error}));
+        }
     }
 }
 

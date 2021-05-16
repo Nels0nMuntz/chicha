@@ -84,3 +84,27 @@ UserSchema.statics.findOneByPhoneNumber = async function (this: Model<IUserDocum
 const UserModel = model<IUserDocument, IUserModel>("User", UserSchema);
 
 export default UserModel;
+
+export class UserMap {
+
+    public static toDomain = (data: IUser): IUserDomain => ({
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName ? data.lastName : null,
+        phoneNumber: data.phoneNumber,
+        password: data.password,
+        avatar: data.avatar ? data.avatar : null,
+        lastSeen: data.lastSeen ? data.lastSeen : new Date()
+    })
+
+    public static toDTO = (data: IUserDocument): IUserDTO => ({
+        id: data._id,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName ? data.lastName : '',
+        phoneNumber: data.phoneNumber,
+        avatar: data.avatar ? data.avatar : '',
+        lastSeen: data.lastSeen,
+    })
+
+};

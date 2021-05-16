@@ -1,9 +1,8 @@
 import bcrypt from 'bcrypt';
 
-import { IUser, IUserDocument, IUserDTO, IUserDomain } from '../models/UserModel';
+import { IUser, IUserDTO, UserMap } from '../models/UserModel';
 import { SigninReqData } from '../controllers/AuthController'
 import { UserRepository } from '../repositories';
-import { Error } from 'mongoose';
 
 
 interface IAuthService {
@@ -37,27 +36,3 @@ class AuthService implements IAuthService {
 };
 
 export default AuthService;
-
-export class UserMap {
-
-    public static toDomain = (data: IUser): IUserDomain => ({
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName ? data.lastName : null,
-        phoneNumber: data.phoneNumber,
-        password: data.password,
-        avatar: data.avatar ? data.avatar : null,
-        lastSeen: data.lastSeen ? data.lastSeen : new Date()
-    })
-
-    public static toDTO = (data: IUserDocument): IUserDTO => ({
-        id: data._id,
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName ? data.lastName : '',
-        phoneNumber: data.phoneNumber,
-        avatar: data.avatar ? data.avatar : '',
-        lastSeen: data.lastSeen,
-    })
-
-};

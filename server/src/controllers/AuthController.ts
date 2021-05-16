@@ -51,7 +51,7 @@ class AuthController {
 
     signin = async (req: Request<SigninReqData>, res: Response<SigninResData>, next: NextFunction) => {
         try {
-
+                        
             const errors = validationResult(req).formatWith(errorFormatter);
             if (!errors.isEmpty()) {
                 const message = errors.array().map(({ msg }) => msg);

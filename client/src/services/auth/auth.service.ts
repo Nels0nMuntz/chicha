@@ -29,8 +29,12 @@ class AuthService {
     }
 
     update = async () => {
-        const { data } = await axiosInstance.get<AuthResponse>('/im');
-        return data;
+        try {
+            const { data } = await axiosInstance.get<AuthResponse>('/im');
+            return data;
+        } catch (error) {
+            throw error
+        }
     }
 };
 
