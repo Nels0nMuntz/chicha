@@ -32,6 +32,14 @@ const Notification: React.FC = () => {
 
     const onClose = () => { dispatch(switchNotificationAC(false)) };
 
+    const mapMessage = () => {
+        const message = config.message;
+        if(typeof message === 'string') return message;
+        return message.map((msg, i) => (
+            <p key={i} >{msg}</p>
+        ))
+    }
+
     return (
         <Snackbar
             open={config.isOpen}
@@ -46,7 +54,7 @@ const Notification: React.FC = () => {
             <Alert
                 severity={alertStatus}
             >
-                {config.message}
+                {mapMessage()}
             </Alert>
         </Snackbar>
     )

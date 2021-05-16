@@ -15,8 +15,12 @@ type SigninResponse = AuthResponse & {
 class AuthService {
 
     signup = async (signupData: ISignupData) => {
-        const { data } = await axiosInstance.post<AuthResponse>('/auth/signup', signupData);      
-        return data;
+        try {
+            const { data } = await axiosInstance.post<AuthResponse>('/auth/signup', signupData);
+            return data;
+        } catch (error) {
+            throw error.response.data
+        }
     }
 
     signin = async (signinData: ISigninData) => {

@@ -5,14 +5,15 @@ type CONFIGURE_NOTIFICATION = 'CONFIGURE_NOTIFICATION';
 
 type NotificationConfig = {
     status: Status
-    message: string
+    message: string | string[]
     isOpen: boolean
 };
 
 export interface IInitialState {
     status: Status
-    message: string
-    isOpen: boolean
+    message: string | string[]
+    isOpen: boolean    
+    params: string[]
 };
 
 export type SwitchNotificationAction = {

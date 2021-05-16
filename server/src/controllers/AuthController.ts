@@ -30,7 +30,11 @@ class AuthController {
         try {
 
             const errors = validationResult(req).formatWith(errorFormatter);
-            if (!errors.isEmpty()) next(new Exception(422, errors.array(), null));
+            if (!errors.isEmpty()) {
+                const message = errors.array().map(({ msg }) => msg);
+                const details = errors.array()
+                next(new Exception(422, message, details));
+            };
 
             const postData = req.body;
 
@@ -49,7 +53,11 @@ class AuthController {
         try {
 
             const errors = validationResult(req).formatWith(errorFormatter);
-            if (!errors.isEmpty()) next(new Exception(422, errors.array(), null));
+            if (!errors.isEmpty()) {
+                const message = errors.array().map(({ msg }) => msg);
+                const details = errors.array()
+                next(new Exception(422, message, details));
+            };
 
             const postData = req.body;
 
@@ -67,6 +75,6 @@ class AuthController {
     }
 };
 
-const errorFormatter = (error: ValidationError) => error.msg;
+const errorFormatter = (error: ValidationError) => ({ param: error.param, msg: error.msg });
 
 export default new AuthController();

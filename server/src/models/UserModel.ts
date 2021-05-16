@@ -33,7 +33,8 @@ export interface IUserDomain {
 
 export interface IUserDocument extends IUserDomain, Document { };
 export interface IUserModel extends Model<IUserDocument> {
-    findOneByEmail(email: string): Promise<IUserDocument>
+    findOneByEmail(email: string) : Promise<IUserDocument>
+    findOneByPhoneNumber(phoneNumber: string) : Promise<IUserDocument>
 };
 
 const UserSchema: Schema = new Schema(
@@ -53,7 +54,7 @@ const UserSchema: Schema = new Schema(
         phoneNumber: {
             type: String,
             required: true,
-            index: { unique: true }
+            unique: true
         },
         password: {
             type: String,
@@ -73,7 +74,11 @@ const UserSchema: Schema = new Schema(
 );
 
 UserSchema.statics.findOneByEmail = async function (this: Model<IUserDocument>, email: string) {
-    return await this.findOne({ email }).exec()
+    return await this.findOne({ email }).exec();
+};
+
+UserSchema.statics.findOneByPhoneNumber = async function (this: Model<IUserDocument>, phoneNumber: string) {
+    return await this.findOne({ phoneNumber }).exec();
 };
 
 const UserModel = model<IUserDocument, IUserModel>("User", UserSchema);

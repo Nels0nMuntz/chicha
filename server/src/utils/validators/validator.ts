@@ -1,4 +1,7 @@
 import { check } from 'express-validator';
+import { UserRepository } from '../../repositories';
+
+const userRepository = new UserRepository();
 
 export const signupValidation = [
     check("email")
@@ -6,7 +9,14 @@ export const signupValidation = [
         .withMessage("E-mail is required")
         .bail()
         .isEmail()
-        .withMessage('Incorrect email format'),
+        .withMessage('Incorrect email format')
+        .custom((value) => {
+            return userRepository.findUserByEmail(value)
+                .then(user => {
+                    if (!!user) return Promise.reject('Пользователь с таким e-mail уже существует')
+                })
+                .catch(err => { throw err })
+        }),
     check("firstName")
         .trim()
         .escape()
@@ -55,7 +65,14 @@ export const signupValidation = [
         .withMessage("Phone number is required")
         .bail()
         .isMobilePhone(['uk-UA', 'ru-RU'])
-        .withMessage("Incorrect phone number format")   
+        .withMessage("Incorrect phone number format")
+        .custom((value) => {
+            return userRepository.findUserByPhoneNumber(value)
+                .then(user => {
+                    if (!!user) return Promise.reject('Пользователь с таким номером телефона уже существует')
+                })
+                .catch(err => { throw err })
+        }),
 ];
 
 export const signinValidation = [

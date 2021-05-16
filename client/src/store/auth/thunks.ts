@@ -1,9 +1,11 @@
-import { Status } from "../../types/types";
+import { AxiosResponseError, Status } from "../../types/types";
 import { AuthService, LocalStorageService } from "../../services";
-import { ISigninData, ISignupData, AuthThunkAction, AuthThunkDispatch } from "./types";
-import { setAuthDataAC, setSigninStatusAC, setSignupStatusAC } from './actions';
+import { ISigninData, ISignupData, AuthThunkAction, AuthThunkDispatch, ErrorFieldDetails } from "./types";
+import { setAuthDataAC, setSigninStatusAC, setSignupStatusAC, setErrorFieldsAC } from './actions';
 import { configureNotificationAC } from "../notification/actions";
 
+
+type AxiosAuthResponseError = AxiosResponseError<Array<ErrorFieldDetails>>;
 
 export const fetchAuthDataThunk = (signinData: ISigninData): AuthThunkAction => {
     return async (dispatch: AuthThunkDispatch) => {
@@ -57,14 +59,15 @@ export const sendAuthDataThunk = (signupData: ISignupData): AuthThunkAction => a
             message: message,
             isOpen: true,
         }));
-    } catch (error) {
-        const errorMessage = error.response.data.message
-        console.log(errorMessage);
+    } catch (error) {        
+        const data: AxiosAuthResponseError = error;
+        const params = data.details;
         dispatch(setSignupStatusAC(Status.FAILD));
         dispatch(configureNotificationAC({
             status: Status.FAILD,
-            message: errorMessage,
+            message: data.message,
             isOpen: true,
         }));
+        dispatch(setErrorFieldsAC(params));
     }
 };

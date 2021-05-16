@@ -13,6 +13,7 @@ const initialState: IInitialState = {
     },
     signinStatus: Status.UNKNOWN,
     signupStatus: Status.UNKNOWN,
+    errorFields: [],
 };
 
 const authReducer = (state: IInitialState = initialState, action: AuthAction): IInitialState => {
@@ -31,6 +32,11 @@ const authReducer = (state: IInitialState = initialState, action: AuthAction): I
             return {
                 ...state, 
                 signupStatus: action.payload.signupStatus
+            };
+        case 'SET_ERROR_FIELDS':
+            return {
+                ...state, 
+                errorFields: action.payload.details
             };
         default:
             return state;

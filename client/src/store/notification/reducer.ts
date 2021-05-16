@@ -3,8 +3,9 @@ import { IInitialState, NotificationAction } from "./types";
 
 const initialState: IInitialState = {
     status: Status.UNKNOWN,
-    message: '',
+    message: [],
     isOpen: false,
+    params: [],
 };
 
 const notificationReducer = (state: IInitialState = initialState, action: NotificationAction): IInitialState => {
@@ -21,7 +22,7 @@ const notificationReducer = (state: IInitialState = initialState, action: Notifi
                 status,
                 message,
                 isOpen,
-            }
+            };
         default:
             return state;
     }

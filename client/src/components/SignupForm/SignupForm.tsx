@@ -5,18 +5,19 @@ import { useFormik } from 'formik';
 import FormTextField from '../TextField/FormTextField';
 import MainButton from '../MainButton/MainButton';
 import { validator, isEmpty } from '../../shared/helpers';
-import { ISignupData } from '../../store/auth/types';
+import { ErrorFieldDetails, ISignupData } from '../../store/auth/types';
 import PhoneInput from './../TextField/PhoneInput';
 
 
 const validate = validator.signup;
 
 type SignupFormProps = {
+    errorFields: Array<ErrorFieldDetails>
     isAuthUnknown: boolean
     onSubmitForm: (values: ISignupData) => void
 };
 
-const SignupForm: React.FC<SignupFormProps> = ({ isAuthUnknown, onSubmitForm }) => {
+const SignupForm: React.FC<SignupFormProps> = ({ errorFields, isAuthUnknown, onSubmitForm }) => {
 
     const formik = useFormik({
         initialValues: {
@@ -40,6 +41,10 @@ const SignupForm: React.FC<SignupFormProps> = ({ isAuthUnknown, onSubmitForm }) 
     React.useEffect(() => {
         if (!isAuthUnknown) formik.setSubmitting(false);
     }, [isAuthUnknown, formik.submitCount]);
+
+    React.useEffect(() => {
+        errorFields.forEach(({ param, msg }) => formik.setFieldError(param, msg))
+    }, [errorFields]);
 
     return (
 

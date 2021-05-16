@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { IUser, IUserDocument, IUserDTO, IUserDomain } from '../models/UserModel';
 import { SigninReqData } from '../controllers/AuthController'
 import { UserRepository } from '../repositories';
+import { Error } from 'mongoose';
 
 
 interface IAuthService {
@@ -19,10 +20,8 @@ class AuthService implements IAuthService {
     }
 
     signup = async (user: IUser): Promise<IUserDTO> => {
+        const hashPassword = bcrypt.hashSync(user.password, 7);
         const userDomain = UserMap.toDomain(user);
-        const isExists = await this.repository.exists(userDomain);
-        if (isExists) throw new Error('Пользователь с таким email уже существует');
-        const hashPassword = bcrypt.hashSync(userDomain.password, 7);
         const document = await this.repository.save({ ...userDomain, password: hashPassword });
         return UserMap.toDTO(document);
     }

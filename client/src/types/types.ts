@@ -17,3 +17,8 @@ export type AxiosResponse = {
     message: string
     data: {}
 };
+
+export type AxiosResponseError<T = any> = {
+    message: string | string[]
+    details: T
+};

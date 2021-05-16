@@ -6,11 +6,13 @@ import { SwitchNotificationAction, ConfigureNotificationAction } from "../notifi
 type SET_AUTH_DATA = 'SET_AUTH_DATA';
 type SET_SIGNIN_STATUS = 'SET_SIGNIN_STATUS';
 type SET_SIGNUP_STATUS = 'SET_SIGNUP_STATUS';
+type SET_ERROR_FIELDS = 'SET_ERROR_FIELDS';
 
 export interface IInitialState {
     user: IUser
     signinStatus: Status
     signupStatus: Status
+    errorFields: Array<ErrorFieldDetails>
 };
 
 export interface ISigninData {
@@ -48,8 +50,25 @@ export type SetSignupStatusAction = {
     }
 };
 
-export type AuthAction = SetAuthDataAction | SetSigninStatusAction | SetSignupStatusAction | SwitchNotificationAction | ConfigureNotificationAction;
+export type SetErrorFieldsAction = {
+    type: SET_ERROR_FIELDS,
+    payload: {
+        details: Array<ErrorFieldDetails>
+    }
+};
+
+export type AuthAction = SetAuthDataAction | 
+                        SetSigninStatusAction | 
+                        SetSignupStatusAction | 
+                        SetErrorFieldsAction | 
+                        SwitchNotificationAction | 
+                        ConfigureNotificationAction;
 
 export type AuthThunkAction = ThunkActionType<AuthAction>;
 
 export type AuthThunkDispatch = ThunkDispatchType<AuthAction>;
+
+export type ErrorFieldDetails = {
+    param: string
+    msg: string
+};

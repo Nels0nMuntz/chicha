@@ -12,4 +12,4 @@ export const configureNotificationAC : ConfigureNotificationAC = ({ status, mess
         message,
         isOpen
     }
-})
+});

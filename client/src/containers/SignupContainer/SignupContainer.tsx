@@ -13,6 +13,7 @@ const SignupContainer: React.FC = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
+    const errorFields = useSelector((state: RootState) => state.auth.errorFields);
     const signupStatus = useSelector((state: RootState) => state.auth.signupStatus);
     const isAuthUnknown = signupStatus === Status.UNKNOWN;
     const isAuthSuccess = signupStatus === Status.SUCCESS;
@@ -32,6 +33,7 @@ const SignupContainer: React.FC = () => {
             subtitle="Для входа в чат, вам нужно зарегистрироваться"
         >
             <SignupForm
+                errorFields={errorFields}
                 isAuthUnknown={isAuthUnknown}
                 onSubmitForm={onSubmit}
             />
