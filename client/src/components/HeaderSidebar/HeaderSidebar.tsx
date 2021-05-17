@@ -1,7 +1,11 @@
 import React from 'react';
 import classnames from 'classnames';
 
-import Drawer from '@material-ui/core/Drawer';
+import GroupIcon from '@material-ui/icons/Group';
+import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
+import SettingsIcon from '@material-ui/icons/Settings';
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import InfoIcon from '@material-ui/icons/Info';
 
 import style from './HeaderSidebar.module.scss';
 
@@ -9,6 +13,26 @@ import style from './HeaderSidebar.module.scss';
 const HeaderSidebar: React.FC = () => {
 
     const [drowerState, setDrowerState] = React.useState(false);
+
+    const ref = React.useRef((e: any) : void => {
+        if(e.target === btnRef.current) return;
+        setDrowerState(false);
+    });
+
+    const btnRef = React.useRef(null);
+
+    const onClickBurger = () => {
+        
+        console.log(drowerState);
+        if(!drowerState) {         
+            setDrowerState(true);
+            document.body.addEventListener('mousedown', ref.current);
+        }
+        if(drowerState){            
+            setDrowerState(false);
+            document.body.removeEventListener('mousedown', ref.current);
+        }        
+    };
 
     return (
         <div className={style.header_sidebar}>
@@ -19,26 +43,38 @@ const HeaderSidebar: React.FC = () => {
                             style.burgerIcon,
                             drowerState && style.burgerIconOpen
                         )}
-                        onClick={() => setDrowerState(!drowerState)}
+                        onClick={onClickBurger}
+                        ref={btnRef}
                     >
                         <div></div>
                     </div>
                 </div>
                 <p className={style.header_sidebarTitle}>Список диалогов</p>
             </div>
-            <Drawer
-                anchor='top'
-                open={drowerState}
-                onClose={() => setDrowerState(false)}
-            >
-                <ul>
-                    <li>List item</li>
-                    <li>List item</li>
-                    <li>List item</li>
-                    <li>List item</li>
-                    <li>List item</li>
+            {drowerState && (
+                <ul className={style.burgerMenu}>
+                    <li className={style.burgerMenuItem}>
+                        <div className={style.itemIcon}><GroupIcon/></div>
+                        <div className={style.itemText}>New group</div>
+                    </li>
+                    <li className={style.burgerMenuItem}>
+                        <div className={style.itemIcon}><PermContactCalendarIcon/></div>
+                        <div className={style.itemText}>Contacts</div>
+                    </li>
+                    <li className={style.burgerMenuItem}>
+                        <div className={style.itemIcon}><SettingsIcon/></div>
+                        <div className={style.itemText}>Settings</div>
+                    </li>
+                    <li className={style.burgerMenuItem}>
+                        <div className={style.itemIcon}><LiveHelpIcon/></div>
+                        <div className={style.itemText}>ChiCha FAQ</div>
+                    </li>
+                    <li className={style.burgerMenuItem}>
+                        <div className={style.itemIcon}><InfoIcon/></div>
+                        <div className={style.itemText}>About</div>
+                    </li>
                 </ul>
-            </Drawer>
+            )}
         </div>
     )
 };

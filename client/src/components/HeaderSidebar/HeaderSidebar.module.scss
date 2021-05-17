@@ -1,4 +1,5 @@
 .header_sidebar {
+    position: relative;
     width: 320px;
     min-height: 60px;
     padding: 10px 17px 10px 20px;
@@ -56,6 +57,45 @@
         }
         & > div {
             transform: scale(0);
+        }
+    }
+}
+
+.burgerMenu{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateY(100%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    color: #c49b9b;
+    background-color: white;
+    border: 1px solid rgba(15, 60, 96, 0.2);
+    border-left-color: #b5c3d0;
+    border-right-color: #b5c3d0;
+    border-top: none;
+    box-shadow: 0px 1px 3px 0px rgba(60, 75, 87, 0.27);
+
+    .burgerMenuItem{
+        display: flex;
+        align-items: center;
+        padding: 10px 15px 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.1s linear;
+
+        &:hover{
+            background-color: #f0f0f0;
+        }
+
+        .itemIcon{
+            flex-shrink: 0;
+            margin-right: 25px;
+        }
+        .itemText{
+            flex-grow: 1;
         }
     }
 }
