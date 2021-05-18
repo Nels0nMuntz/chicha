@@ -1,0 +1,28 @@
+.burger-menu-enter {
+    opacity: 0;
+    transform: translateY(85%);
+}
+.burger-menu-enter-active {
+    opacity: 1;
+    transform: translateY(100%);
+    transition: opacity 250ms, transform 250ms;
+}
+.burger-menu-enter-done {
+    opacity: 1;
+    transform: translateY(100%);
+    transition: opacity 250ms, transform 250ms;
+}
+.burger-menu-exit {
+    opacity: 1;
+    transform: translateY(100%);
+}
+.burger-menu-exit-active {
+    opacity: 0;
+    transform: translateY(85%);
+    transition: opacity 250ms, transform 250ms;
+}
+.burger-menu-exit-done {
+    opacity: 0;
+    transform: translateY(85%);
+    transition: opacity 250ms, transform 250ms;
+}
