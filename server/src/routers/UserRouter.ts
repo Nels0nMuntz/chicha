@@ -19,7 +19,7 @@ class UserRouter {
         this._router.get(
             '/im',
             checkAuthMW,
-            this._controller.getUserData
+            this._controller.index
         )
     }
 }

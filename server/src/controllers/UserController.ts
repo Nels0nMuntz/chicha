@@ -12,7 +12,7 @@ class UserController {
         this.service = new UserService();
     }
 
-    getUserData = async (req: Request, res: Response<IUserDTO>, next: NextFunction) => {
+    index = async (req: Request, res: Response<IUserDTO>, next: NextFunction) => {
         try {
             const id = req.decodedToken.id;
             const user = await this.service.getUser(id);
@@ -20,6 +20,10 @@ class UserController {
         } catch (error) {
             next(new Exception(422, error.message, {...error}));
         }
+    }
+
+    search = async (req: Request, res: Response<Array<IUserDTO>>, next: NextFunction) => {
+
     }
 }
 

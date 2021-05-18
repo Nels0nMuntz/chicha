@@ -1,10 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-
+import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -12,23 +9,48 @@ import style from "./SearchInput.module.scss";
 
 const useStyles = makeStyles({
     root: {
-        '&.MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon .MuiAutocomplete-inputRoot[class*="MuiOutlinedInput-root"]': {
-            paddingRight: '9px'
+        '&.MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon .MuiAutocomplete-inputRoot': {
+            padding: '0px 4px',
         },
-        '& .MuiFormLabel-root': {
-            display: 'none',
+        '& .PrivateNotchedOutline-legendLabelled-4 > span': {
+            display: 'none'
+        },
+        '& .MuiAutocomplete-input.MuiInputBase-input': {
+            height: 'initial',
+            padding: '8px 26px 8px 5px',
+            fontSize: '12px',
         },
         '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-                borderColor: '#DDDDDD',
+            backgroundColor: '#F2F2F2',
+            transition: 'background-color 0.125s linear',
+
+            '& .MuiOutlinedInput-notchedOutline': {
+                borderWidth: '1px',
+                borderRadius: '1px',
+                borderColor: '#F2F2F2',
             },
             '&:hover fieldset': {
-                borderColor: '#B8B8B8',
+                borderColor: '#F2F2F2',
             },
-            '&.Mui-focused fieldset': {
-                display: '#4CA5FF',
+            '&.Mui-focused': {
+                backgroundColor: 'white',
+                '& fieldset': {
+                    borderColor: '#d9dbde',
+                }
             },
         },
+        '& .MuiFormLabel-root': {
+            fontSize: '12px',
+            transform: 'translate(30px, 12px) scale(1)',
+            '&.Mui-focused': {
+                display: 'none'
+            }
+        },
+        '& .MuiSvgIcon-root': {
+            fontSize: '22px',
+            transform: 'scale(-1, 1)',
+            opacity: '0.5',
+        }
     }
 });
 
@@ -45,6 +67,7 @@ const SearchInput: React.FC = () => {
             open={open}
             onOpen={() => setOpen(true)}
             onClose={() => setOpen(false)}
+            onFocus={() => setOptions(['option 1', 'option 2'])}
             options={options}
             loading={loading}
             popupIcon={false}
@@ -61,6 +84,7 @@ const SearchInput: React.FC = () => {
                                 {loading ? <CircularProgress color="inherit" size={20} /> : null}
                             </React.Fragment>
                         ),
+                        startAdornment: <SearchIcon/>
                     }}
                 />
                 // <FormControl>
