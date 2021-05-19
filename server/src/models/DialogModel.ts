@@ -1,0 +1,57 @@
+import { Document, Schema, model } from 'mongoose';
+import { IUserDocument } from "./UserModel";
+
+interface IDialog {
+    participant_1: string
+    participant_2: string    
+}
+
+export interface IDialogDTO {
+    id: IDialogDocument["_id"]
+    participant_1: IUserDocument["_id"]
+    participant_2: IUserDocument["_id"] 
+}
+
+export interface IDialogDomain {
+    participant_1: IUserDocument["_id"]
+    participant_2: IUserDocument["_id"] 
+}
+
+export interface IDialogDocument extends IDialogDomain, Document {};
+
+const DialogSchema = new Schema(
+    {
+        participant_1: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+        },
+        participant_2: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: true
+        }
+    },
+    {
+        timestamps: true
+    }
+);
+
+const DialogModel = model<IDialogDocument>("Dialog", DialogSchema);
+
+export default DialogModel;
+
+export class DialogMap {
+
+    public static toDomain = (dialog: IDialog) : IDialogDomain => ({
+        participant_1: dialog.participant_1,
+        participant_2: dialog.participant_2
+    })
+
+    public static toDTO = (dialog: IDialogDocument) : IDialogDTO => ({
+        id: dialog._id,
+        participant_1: dialog.participant_1,
+        participant_2: dialog.participant_2
+    })
+
+};
