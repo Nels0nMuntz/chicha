@@ -1,0 +1,28 @@
+.search-options-enter {
+    opacity: 0;
+    transform: translateY(-5%);
+}
+.search-options-enter-active {
+    opacity: 1;
+    transform: translateY(0%);
+    transition: opacity 150ms, transform 150ms;
+}
+.search-options-enter-done {
+    opacity: 1;
+    transform: translateY(0%);
+    transition: opacity 150ms, transform 150ms;
+}
+.search-options-exit {
+    opacity: 1;
+    transform: translateY(0%);
+}
+.search-options-exit-active {
+    opacity: 0;
+    transform: translateY(-5%);
+    transition: opacity 150ms, transform 150ms;
+}
+.search-options-exit-done {
+    opacity: 0;
+    transform: translateY(-5%);
+    transition: opacity 150ms, transform 150ms;
+}

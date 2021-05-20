@@ -19,7 +19,7 @@ class UserService {
 
     search = async (input: string) : Promise<Array<IUser>> => {
         try {
-            const { data } = await axiosInstance.get<SearchResponse>(`/search?input=${input}`);
+            const { data } = await axiosInstance.get<SearchResponse>(`/search?input='${input}'`);
             return data.data;
         } catch (error) {
             throw error.response.data

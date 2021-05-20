@@ -1,7 +1,7 @@
 import React from 'react';
 
 import style from "./Message.module.scss";
-import avatar from "../../assets/images/avatar.jpg"
+import avatar from "../../../../assets/images/avatar.jpg"
 
 enum MessageKind {
     Text,

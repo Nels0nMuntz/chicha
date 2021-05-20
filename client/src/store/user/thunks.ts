@@ -16,7 +16,7 @@ export const fetchUserDataThunk = (): ThunkAction<Promise<void>, RootState, unkn
 
 export const searchUsersThunk = (input: string) : ThunkAction<Promise<void>, RootState, unknown, UserAction> => {
     return async (dispatch: ThunkDispatch<RootState, unknown, UserAction>) => {
-        try {
+        try {             
             const users = await UserService.search(input);
             dispatch(setSearchUsersAC(users));
         } catch (error) {

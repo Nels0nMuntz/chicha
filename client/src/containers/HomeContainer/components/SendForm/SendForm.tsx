@@ -5,10 +5,10 @@ import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import MicIcon from '@material-ui/icons/Mic';
 
 import SendFormField from './SendFormField';
+import { EmojiIcon } from '../../../../components';
 
 import style from "./SendForm.module.scss";
-import avatar from "../../assets/images/avatar.jpg"
-import EmojiIcon from './../EmojiIcon/EmojiIcon';
+import avatar from "../../../../assets/images/avatar.jpg"
 
 
 const emojies = [
@@ -20,7 +20,7 @@ const emojies = [
     { symbol: '😜', label: 'face with stuck-out tongue and winking eye' },
 ]
 
-const SendForm: React.FC = () => {
+const SendForm : React.FC = () => {
     return (
         <div className={style.wrapper}>
             <div

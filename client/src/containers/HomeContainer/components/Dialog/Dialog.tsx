@@ -3,7 +3,7 @@ import Badge from '@material-ui/core/Badge';
 import { makeStyles } from '@material-ui/core';
 
 import style from "./Dialog.module.scss";
-import avatar from "../../assets/images/avatar.jpg"
+import avatar from "../../../../assets/images/avatar.jpg"
 
 
 const useStyles = makeStyles({

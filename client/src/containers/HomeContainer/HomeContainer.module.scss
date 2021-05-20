@@ -90,15 +90,7 @@
 }
 .dialogs_searchWrapper {
     position: relative;
-    padding: 20px 15px 20px 20px;
-    &::before {
-        content: "";
-        position: absolute;
-        bottom: -10px;
-        left: 0;
-        right: 0;
-        height: 10px;
-    }
+    padding: 20px 15px;
 }
 .send_panel {
     max-width: 550px;

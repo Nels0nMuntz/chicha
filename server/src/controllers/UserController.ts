@@ -29,7 +29,7 @@ class UserController {
 
     search = async (req: Request<any, SearchReqQuery>, res: Response<Array<IUserDTO>>, next: NextFunction) => {
         try {
-            const queryParam = req.query.input;
+            const queryParam = req.query.input.slice(1, -1);
             const user = await this.service.search(queryParam);
             return res.status(200).json({ message: 'Пользователи успешно найдены', data: user })
         } catch (error) {

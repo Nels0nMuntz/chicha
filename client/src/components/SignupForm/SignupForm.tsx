@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 
 import FormTextField from '../TextField/FormTextField';
 import MainButton from '../MainButton/MainButton';
-import { validator, isEmpty } from '../../shared/helpers';
+import { validator, isEmpty } from '../../shared';
 import { ErrorFieldDetails, ISignupData } from '../../store/auth/types';
 import PhoneInput from './../TextField/PhoneInput';
 

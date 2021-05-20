@@ -40,7 +40,6 @@ class UserRepository {
             $or: [
                 { firstName: pattern },
                 { lastName: pattern },
-                { email: pattern },
                 { phoneNumber: pattern }
             ]
         }).exec();

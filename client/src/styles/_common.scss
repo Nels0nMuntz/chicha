@@ -21,3 +21,15 @@
     margin: 0 auto;
     display: flex;
 }
+.MuiAutocomplete-option{
+    font-size: 12px;
+}
+.MuiAutocomplete-option[aria-selected="true"]{
+    background-color: white !important;
+}
+.MuiAutocomplete-option[data-focus="true"]{
+    background-color: #F3F7FF !important;
+}
+.MuiAutocomplete-noOptions{
+    font-size: 12px;
+}
