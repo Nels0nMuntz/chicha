@@ -4,31 +4,30 @@ import { validator } from '../utils';
 
 
 class AuthRouter {
-    private _router: Router = Router();
-    private _controller = AuthController;
 
-    get router() {
-        return this._router;
-    }
+    public router: Router
+    private controller: AuthController
 
     constructor() {
+        this.router = Router()
+        this.controller = new AuthController()
         this.initRoutes();
     }
 
     private initRoutes() {
 
-        this._router.post(
+        this.router.post(
             '/signup',
             validator.signup,
-            this._controller.signup
+            this.controller.signup
         )
 
-        this._router.post(
+        this.router.post(
             '/signin',
             validator.signin,
-            this._controller.signin
+            this.controller.signin
         )
     }
 };
 
-export default new AuthRouter().router;
+export default AuthRouter;

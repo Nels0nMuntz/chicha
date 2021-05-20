@@ -1,7 +1,7 @@
 import express from 'express';
 import { connectDB } from "./core"
 import dotenv from 'dotenv';
-import RootRouter from './routers/RootRouter';
+import RootRouter from './routers/rootRouter';
 import bodyParser from 'body-parser';
 import { exceptionHandlerMW } from './middlewares';
 

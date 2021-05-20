@@ -4,28 +4,26 @@ import { checkAuthMW} from '../middlewares';
 
 class UserRouter {
 
-    private _router: Router = Router()
-    private _controller = UserController
-
-    get router() {
-        return this._router;
-    }
+    public router: Router
+    private controller: UserController
 
     constructor(){
+        this.router = Router()
+        this.controller = new UserController()
         this.initRoutes();
     }
 
     private initRoutes = () => {
-        this._router.get(
+        this.router.get(
             '/im',
             checkAuthMW,
-            this._controller.index
+            this.controller.index
         )
-        this._router.get(
+        this.router.get(
             '/search',
-            this._controller.search
+            this.controller.search
         )
     }
 }
 
-export default new UserRouter().router;
+export default UserRouter;

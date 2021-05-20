@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
 import { IUser, IUserDTO, UserMap } from '../models/UserModel';
-import { SigninReqData } from '../controllers/AuthController'
+import { SigninReqData } from '../controllers/authController'
 import { UserRepository } from '../repositories';
 
 

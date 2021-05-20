@@ -17,7 +17,7 @@ class UserController {
         this.service = new UserService();
     }
 
-    index = async (req: Request, res: Response<IUserDTO>, next: NextFunction) => {
+    public index = async (req: Request, res: Response<IUserDTO>, next: NextFunction) => {
         try {
             const id = req.decodedToken.id;
             const user = await this.service.getUser(id);
@@ -27,7 +27,7 @@ class UserController {
         }
     }
 
-    search = async (req: Request<any, SearchReqQuery>, res: Response<Array<IUserDTO>>, next: NextFunction) => {
+    public search = async (req: Request<any, SearchReqQuery>, res: Response<Array<IUserDTO>>, next: NextFunction) => {
         try {
             const queryParam = req.query.input.slice(1, -1);
             const user = await this.service.search(queryParam);

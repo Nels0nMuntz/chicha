@@ -1,10 +1,10 @@
 import { IRepository } from "../types";
-import DialogModel, { IDialogDTO, IDialogDocument, IDialogModel } from './../models/DialogModel';
+import DialogModel, { IDialog, IDialogDTO, IDialogDocument, IDialogModel } from './../models/DialogModel';
 
 
-interface IDialogRepository extends IRepository<IDialogDTO> {
+interface IDialogRepository extends IRepository<IDialog> {
     exists(id: string) : Promise<boolean>
-    save(dialog: IDialogDTO) : Promise<IDialogDocument>
+    save(dialog: IDialog) : Promise<IDialogDocument>
     delete(dialog: IDialogDTO) : Promise<IDialogDocument>
     findAllById(id: string) : Promise<Array<IDialogDocument>>
 }
@@ -22,7 +22,7 @@ class DialogRepository implements IDialogRepository {
         return !!document;
     }
 
-    public save = async (dialog: IDialogDTO) : Promise<IDialogDocument> => {
+    public save = async (dialog: IDialog) : Promise<IDialogDocument> => {
         const document = await this.model.create(dialog);
         return document;
     }

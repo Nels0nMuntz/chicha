@@ -26,7 +26,7 @@ class AuthController {
         this.service = new AuthService();
     }
 
-    signup = async (req: Request<IUser>, res: Response<IUserDTO>, next: NextFunction) => {
+    public signup = async (req: Request<IUser>, res: Response<IUserDTO>, next: NextFunction) => {
         try {
 
             const errors = validationResult(req).formatWith(errorFormatter);
@@ -49,7 +49,7 @@ class AuthController {
         }
     }
 
-    signin = async (req: Request<SigninReqData>, res: Response<SigninResData>, next: NextFunction) => {
+    public signin = async (req: Request<SigninReqData>, res: Response<SigninResData>, next: NextFunction) => {
         try {
                         
             const errors = validationResult(req).formatWith(errorFormatter);

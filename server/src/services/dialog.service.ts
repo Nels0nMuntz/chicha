@@ -1,5 +1,5 @@
 import { DialogRepository } from "../repositories";
-import { IDialogDTO, DialogMap } from './../models/DialogModel';
+import { IDialogDTO, DialogMap, IDialog } from './../models/DialogModel';
 
 class DialogService {
 
@@ -13,6 +13,12 @@ class DialogService {
         const dialogs = await this.repository.findAllById(id);
         const dialogsDto = dialogs.map(dialog => DialogMap.toDTO(dialog));
         return dialogsDto;
+    }
+
+    public createDialog = async (dialog: IDialog) : Promise<IDialogDTO> => {
+        const document = await this.repository.save(dialog);
+        const dialogDto = DialogMap.toDTO(document);
+        return dialogDto;
     }
 
 }

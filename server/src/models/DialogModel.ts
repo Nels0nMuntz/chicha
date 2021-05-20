@@ -1,7 +1,7 @@
 import { Document, Schema, Model, model } from 'mongoose';
 import { IUserDocument } from "./UserModel";
 
-interface IDialog {
+export interface IDialog {
     participant_1: string
     participant_2: string    
 }
