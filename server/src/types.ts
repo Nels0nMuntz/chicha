@@ -10,7 +10,7 @@ type ResBodyError = {
     details: any
 };
 
-export interface Request<T> extends ExpressRequest<any, any, T> { };
+export interface Request<T = any,  K = qs.ParsedQs> extends ExpressRequest<any, any, T, K> { };
 export interface Response<T> extends ExpressResponse<ResBody<T>> { };
 export interface ResponseError extends ExpressResponse<ResBodyError> { };
 

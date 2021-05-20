@@ -1,11 +1,15 @@
 import React from 'react';
+import { createSelector } from 'reselect';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
 
-import style from "./SearchInput.module.scss";
+import { searchUsersThunk } from '../../store/user/thunks';
+
 
 const useStyles = makeStyles({
     root: {
@@ -56,20 +60,49 @@ const useStyles = makeStyles({
 
 const SearchInput: React.FC = () => {
 
-    const classes = useStyles();
-
     const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState<string[]>([]);
-    const loading = open && options.length === 0;
+    const [value, setValue] = React.useState('');
+
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const isLoading = useSelector((state: RootState) => state.loading.isloading);
+    const options = useSelector(createSelector(
+        (state: RootState) => state.user.search,
+        (users) => {
+            return users.map(user => user.lastName)
+        }
+    ));
+
+    // const onChangeAutocomplete = (event: React.ChangeEvent<{}>, value: string | null, reason: any) => {
+    //     console.log(value);
+    //     setInput(value)
+    // }
+
+    const onChangeField = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        console.log(value);
+        // if (value === '' || value === null) return;        
+        setValue(value);
+    };
+
+    React.useEffect(() => {
+        console.log(value);
+        // if
+        dispatch(searchUsersThunk(value));
+    }, [value, dispatch]);
 
     return (
         <Autocomplete
+            value={value}         
             open={open}
             onOpen={() => setOpen(true)}
             onClose={() => setOpen(false)}
-            onFocus={() => setOptions(['option 1', 'option 2'])}
+            onBlur={() => setValue('')}
             options={options}
-            loading={loading}
+            getOptionLabel={(option: string) => option}
+            getOptionSelected={(option: string, value: string) => true}
+            renderOption={(option: string) => option}
+            loading={isLoading}
             popupIcon={false}
             className={classes.root}
             renderInput={(params) => (
@@ -77,28 +110,19 @@ const SearchInput: React.FC = () => {
                     {...params}
                     label="Search"
                     variant="outlined"
+                    onChange={onChangeField}
                     InputProps={{
                         ...params.InputProps,
                         endAdornment: (
                             <React.Fragment>
-                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
                             </React.Fragment>
                         ),
-                        startAdornment: <SearchIcon/>
+                        startAdornment: <SearchIcon />
                     }}
                 />
-                // <FormControl>
-                //     <InputLabel htmlFor="my-input" variant="outlined">Email address</InputLabel>
-                //     <Input id="my-input" aria-describedby="my-helper-text" />
-                // </FormControl>
             )}
         />
-
-        // <input
-        //     className={style.search_input}
-        //     type="text"
-        //     placeholder="Search"
-        // />
     )
 };
 

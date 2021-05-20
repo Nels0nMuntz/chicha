@@ -18,6 +18,11 @@ class UserService implements IUserService {
         return UserMap.toDTO(document);
     }
 
+    public search = async (queryParam: string) : Promise<Array<IUserDTO>> => {
+        const documents =  await this.repository.findUserByQueryParam(queryParam);
+        return documents.map(document => UserMap.toDTO(document));
+    }
+
 };
 
 export default UserService;

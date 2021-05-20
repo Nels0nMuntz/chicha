@@ -21,6 +21,10 @@ class UserRouter {
             checkAuthMW,
             this._controller.index
         )
+        this._router.get(
+            '/search',
+            this._controller.search
+        )
     }
 }
 

@@ -2,11 +2,8 @@ import { Error } from 'mongoose';
 import UserModel, { IUserDomain, IUserModel, IUserDocument } from '../models/UserModel';
 import { IRepository } from '../types'
 
-interface IUserRepository extends IRepository<IUserDomain> {
-    findUserByEmail(email: string) : Promise<IUserDocument>
-};
 
-class UserRepository implements IUserRepository {
+class UserRepository {
 
     private model: IUserModel = UserModel
 
@@ -37,6 +34,19 @@ class UserRepository implements IUserRepository {
         return await this.model.findOneByPhoneNumber(phoneNumber);
     }
 
+    public findUserByQueryParam = async (queryParam: string) : Promise<Array<IUserDocument>> => {
+        const pattern = new RegExp(queryParam, 'i')
+        const res = await this.model.find({
+            $or: [
+                { firstName: pattern },
+                { lastName: pattern },
+                { email: pattern },
+                { phoneNumber: pattern }
+            ]
+        }).exec();
+        if(!res) throw new Error('Пользователь не найден');
+        return res;
+    }
 };
 
 export default UserRepository;

@@ -1,8 +1,13 @@
-import { NextFunction, Request } from "express";
+import { NextFunction } from "express";
 import { UserModel } from "../models";
 import { IUser, IUserDTO } from "../models/UserModel";
 import { UserService } from "../services";
-import { Exception, Response } from "../types";
+import { Exception, Request, Response } from "../types";
+
+
+type SearchReqQuery = {
+    input: string
+}
 
 class UserController {
 
@@ -22,8 +27,14 @@ class UserController {
         }
     }
 
-    search = async (req: Request, res: Response<Array<IUserDTO>>, next: NextFunction) => {
-
+    search = async (req: Request<any, SearchReqQuery>, res: Response<Array<IUserDTO>>, next: NextFunction) => {
+        try {
+            const queryParam = req.query.input;
+            const user = await this.service.search(queryParam);
+            return res.status(200).json({ message: 'Пользователи успешно найдены', data: user })
+        } catch (error) {
+            next(new Exception(422, error.message, {...error}));
+        }
     }
 }
 
