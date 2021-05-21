@@ -1,4 +1,4 @@
-import { Document, Schema, model } from 'mongoose';
+import { Document, Schema, Model, model } from 'mongoose';
 import { IUserDocument } from "./UserModel";
 
 interface IDialog {
@@ -18,6 +18,8 @@ export interface IDialogDomain {
 }
 
 export interface IDialogDocument extends IDialogDomain, Document {};
+
+export interface IDialogModel extends Model<IDialogDocument> {};
 
 const DialogSchema = new Schema(
     {

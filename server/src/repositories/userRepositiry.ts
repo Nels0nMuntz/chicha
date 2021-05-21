@@ -3,7 +3,7 @@ import UserModel, { IUserDomain, IUserModel, IUserDocument } from '../models/Use
 import { IRepository } from '../types'
 
 
-class UserRepository {
+class UserRepository implements IRepository<IUserDomain> {
 
     private model: IUserModel = UserModel
 
@@ -16,8 +16,10 @@ class UserRepository {
         return await this.model.create(user);
     }
 
-    public delete = async (user: IUserDomain): Promise<any> => {
-        return await this.model.findOneAndDelete({ email: user.email })
+    public delete = async (user: IUserDomain): Promise<IUserDocument> => {
+        const document = await this.model.findOneAndDelete({ email: user.email });
+        if(!document) throw new Error('Ошибка удаления пользователя');
+        return document;
     }
 
     public findUserById = async (id: string) : Promise<IUserDocument> => {
@@ -43,7 +45,7 @@ class UserRepository {
                 { phoneNumber: pattern }
             ]
         }).exec();
-        if(!res) throw new Error('Пользователь не найден');
+        if(!res) throw new Error('Ошибка при поиске пользователей');
         return res;
     }
 };

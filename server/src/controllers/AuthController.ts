@@ -77,4 +77,4 @@ class AuthController {
 
 const errorFormatter = (error: ValidationError) => ({ param: error.param, msg: error.msg });
 
-export default new AuthController();
+export default AuthController;
