@@ -20,12 +20,11 @@ export const fetchAuthDataThunk = (signinData: ISigninData): AuthThunkAction => 
             }));
             LocalStorageService.setAccessToken(data.accessToken);
         } catch (error) {
-            const errorMessage = error.response.data.message
-            console.log(errorMessage);
+            console.log(error.message);
             dispatch(setSigninStatusAC(Status.FAILD));
             dispatch(configureNotificationAC({
                 status: Status.FAILD,
-                message: errorMessage,
+                message: error.message,
                 isOpen: true
             }));
         }
@@ -43,8 +42,7 @@ export const updateAuthDataThunk = (): AuthThunkAction => async (dispatch: AuthT
             isOpen: true
         }));
     } catch (error) {
-        const errorMessage = error.response.data.message
-        console.log(errorMessage);
+        console.log(error.message);
         dispatch(setSigninStatusAC(Status.FAILD));
     }
 };

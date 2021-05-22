@@ -11,8 +11,8 @@ type SetIsLoadingAction = {
     payload: { isLoading: boolean }
 };
 
-export type Action = SetIsLoadingAction;
+export type LoadingAction = SetIsLoadingAction;
 
-export type LoadingThunkAction = ThunkActionType<Action>;
+export type LoadingThunkAction = ThunkActionType<LoadingAction>;
 
-export type LoadingThunkDispatch = ThunkDispatchType<Action>;
+export type LoadingThunkDispatch = ThunkDispatchType<LoadingAction>;

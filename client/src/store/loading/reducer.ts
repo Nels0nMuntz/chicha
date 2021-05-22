@@ -1,10 +1,10 @@
-import { Action, IInitialState } from "./types";
+import { LoadingAction, IInitialState } from "./types";
 
 const initialState: IInitialState = {
     isloading: false
 };
 
-const loadingReducer = (state: IInitialState = initialState, action: Action) : IInitialState => {
+const loadingReducer = (state: IInitialState = initialState, action: LoadingAction) : IInitialState => {
     switch (action.type) {
         case 'SET_IS_LOADING':
             return {

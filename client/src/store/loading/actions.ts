@@ -1,3 +1,3 @@
-import { Action } from "./types";
+import { LoadingAction } from "./types";
 
-export const setIsLoading = (isLoading: boolean) : Action => ({ type: 'SET_IS_LOADING', payload: { isLoading } });
+export const setIsLoading = (isLoading: boolean) : LoadingAction => ({ type: 'SET_IS_LOADING', payload: { isLoading } });

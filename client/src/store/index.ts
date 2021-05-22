@@ -5,6 +5,7 @@ import user from './user/reducer';
 import auth from './auth/reducer';
 import loading from './loading/reducer';
 import notification from './notification/reducer';
+import dialogs from './dialogs/reducer';
 
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     auth,
     loading,
     notification,
+    dialogs
 });
 
 const store = createStore(

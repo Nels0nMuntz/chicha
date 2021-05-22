@@ -2,10 +2,8 @@ import { axiosInstance } from "../../core"
 import { IUser } from "../../store/user/types";
 import { AxiosResponse } from "../../types/types";
 
-type SearchResponse = AxiosResponse & {
-    data: Array<IUser>
-};
 
+type SearchResponse = AxiosResponse<Array<IUser>>;
 class UserService {
 
     getUserData = async () => {
@@ -25,6 +23,6 @@ class UserService {
             throw error.response.data
         }
     }
-}
+};
 
 export default new UserService();

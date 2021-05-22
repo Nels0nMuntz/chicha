@@ -4,13 +4,18 @@ import { IUser } from "../../store/user/types";
 import { AxiosResponse } from "../../types/types";
 
 
-type AuthResponse = AxiosResponse & {
-    data: { user: IUser }
-};
+type AuthResData = {
+    user: IUser
+}
 
-type SigninResponse = AuthResponse & {
-    data: { accessToken: string }
-};
+type SigninResData = {
+    user: IUser,
+    accessToken: string
+}
+
+type AuthResponse = AxiosResponse<AuthResData>;
+
+type SigninResponse = AxiosResponse<SigninResData>;
 
 class AuthService {
 
@@ -24,8 +29,12 @@ class AuthService {
     }
 
     signin = async (signinData: ISigninData) => {
-        const { data } = await axiosInstance.post<SigninResponse>('/auth/signin', signinData);
-        return data;
+        try {
+            const { data } = await axiosInstance.post<SigninResponse>('/auth/signin', signinData);
+            return data;
+        } catch (error) {
+            throw error.response.data
+        }
     }
 
     update = async () => {
@@ -33,7 +42,7 @@ class AuthService {
             const { data } = await axiosInstance.get<AuthResponse>('/im');
             return data;
         } catch (error) {
-            throw error
+            throw error.response.data
         }
     }
 };

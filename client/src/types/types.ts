@@ -13,9 +13,9 @@ export type ThunkActionType<T extends AnyAction> = ThunkAction<Promise<void>, Ro
 
 export type ThunkDispatchType<T extends AnyAction> = ThunkDispatch<RootState, unknown, T>;
 
-export type AxiosResponse = {
+export type AxiosResponse<T> = {
     message: string
-    data: {}
+    data: T
 };
 
 export type AxiosResponseError<T = any> = {

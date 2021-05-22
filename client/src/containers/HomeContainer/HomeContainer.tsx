@@ -9,12 +9,15 @@ import { updateAuthDataThunk } from '../../store/auth/thunks';
 import { HeaderSidebar, SearchField, DialogTrack, Message, SendForm } from './components';
 
 import style from './HomeContainer.module.scss';
+import { setIsLoading } from './../../store/loading/actions';
+import { getDialogsThunk } from './../../store/dialogs/thunks';
 
 
 const HomeContainer: React.FC = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
+    const isLoading = useSelector((state: RootState) => state.loading.isloading);
     const signinStatus = useSelector((state: RootState) => state.auth.signinStatus);
     const isAuthSuccess = signinStatus === Status.SUCCESS ? true : false;
     const isAuthFaild = signinStatus === Status.FAILD ? true : false;
@@ -23,11 +26,15 @@ const HomeContainer: React.FC = () => {
         if (isAuthFaild) {
             history.push('/auth/signin');
         } else if (!isAuthSuccess) {
+            dispatch(setIsLoading(true));
             dispatch(updateAuthDataThunk());
+        } else if (isAuthSuccess){
+            dispatch(getDialogsThunk());
+            dispatch(setIsLoading(false));
         }
     }, [isAuthSuccess, isAuthFaild, dispatch, history]);
 
-    if (!isAuthSuccess) return <Preloader />;
+    if (!isAuthSuccess || isLoading) return <Preloader />;
 
     return (
         <div className={style.home_wrapper}>
