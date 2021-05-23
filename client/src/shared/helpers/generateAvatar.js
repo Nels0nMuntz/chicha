@@ -11,7 +11,7 @@ const stringToColor = function stringToColor(str) {
     }
 
     for (let i = 0; i < 3; i++) {
-        value = (hash >> (i * 8)) & 0xFF;
+        value = (hash >> (i * 3)) & 0xEE;
         color += ('00' + value.toString(16)).substr(-2);
     }
 

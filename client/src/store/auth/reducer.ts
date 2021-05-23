@@ -10,6 +10,7 @@ const initialState: IInitialState = {
         lastName: '',
         password: '',
         phoneNumber: '',
+        avatar: ''
     },
     signinStatus: Status.UNKNOWN,
     signupStatus: Status.UNKNOWN,

@@ -1,12 +1,12 @@
 import { ThunkActionType, ThunkDispatchType } from "../../types/types";
 import { ConfigureNotificationAction } from "../notification/types";
+import { IUser } from "../user/types";
 
 type SET_DIALOGS = 'SET_DIALOGS';
 
 export interface IDialog {
     id: string
-    participent_1: string
-    participent_2: string
+    participant: IUser
 };
 
 export interface IInitialState {

@@ -6,10 +6,9 @@ import { RootState } from '../../store';
 import { Status } from '../../types/types';
 import { Preloader } from '../../components';
 import { updateAuthDataThunk } from '../../store/auth/thunks';
-import { HeaderSidebar, SearchField, DialogTrack, Message, SendForm } from './components';
+import { HeaderSidebar, SearchField, DialogsTrackContainer, Message, SendForm } from './components';
 
 import style from './HomeContainer.module.scss';
-import { setIsLoading } from './../../store/loading/actions';
 import { getDialogsThunk } from './../../store/dialogs/thunks';
 
 
@@ -19,22 +18,25 @@ const HomeContainer: React.FC = () => {
     const dispatch = useDispatch();
     const isLoading = useSelector((state: RootState) => state.loading.isloading);
     const signinStatus = useSelector((state: RootState) => state.auth.signinStatus);
-    const isAuthSuccess = signinStatus === Status.SUCCESS ? true : false;
-    const isAuthFaild = signinStatus === Status.FAILD ? true : false;
+    const isAuthorized = signinStatus === Status.SUCCESS;
 
     React.useEffect(() => {
-        if (isAuthFaild) {
-            history.push('/auth/signin');
-        } else if (!isAuthSuccess) {
-            dispatch(setIsLoading(true));
-            dispatch(updateAuthDataThunk());
-        } else if (isAuthSuccess){
-            dispatch(getDialogsThunk());
-            dispatch(setIsLoading(false));
+        switch (signinStatus) {
+            case Status.FAILD:
+                history.push('/auth/signin');
+                break;
+            case Status.UNKNOWN:
+                dispatch(updateAuthDataThunk());
+                break;
+            case Status.SUCCESS:
+                dispatch(getDialogsThunk());
+                break;
+            default:
+                break;
         }
-    }, [isAuthSuccess, isAuthFaild, dispatch, history]);
+    }, [signinStatus, dispatch, history]);
 
-    if (!isAuthSuccess || isLoading) return <Preloader />;
+    if (!isAuthorized || isLoading) return <Preloader />;
 
     return (
         <div className={style.home_wrapper}>
@@ -56,7 +58,7 @@ const HomeContainer: React.FC = () => {
                         <div className={style.dialogs_searchWrapper}>
                             <SearchField />
                         </div>
-                        <DialogTrack/>
+                        <DialogsTrackContainer />
                     </aside>
                     <main className={style.home_main}>
                         <div className={style.massages_track}>

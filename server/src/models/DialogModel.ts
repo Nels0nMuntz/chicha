@@ -1,25 +1,24 @@
 import { Document, Schema, Model, model } from 'mongoose';
-import { IUserDocument } from "./UserModel";
+import { IUserDocument, IUserDTO, UserMap } from "./UserModel";
 
 export interface IDialog {
     participant_1: string
-    participant_2: string    
+    participant_2: string
 }
 
 export interface IDialogDTO {
     id: IDialogDocument["_id"]
-    participant_1: IUserDocument["_id"]
-    participant_2: IUserDocument["_id"] 
+    participant: IUserDTO
 }
 
 export interface IDialogDomain {
     participant_1: IUserDocument["_id"]
-    participant_2: IUserDocument["_id"] 
+    participant_2: IUserDocument["_id"]
 }
 
-export interface IDialogDocument extends IDialogDomain, Document {};
+export interface IDialogDocument extends IDialogDomain, Document { };
 
-export interface IDialogModel extends Model<IDialogDocument> {};
+export interface IDialogModel extends Model<IDialogDocument> { };
 
 const DialogSchema = new Schema(
     {
@@ -45,15 +44,20 @@ export default DialogModel;
 
 export class DialogMap {
 
-    public static toDomain = (dialog: IDialog) : IDialogDomain => ({
+    public static toDomain = (dialog: IDialog): IDialogDomain => ({
         participant_1: dialog.participant_1,
         participant_2: dialog.participant_2
     })
 
-    public static toDTO = (dialog: IDialogDocument) : IDialogDTO => ({
-        id: dialog._id,
-        participant_1: dialog.participant_1,
-        participant_2: dialog.participant_2
-    })
+    public static toDTO = (dialog: IDialogDocument): IDialogDTO => {
+        const dialogDto = {
+            id: dialog._id,
+            participant: dialog.participant_1 || dialog.participant_2
+        };
+        return ({
+            ...dialogDto,
+            participant: UserMap.toDTO(dialogDto.participant)
+        })
+    };
 
 };

@@ -2,8 +2,6 @@ import axios from 'axios';
 import { LocalStorageService } from '../services';
 
 
-const accessToken = LocalStorageService.getAccessToken();
-
 const axiosInstance = axios.create({
     baseURL: window.location.origin,
     headers: {
@@ -13,6 +11,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     config => {
+        const accessToken = LocalStorageService.getAccessToken();        
         if(accessToken) config.headers["Authorization"] = `Bearer ${accessToken}`;
         return config;
     },

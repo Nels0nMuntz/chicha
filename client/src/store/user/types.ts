@@ -1,6 +1,5 @@
 type SET_USER_DATA = 'SET_USER_DATA';
 type SET_SEARCH_USERS = 'SET_SEARCH_USERS';
-type CLEAR_SEARCH_USERS = 'CLEAR_SEARCH_USERS';
 
 export interface IInitialState {
     user: IUser
@@ -14,7 +13,7 @@ export interface IUser {
     lastName: string
     password: string
     phoneNumber: string
-    avatar?: string
+    avatar: string
     lastSeen?: Date
 };
 

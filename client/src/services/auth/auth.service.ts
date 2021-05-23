@@ -4,16 +4,12 @@ import { IUser } from "../../store/user/types";
 import { AxiosResponse } from "../../types/types";
 
 
-type AuthResData = {
-    user: IUser
-}
-
 type SigninResData = {
     user: IUser,
     accessToken: string
 }
 
-type AuthResponse = AxiosResponse<AuthResData>;
+type AuthResponse = AxiosResponse<IUser>;
 
 type SigninResponse = AxiosResponse<SigninResData>;
 
@@ -47,4 +43,6 @@ class AuthService {
     }
 };
 
-export default new AuthService();
+const authService = new AuthService();
+
+export default authService;

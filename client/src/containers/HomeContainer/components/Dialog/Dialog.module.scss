@@ -1,39 +1,37 @@
-.dialog_wrapper{
+.dialog_wrapper {
     display: flex;
     align-items: center;
     padding: 8px 16px 8px 20px;
     cursor: pointer;
     transition: background-color 0.1s linear;
-    &:hover{
-        background-color: #F3F7FF;
+    &:hover {
+        background-color: #f3f7ff;
     }
 }
-.avatar_wrapper{
+.avatar_wrapper {
     position: relative;
-    img{
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-    }
+    flex-shrink: 0;
+    width: 45px;
+    height: 45px;
 }
-.dialog_info{
+.dialog_info {
     flex-grow: 1;
     margin-left: 10px;
 }
-.dialog_infoRow{
+.dialog_infoRow {
     display: flex;
     justify-content: space-between;
-    & + &{
+    & + & {
         margin-top: 3px;
         align-items: center;
     }
 }
-.user_fillname{
+.user_fillname {
     font-weight: 500;
     line-height: 1.15;
     padding-right: 15px;
 }
-.user_date{
+.user_date {
     flex-shrink: 0;
     font-size: 12px;
     opacity: 0.4;
@@ -42,15 +40,15 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.dialog_message{
+.dialog_message {
     opacity: 0.4;
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.dialog_status{
-    span{
+.dialog_status {
+    span {
         display: inline-block;
         width: 24px;
         height: 24px;
@@ -58,7 +56,7 @@
         line-height: 24px;
         text-align: center;
         color: white;
-        background-color: #F46B6B;
+        background-color: #f46b6b;
         border-radius: 50%;
     }
 }

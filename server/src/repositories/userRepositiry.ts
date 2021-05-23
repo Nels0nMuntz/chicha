@@ -3,7 +3,17 @@ import UserModel, { IUserDomain, IUserModel, IUserDocument } from '../models/Use
 import { IRepository } from '../types'
 
 
-class UserRepository implements IRepository<IUserDomain> {
+interface IUserRepository extends IRepository<IUserDomain> {
+    exists(id: string): Promise<boolean>
+    save(user: IUserDomain): Promise<IUserDocument>
+    delete(id: string): Promise<IUserDocument>
+    findUserById(id: string) : Promise<IUserDocument>
+    findUserByEmail(email: string) : Promise<IUserDocument>
+    findUserByPhoneNumber(phoneNumber: string) : Promise<IUserDocument>
+    findUserByQueryParam(queryParam: string) : Promise<Array<IUserDocument>>
+};
+
+class UserRepository implements IUserRepository {
 
     private model: IUserModel = UserModel
 
@@ -16,8 +26,8 @@ class UserRepository implements IRepository<IUserDomain> {
         return await this.model.create(user);
     }
 
-    public delete = async (user: IUserDomain): Promise<IUserDocument> => {
-        const document = await this.model.findOneAndDelete({ email: user.email });
+    public delete = async (id: string): Promise<IUserDocument> => {
+        const document = await this.model.findOneAndDelete({ id: id });
         if(!document) throw new Error('Ошибка удаления пользователя');
         return document;
     }

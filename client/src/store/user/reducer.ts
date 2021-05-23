@@ -9,6 +9,7 @@ const initialState: IInitialState = {
         lastName: '',
         password: '',
         phoneNumber: '',
+        avatar: ''
     },
     search: []
 };
