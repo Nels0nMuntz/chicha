@@ -1,9 +1,9 @@
 
-import { Document, Schema, model } from 'mongoose';
+import { Document, Schema, model, Model } from 'mongoose';
 import { IDialogDocument } from './DialogModel';
 import { IUserDocument, IUserDTO, UserMap } from './UserModel';
 
-interface IMessage {
+export interface IMessage {
     dialog: IDialogDocument["_id"]
     createdBy: IUserDocument["_id"]
     text: string
@@ -34,6 +34,8 @@ export interface IMessageDomain {
 };
 
 export interface IMessageDocument extends IMessageDomain, Document { };
+
+export interface IMessageModel extends Model<IMessageDocument> { };
 
 const MessageSchema = new Schema(
     {
