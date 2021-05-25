@@ -7,9 +7,10 @@ import { Status } from '../../types/types';
 import { Preloader } from '../../components';
 import { updateAuthDataThunk } from '../../store/auth/thunks';
 import { HeaderSidebar, SearchField, DialogsTrackContainer, Message, SendForm } from './components';
+import { getDialogsThunk } from './../../store/dialogs/thunks';
+import { setIsLoading } from './../../store/loading/actions';
 
 import style from './HomeContainer.module.scss';
-import { getDialogsThunk } from './../../store/dialogs/thunks';
 
 
 const HomeContainer: React.FC = () => {
@@ -26,10 +27,11 @@ const HomeContainer: React.FC = () => {
                 history.push('/auth/signin');
                 break;
             case Status.UNKNOWN:
+                dispatch(setIsLoading(true));
                 dispatch(updateAuthDataThunk());
                 break;
             case Status.SUCCESS:
-                dispatch(getDialogsThunk());
+                dispatch(getDialogsThunk());       
                 break;
             default:
                 break;

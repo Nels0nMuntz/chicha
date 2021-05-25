@@ -1,6 +1,7 @@
 import { IUser } from "../user/types";
 import { Status, ThunkActionType, ThunkDispatchType } from "../../types/types";
 import { SwitchNotificationAction, ConfigureNotificationAction } from "../notification/types";
+import { LoadingAction } from "../loading/types";
 
 
 type SET_AUTH_DATA = 'SET_AUTH_DATA';

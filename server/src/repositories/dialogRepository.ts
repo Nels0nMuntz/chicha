@@ -1,12 +1,12 @@
 import { IRepository } from "../types";
-import DialogModel, { IDialog, IDialogDTO, IDialogDocument, IDialogModel } from './../models/DialogModel';
+import DialogModel, { IDialog, IDialogDocument, IDialogModel, IDialogPopulated } from './../models/DialogModel';
 
 
 interface IDialogRepository extends IRepository<IDialog> {
     exists(id: string): Promise<boolean>
-    save(dialog: IDialog): Promise<IDialogDocument>
+    save(dialog: IDialog): Promise<IDialogPopulated>
     delete(id: string): Promise<IDialogDocument>
-    findAllById(id: string): Promise<Array<IDialogDocument>>
+    findAllById(id: string): Promise<Array<IDialogPopulated>>
 };
 
 class DialogRepository implements IDialogRepository {
@@ -22,9 +22,13 @@ class DialogRepository implements IDialogRepository {
         return !!document;
     }
 
-    public save = async (dialog: IDialog): Promise<IDialogDocument> => {
+    public save = async (dialog: IDialog): Promise<IDialogPopulated> => {
         const document = await this.model.create(dialog);
-        return document;
+        const populated = await this.model.findById(document.id)
+            .populate('participant_1')
+            .populate('participant_2');
+        if (!populated) throw new Error('Ошибка создания диалога');
+        return populated;
     }
 
     public delete = async (id: string): Promise<IDialogDocument> => {
@@ -33,21 +37,15 @@ class DialogRepository implements IDialogRepository {
         return document;
     }
 
-    public findAllById = async (id: string): Promise<Array<IDialogDocument>> => {
+    public findAllById = async (id: string): Promise<Array<IDialogPopulated>> => {
         const documents = await this.model.find({
             $or: [
                 { participant_1: id },
                 { participant_2: id },
             ]
         })
-            .populate({
-                path: 'participant_1',
-                match: { _id: { $ne: id } },
-            })
-            .populate({
-                path: 'participant_2',
-                match: { _id: { $ne: id } },
-            })
+            .populate('participant_1')
+            .populate('participant_2');
         return documents;
     }
 

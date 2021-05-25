@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { checkAuthMW } from '../middlewares';
-import AuthRouter from './authRouter';
+import AuthRouter from './AuthRouter';
 import DialogRouter from './dialogRouter';
-import UserRouter from './userRouter';
+import UserRouter from './UserRouter';
 
 
 class RootRouter {

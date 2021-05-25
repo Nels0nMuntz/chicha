@@ -16,7 +16,13 @@ export interface IDialogDomain {
     participant_2: IUserDocument["_id"]
 }
 
-export interface IDialogDocument extends IDialogDomain, Document { };
+export interface IDialogDocument extends Document, IDialogDomain { };
+
+export interface IDialogPopulated {
+    id?: IUserDocument["_id"]
+    participant_1: IUserDocument
+    participant_2: IUserDocument
+}
 
 export interface IDialogModel extends Model<IDialogDocument> { };
 
@@ -49,15 +55,15 @@ export class DialogMap {
         participant_2: dialog.participant_2
     })
 
-    public static toDTO = (dialog: IDialogDocument): IDialogDTO => {
+    public static toDTO = (dialog: IDialogPopulated, userId: string): IDialogDTO => {
         const dialogDto = {
-            id: dialog._id,
-            participant: dialog.participant_1 || dialog.participant_2
-        };
+            id: dialog.id,
+            participant: dialog.participant_1.id !== userId ? dialog.participant_1 : dialog.participant_2
+        };        
         return ({
             ...dialogDto,
             participant: UserMap.toDTO(dialogDto.participant)
         })
-    };
+    }
 
 };

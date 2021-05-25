@@ -1,7 +1,7 @@
 
 import { Document, Schema, model } from 'mongoose';
 import { IDialogDocument } from './DialogModel';
-import { IUserDocument } from './UserModel';
+import { IUserDocument, IUserDTO, UserMap } from './UserModel';
 
 interface IMessage {
     dialog: IDialogDocument["_id"]
@@ -13,7 +13,15 @@ interface IMessage {
 export interface IMessageDTO {
     id: IMessageDocument["_id"]
     dialog: IDialogDocument["_id"]
-    createdBy: IUserDocument["_id"]
+    createdBy: IUserDTO
+    text: string
+    read: boolean
+};
+
+export interface IMessagePopulated {
+    id: IMessageDocument["_id"]
+    dialog: IDialogDocument["_id"]
+    createdBy: IUserDocument
     text: string
     read: boolean
 };
@@ -41,6 +49,9 @@ const MessageSchema = new Schema(
         },
         text: String,
         read: Boolean,
+    },
+    {
+        timestamps: true
     }
 );
 
@@ -57,10 +68,10 @@ export class MessageMap {
         read: message.read
     })
 
-    public static toDTO = (message: IMessageDocument) : IMessageDTO => ({
-        id: message._id,
+    public static toDTO = (message: IMessagePopulated) : IMessageDTO => ({
+        id: message.id,
         dialog: message.dialog,
-        createdBy: message.createdBy,
+        createdBy: UserMap.toDTO(message.createdBy),
         text: message.text,
         read: message.read
     })

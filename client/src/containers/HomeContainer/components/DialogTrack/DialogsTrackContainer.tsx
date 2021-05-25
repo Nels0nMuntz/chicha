@@ -4,7 +4,7 @@ import { RootState } from '../../../../store';
 
 import DialogsTrack from './DialogsTrack';
 
-import emptyIcon from '../../../../assets/images/empty.svg';
+import { EmptySection } from '../../../../components';
 
 
 const DialogsTrackContainer : React.FC = () => {
@@ -16,7 +16,9 @@ const DialogsTrackContainer : React.FC = () => {
             dialogs={dialogs}
         />
     ) : (
-        <img src={emptyIcon} alt="empty" />
+        <EmptySection
+            text='У Вас пока нет диалогов. Найдите собеседников, что бы начать общаться.'
+        />
     );
 };
 

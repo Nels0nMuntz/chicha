@@ -11,13 +11,13 @@ class DialogService {
 
     public getDialogs = async (id: string) : Promise<Array<IDialogDTO>> => {
         const dialogs = await this.repository.findAllById(id);
-        const dialogsDto = dialogs.map(dialog => DialogMap.toDTO(dialog));
+        const dialogsDto = dialogs.map(dialog => DialogMap.toDTO(dialog, id));
         return dialogsDto;
     }
 
-    public createDialog = async (dialog: IDialog) : Promise<IDialogDTO> => {
-        const document = await this.repository.save(dialog);
-        const dialogDto = DialogMap.toDTO(document);
+    public createDialog = async (dialog: IDialog, id: string) : Promise<IDialogDTO> => {
+        const document = await this.repository.save(dialog);       
+        const dialogDto = DialogMap.toDTO(document, id);
         return dialogDto;
     }
 

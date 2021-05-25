@@ -3,7 +3,6 @@ import Badge from '@material-ui/core/Badge';
 import { makeStyles } from '@material-ui/core';
 
 import style from "./Dialog.module.scss";
-import avatar from "../../../../assets/images/avatar.jpg"
 import { Avatar } from '../../../../components';
 
 
@@ -30,7 +29,7 @@ const Dialog: React.FC<DialogProps> = ({ firstName, lastName, avatar }) => {
 
     const classes = useStyles();
 
-    const fullname =  lastName ? `${firstName} ${lastName}` : firstName;
+    const fullname = lastName ? `${firstName} ${lastName}` : firstName;
 
     return (
         <div className={style.dialog_wrapper}>
@@ -46,11 +45,13 @@ const Dialog: React.FC<DialogProps> = ({ firstName, lastName, avatar }) => {
                     <div className={style.user_date}>Сейчас</div>
                 </div>
                 <div className={style.dialog_infoRow}>
-                    <div className={style.dialog_message}>Я ща стрепсилс тебе куплю, потерпи</div>
-                    <Badge
-                        badgeContent={28}
-                        className={classes.root}
-                    />
+                    <div className={style.dialog_message}> </div>
+                    <div>
+                        <Badge
+                            badgeContent={28}
+                            className={classes.root}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

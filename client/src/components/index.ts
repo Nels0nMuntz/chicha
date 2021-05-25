@@ -6,3 +6,4 @@ export { default as Preloader } from "./Preloader/Preloader";
 export { default as Notification } from "./Notification/Notification";
 export { default as Avatar } from "./Avatar/Avatar";
 export { default as EmojiIcon } from "./EmojiIcon/EmojiIcon";
+export { default as EmptySection } from "./EmptySection/EmptySection";

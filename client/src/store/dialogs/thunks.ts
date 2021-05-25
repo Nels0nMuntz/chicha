@@ -4,10 +4,11 @@ import { setDialogsAC } from './actions';
 import { configureNotificationAC } from "../notification/actions";
 import { Status } from "../../types/types";
 
+
 export const getDialogsThunk = () : DialogsThunkAction => async  (dispatch: DialogsThunkDispatch) => {
     try {
         const { data } = await dialogService.getDialogs();
-        dispatch(setDialogsAC(data));
+        dispatch(setDialogsAC(data));  
     } catch (error) {
         console.log(error);        
         dispatch(configureNotificationAC({
