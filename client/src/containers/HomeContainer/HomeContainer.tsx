@@ -7,10 +7,10 @@ import { Status } from '../../types/types';
 import { Preloader } from '../../components';
 import { updateAuthDataThunk } from '../../store/auth/thunks';
 import { HeaderSidebar, SearchField, DialogsTrackContainer, Message, SendForm } from './components';
-import { getDialogsThunk } from './../../store/dialogs/thunks';
 import { setIsLoading } from './../../store/loading/actions';
 
 import style from './HomeContainer.module.scss';
+import { initAppThunk } from '../../store/initApp/thunks';
 
 
 const HomeContainer: React.FC = () => {
@@ -31,7 +31,7 @@ const HomeContainer: React.FC = () => {
                 dispatch(updateAuthDataThunk());
                 break;
             case Status.SUCCESS:
-                dispatch(getDialogsThunk());       
+                dispatch(initAppThunk());       
                 break;
             default:
                 break;

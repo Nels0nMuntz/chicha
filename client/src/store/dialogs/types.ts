@@ -1,5 +1,4 @@
 import { ThunkActionType, ThunkDispatchType } from "../../types/types";
-import { ConfigureNotificationAction } from "../notification/types";
 import { IUser } from "../user/types";
 
 type SET_DIALOGS = 'SET_DIALOGS';
@@ -20,7 +19,7 @@ export type SetDialogsAction = {
     }
 };
 
-export type DialogsAction = SetDialogsAction | ConfigureNotificationAction;
+export type DialogsAction = SetDialogsAction;
 
 export type DialogsThunkAction = ThunkActionType<DialogsAction>;
 

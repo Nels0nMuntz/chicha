@@ -14,7 +14,7 @@ class DialogRouter {
     }
 
     private initRotes = () => {
-        this.router.get('/', this.controller.getDialogs);
+        this.router.get('/index', this.controller.getDialogs);
         this.router.post('/create', this.controller.create);
     }
 

@@ -21,7 +21,7 @@ class MessageController {
         try {
             const message = req.body.data;
             const document = await this.service.create(message);
-            return document;
+            return res.status(200).json({ message: 'Сообщение успешно создано', data: document });
         } catch (error) {
             next(new Exception(500, error.message, error.stack));
         }

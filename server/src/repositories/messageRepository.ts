@@ -5,7 +5,7 @@ interface IMessageRepository extends IRepository<IMessageDomain> {
     exists(id: string) : Promise<boolean>
     save(message: IMessageDomain) : Promise<IMessageDocument>
     delete(id: string): Promise<IMessageDocument>
-    findAllByDialogId(id: string) : Promise<Array<IMessagePopulated>>
+    findLastByDialogId(id: string) : Promise<Array<IMessagePopulated>>
 };
 
 class MessageRepository implements IMessageRepository {
@@ -32,8 +32,9 @@ class MessageRepository implements IMessageRepository {
         return document;
     }
 
-    findAllByDialogId = async (id: string) : Promise<Array<IMessagePopulated>> => {
-        const messages = await this.model.find({ dialog: id }).populate('createdBy');
+    findLastByDialogId = async (id: string) : Promise<Array<IMessagePopulated>> => {
+        const messages = await this.model.find({ dialog: id }).sort({ $natural: -1 }).limit(1).populate('createdBy');
+        console.log(messages);        
         return messages as Array<IMessagePopulated>;
     }
 
