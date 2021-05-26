@@ -1,6 +1,5 @@
 import { NextFunction } from "express";
-import { UserModel } from "../models";
-import { IUser, IUserDTO } from "../models/UserModel";
+import { IUserDTO } from "../models/UserModel";
 import { UserService } from "../services";
 import { Exception, Request, Response } from "../types";
 

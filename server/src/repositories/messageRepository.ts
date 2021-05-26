@@ -3,8 +3,9 @@ import { IRepository } from '../types';
 
 interface IMessageRepository extends IRepository<IMessageDomain> {
     exists(id: string) : Promise<boolean>
-    save(message: IMessageDomain) : Promise<IMessagePopulated>
+    save(message: IMessageDomain) : Promise<IMessageDocument>
     delete(id: string): Promise<IMessageDocument>
+    findAllByDialogId(id: string) : Promise<Array<IMessagePopulated>>
 };
 
 class MessageRepository implements IMessageRepository {
@@ -20,17 +21,20 @@ class MessageRepository implements IMessageRepository {
         return !!document;
     }
 
-    save = async (message: IMessageDomain) : Promise<IMessagePopulated> => {
+    save = async (message: IMessageDomain) : Promise<IMessageDocument> => {
         const document = await this.model.create(message);
-        const populated = await this.model.findById(document._id).populate('createdBy');
-        if(!populated) throw new Error('Ошибка создания сообщения');
-        return populated as IMessagePopulated;
+        return document;
     }
 
     delete = async (id: string) : Promise<IMessageDocument> => {
         const document = await this.model.findByIdAndDelete(id);
         if(!document) throw new Error('Ошибка удаления сообщения');
         return document;
+    }
+
+    findAllByDialogId = async (id: string) : Promise<Array<IMessagePopulated>> => {
+        const messages = await this.model.find({ dialog: id }).populate('createdBy');
+        return messages as Array<IMessagePopulated>;
     }
 
 };

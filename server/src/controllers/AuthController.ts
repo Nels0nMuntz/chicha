@@ -1,7 +1,7 @@
 import { NextFunction } from 'express';
 import { ValidationError, validationResult } from 'express-validator';
 
-import { Request, Response, Exception } from '../types';
+import { Request, Response, Exception, AuthRequest } from '../types';
 import { IUser, IUserDTO } from '../models/UserModel';
 import { AuthService } from '../services';
 import { generateAccessToken } from '../utils';
@@ -26,7 +26,7 @@ class AuthController {
         this.service = new AuthService();
     }
 
-    public signup = async (req: Request<IUser>, res: Response<IUserDTO>, next: NextFunction) => {
+    public signup = async (req: AuthRequest<IUser>, res: Response<IUserDTO>, next: NextFunction) => {
         try {
 
             const errors = validationResult(req).formatWith(errorFormatter);
@@ -49,13 +49,13 @@ class AuthController {
         }
     }
 
-    public signin = async (req: Request<SigninReqData>, res: Response<SigninResData>, next: NextFunction) => {
+    public signin = async (req: AuthRequest<SigninReqData>, res: Response<SigninResData>, next: NextFunction) => {
         try {
                         
             const errors = validationResult(req).formatWith(errorFormatter);
             if (!errors.isEmpty()) {
                 const message = errors.array().map(({ msg }) => msg);
-                const details = errors.array()
+                const details = errors.array();
                 next(new Exception(422, message, details));
             };
 

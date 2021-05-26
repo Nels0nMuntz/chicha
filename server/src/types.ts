@@ -1,5 +1,9 @@
 import { Request as ExpressRequest, Response as ExpressResponse } from 'express';
 
+type ReqBody<T> = {
+    data: T
+};
+
 type ResBody<T> = {
     message: string
     data: T
@@ -10,8 +14,12 @@ type ResBodyError = {
     details: any
 };
 
-export interface Request<T = any,  K = qs.ParsedQs> extends ExpressRequest<any, any, T, K> { };
+export interface Request<T = {},  K = qs.ParsedQs> extends ExpressRequest<any, any, ReqBody<T>, K> { };
+
+export interface AuthRequest<T = {},  K = qs.ParsedQs> extends ExpressRequest<any, any, T, K> { };
+
 export interface Response<T> extends ExpressResponse<ResBody<T>> { };
+
 export interface ResponseError extends ExpressResponse<ResBodyError> { };
 
 export interface IRepository<T> {

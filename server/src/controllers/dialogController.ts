@@ -28,7 +28,7 @@ class DialogController {
     public create = async (req: Request<IDialog>, res: Response<IDialogDTO>, next: NextFunction) => {
         try {
             const id = this.getUserId(req);
-            const postData = req.body;
+            const postData = req.body.data;
             const dialog = await this.service.createDialog(postData, id);
             return res.status(200).json({ message: 'Диалог успешно создан', data: dialog });
         } catch (error) {
