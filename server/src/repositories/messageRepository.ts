@@ -1,11 +1,11 @@
-import MessageMopdel, { IMessageDocument, IMessageDomain, IMessageModel, IMessagePopulated } from '../models/MessageModel';
+import MessageMopdel, { IMessageDocument, IMessageDomain, IMessageModel } from '../models/MessageModel';
 import { IRepository } from '../types';
 
 interface IMessageRepository extends IRepository<IMessageDomain> {
     exists(id: string) : Promise<boolean>
     save(message: IMessageDomain) : Promise<IMessageDocument>
     delete(id: string): Promise<IMessageDocument>
-    findLastByDialogId(id: string) : Promise<Array<IMessagePopulated>>
+    findLastOneByDialogId(id: string) : Promise<IMessageDocument | null>
 };
 
 class MessageRepository implements IMessageRepository {
@@ -32,10 +32,10 @@ class MessageRepository implements IMessageRepository {
         return document;
     }
 
-    findLastByDialogId = async (id: string) : Promise<Array<IMessagePopulated>> => {
-        const messages = await this.model.find({ dialog: id }).sort({ $natural: -1 }).limit(1).populate('createdBy');
-        console.log(messages);        
-        return messages as Array<IMessagePopulated>;
+    findLastOneByDialogId = async (id: string) : Promise<IMessageDocument | null> => {
+        const messages = await this.model.find({ dialog: id }).sort({ _id: -1 }).limit(1);  
+        if(!messages.length) return null;        
+        return messages[0];
     }
 
 };

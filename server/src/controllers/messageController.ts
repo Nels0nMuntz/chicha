@@ -27,17 +27,17 @@ class MessageController {
         }
     }
 
-    getAll = async (req: Request<Array<string>>, res: Response<GetAllResBody>, next: NextFunction) => {
+    getAllLast = async (req: Request<Array<string>>, res: Response<GetAllResBody>, next: NextFunction) => {
         try {
             const dialogIds = req.body.data;
-            const messagesById = dialogIds.reduce(async (prev, curr) => {
-                const acc: any = await prev;
-                const messages = await this.service.getAllByDialogId(curr);
-                acc[curr] = messages;
+            const messages = dialogIds.reduce(async (result, id) => {
+                const acc: any = await result;
+                const message = await this.service.getLastOneByDialogId(id);
+                acc[id] = message;
                 return acc;
             }, Promise.resolve({}));
-            const result = await messagesById;
-            return res.status(200).json({ message: "", data: result });
+            const result = await messages;
+            return res.status(200).json({ message: "Последние сообщения диалогов пользователя успешно найдены", data: result });
         } catch (error) {
             next(new Exception(500, error.message, error.stack));
         }

@@ -9,7 +9,7 @@ class DialogService {
 
     getDialogs = async () => {
         try {
-            const { data } = await axiosInstance.get<GetDialogsResponse>('/dialogs');
+            const { data } = await axiosInstance.get<GetDialogsResponse>('/dialogs/index');
             return data;
         } catch (error) {
             throw error.response.data;

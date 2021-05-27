@@ -27,7 +27,7 @@ class RootRouter {
         this.router.use('/auth', this.authRouter.router);
         this.router.use('/', checkAuthMW, this.userRouter.router);
         this.router.use('/dialogs', checkAuthMW, this.dialogRouter.router);
-        this.router.use('/message', checkAuthMW, this.messageRouter.router)
+        this.router.use('/messages', checkAuthMW, this.messageRouter.router)
     }
 }
 

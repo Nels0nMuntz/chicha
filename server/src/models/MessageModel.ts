@@ -18,14 +18,6 @@ export interface IMessageDTO {
     read: boolean
 };
 
-export interface IMessagePopulated {
-    id: IMessageDocument["_id"]
-    dialog: IDialogDocument["_id"]
-    createdBy: IUserDocument
-    text: string
-    read: boolean
-};
-
 export interface IMessageDomain {
     dialog: IDialogDocument["_id"]
     createdBy: IUserDocument["_id"]
@@ -70,10 +62,10 @@ export class MessageMap {
         read: message.read
     })
 
-    public static toDTO = (message: IMessagePopulated) : IMessageDTO => ({
-        id: message.id,
+    public static toDTO = (message: IMessageDocument) : IMessageDTO => ({
+        id: message._id,
         dialog: message.dialog,
-        createdBy: UserMap.toDTO(message.createdBy),
+        createdBy: message.createdBy,
         text: message.text,
         read: message.read
     })

@@ -14,7 +14,7 @@ class MessageRouter {
 
     private initRoutes = () => {
         this.router.post('/create', this.controller.create);
-        this.router.post('/index', this.controller.getAll)
+        this.router.post('/last', this.controller.getAllLast)
     }
 
 };

@@ -7,7 +7,7 @@ import { RootState } from '../../store';
 import { ISigninData } from '../../store/auth/types';
 import { Status } from '../../types/types';
 import { fetchAuthDataThunk } from '../../store/auth/thunks';
-import { setIsLoading } from '../../store/loading/actions';
+import { setIsLoadingAC } from '../../store/loading/actions';
 
 
 const SigninContainer: React.FC = () => {
@@ -16,7 +16,7 @@ const SigninContainer: React.FC = () => {
     const dispatch = useDispatch();
 
     const onSubmit = (values: ISigninData) => { 
-        dispatch(setIsLoading(true));
+        dispatch(setIsLoadingAC(true));
         dispatch(fetchAuthDataThunk(values));
     };
 

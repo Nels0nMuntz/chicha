@@ -2,3 +2,4 @@ export { default as LocalStorageService } from './localStorage/localStorage.serv
 export { default as authService } from './auth/auth.service';
 export { default as userService } from './user/user.service';
 export { default as dialogService } from './dialog/dialog.service';
+export { default as messageService } from './message/message.service';

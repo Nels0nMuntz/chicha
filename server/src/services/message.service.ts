@@ -16,10 +16,11 @@ class MessageService {
         return document;
     }
 
-    getAllByDialogId = async (id: string) : Promise<Array<IMessageDTO>> => {
-        const messagesPopulated = await this.repository.findLastByDialogId(id);
-        const messagesDto = messagesPopulated.map(msg => MessageMap.toDTO(msg));
-        return messagesDto;
+    getLastOneByDialogId = async (id: string) : Promise<IMessageDTO | null> => {
+        const messageDocument = await this.repository.findLastOneByDialogId(id);
+        if(!messageDocument) return null;
+        const messageDto = MessageMap.toDTO(messageDocument);
+        return messageDto;
     }
 
 };
