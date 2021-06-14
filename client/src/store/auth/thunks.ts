@@ -31,22 +31,6 @@ export const signinThunk = (signinData: ISigninData): AuthThunkAction => {
     }
 };
 
-// export const updateAuthDataThunk = (): AuthThunkAction => async (dispatch: AuthThunkDispatch) => {
-//     try {
-//         let { data, message } = await authService.update();        
-//         dispatch(setAuthDataAC(data));
-//         dispatch(setSigninStatusAC(Status.SUCCESS));
-//         dispatch(configureNotificationAC({
-//             status: Status.SUCCESS,
-//             message: message,
-//             isOpen: true
-//         }));
-//     } catch (error) {
-//         console.log(error);
-//         dispatch(setSigninStatusAC(Status.FAILD));
-//     }
-// };
-
 export const signupThunk = (signupData: ISignupData): AuthThunkAction => async (dispatch: AuthThunkDispatch) => {
     try {
         let { data, message } = await authService.signup(signupData);

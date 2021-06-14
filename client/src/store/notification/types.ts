@@ -1,7 +1,7 @@
 import { Status, ThunkActionType, ThunkDispatchType } from "../../types/types";
 
 type SWITCH_NOTIFICATION = 'SWITCH_NOTIFICATION';
-type CONFIGURE_NOTIFICATION = 'CONFIGURE_NOTIFICATION';
+type SET_NOTIFICATION = 'SET_NOTIFICATION';
 
 type NotificationConfig = {
     status: Status
@@ -23,16 +23,16 @@ export type SwitchNotificationAction = {
     }
 };
 
-export type ConfigureNotificationAction = {
-    type: CONFIGURE_NOTIFICATION,
+export type SetNotificationAction = {
+    type: SET_NOTIFICATION,
     payload: NotificationConfig
 };
 
 export type SwitchNotificationAC = (isOpen: boolean) => SwitchNotificationAction;
 
-export type ConfigureNotificationAC = (config: NotificationConfig) => ConfigureNotificationAction;
+export type SetNotificationAC = (config: NotificationConfig) => SetNotificationAction;
 
-export type NotificationAction = SwitchNotificationAction | ConfigureNotificationAction;
+export type NotificationAction = SwitchNotificationAction | SetNotificationAction;
 
 export type NotificationThunkAction = ThunkActionType<NotificationAction>;
 

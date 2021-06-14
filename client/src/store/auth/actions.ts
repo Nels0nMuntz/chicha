@@ -1,8 +1,10 @@
 import { Status } from "../../types/types";
 import { IUser } from "../user/types";
-import { SetAuthDataAction, SetSigninStatusAction, SetSignupStatusAction, SetErrorFieldsAction, ErrorFieldDetails } from "./types";
+import { SetAuthDataAction, SetSigninStatusAction, SetSignupStatusAction, SetErrorFieldsAction, ErrorFieldDetails, SetAuthStatusAction } from "./types";
 
 export const setAuthDataAC = (user: IUser) : SetAuthDataAction => ({ type: 'SET_AUTH_DATA' , payload: { user } });
+
+export const SetAuthStatusAC = (status: Status) : SetAuthStatusAction => ({ type: 'SET_AUTH_STATUS', payload: { status } });
 
 export const setSigninStatusAC = (signinStatus: Status) : SetSigninStatusAction => ({ type: 'SET_SIGNIN_STATUS' , payload: { signinStatus } });
 

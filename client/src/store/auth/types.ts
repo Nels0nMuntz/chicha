@@ -1,10 +1,10 @@
 import { IUser } from "../user/types";
 import { Status, ThunkActionType, ThunkDispatchType } from "../../types/types";
-import { SwitchNotificationAction, ConfigureNotificationAction } from "../notification/types";
-import { LoadingAction } from "../loading/types";
+import { SwitchNotificationAction, SetNotificationAction } from "../notification/types";
 
 
 type SET_AUTH_DATA = 'SET_AUTH_DATA';
+type SET_AUTH_STATUS = 'SET_AUTH_STATUS';
 type SET_SIGNIN_STATUS = 'SET_SIGNIN_STATUS';
 type SET_SIGNUP_STATUS = 'SET_SIGNUP_STATUS';
 type SET_ERROR_FIELDS = 'SET_ERROR_FIELDS';
@@ -13,6 +13,7 @@ export interface IInitialState {
     user: IUser
     signinStatus: Status
     signupStatus: Status
+    authStatus: Status
     errorFields: Array<ErrorFieldDetails>
 };
 
@@ -34,6 +35,13 @@ export type SetAuthDataAction = {
     type: SET_AUTH_DATA,
     payload: {
         user: IUser
+    }
+};
+
+export type SetAuthStatusAction = {
+    type: SET_AUTH_STATUS,
+    payload: {
+        status: Status
     }
 };
 
@@ -59,11 +67,13 @@ export type SetErrorFieldsAction = {
 };
 
 export type AuthAction = SetAuthDataAction | 
-                        SetSigninStatusAction | 
-                        SetSignupStatusAction | 
-                        SetErrorFieldsAction | 
-                        SwitchNotificationAction | 
-                        ConfigureNotificationAction;
+    SetAuthStatusAction | 
+    SetSigninStatusAction | 
+    SetSignupStatusAction | 
+    SetErrorFieldsAction | 
+    SwitchNotificationAction | 
+    SetNotificationAction
+;
 
 export type AuthThunkAction = ThunkActionType<AuthAction>;
 

@@ -14,7 +14,7 @@ const notificationReducer = (state: IInitialState = initialState, action: Notifi
                 ...state,
                 isOpen: action.payload.isOpen
             };
-        case 'CONFIGURE_NOTIFICATION':
+        case 'SET_NOTIFICATION':
             const { status, message, isOpen } = action.payload;
             return {
                 ...state,

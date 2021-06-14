@@ -1,4 +1,3 @@
-import { Status } from '../../types/types';
 import { IInitialState, AuthAction } from './types';
 
 
@@ -14,6 +13,7 @@ const initialState: IInitialState = {
     },
     signinStatus: 'INITIAL',
     signupStatus: 'INITIAL',
+    authStatus: 'INITIAL',
     errorFields: [],
 };
 
@@ -23,6 +23,11 @@ const authReducer = (state: IInitialState = initialState, action: AuthAction): I
             return {
                 ...state, 
                 user: action.payload.user
+            };
+        case 'SET_AUTH_STATUS':
+            return {
+                ...state, 
+                authStatus: action.payload.status
             };
         case 'SET_SIGNIN_STATUS':
             return {

@@ -1,18 +1,16 @@
-import { ThunkActionType, ThunkDispatchType } from "../../types/types";
-import { LoadingAction } from "../loading/types";
-import { ConfigureNotificationAction } from "../notification/types";
+import { Status, ThunkActionType, ThunkDispatchType } from "../../types/types";
+import { SetAuthStatusAction } from "../auth/types";
+import { SetNotificationAction } from "../notification/types";
 import { IUser } from "../user/types";
 
+type SET_DIALOG = 'SET_DIALOG';
 type SET_DIALOGS = 'SET_DIALOGS';
-type SET_LAST_MESSAGES = 'SET_LAST_MESSAGES';
+type SET_STATUS = 'SET_DIALOGS_STATUS';
 
 export interface IDialog {
     id: string
-    participant: IUser
-};
-
-export interface IDialogUI extends IDialog {
-    messages: Array<IMessage> | null
+    member: IUser
+    messages: Array<IMessage | null>
 };
 
 export type IMessage = {
@@ -23,12 +21,16 @@ export type IMessage = {
     read: boolean
 };
 
-export type LastMessages = {
-    [key: string]: IMessage
+export interface IInitialState {
+    dialogs: Array<IDialog>
+    status: Status
 };
 
-export interface IInitialState {
-    dialogs: Array<IDialogUI>
+export type SetDialogAction = {
+    type: SET_DIALOG,
+    payload: {
+        dialog: IDialog
+    }
 };
 
 export type SetDialogsAction = {
@@ -38,14 +40,14 @@ export type SetDialogsAction = {
     }
 };
 
-export type SetLastMessagesAction = {
-    type: SET_LAST_MESSAGES,
+export type SetStatusAction = {
+    type: SET_STATUS,
     payload: {
-        messages: LastMessages
+        status: Status
     }
 };
 
-export type DialogsAction = SetDialogsAction | SetLastMessagesAction | LoadingAction | ConfigureNotificationAction;
+export type DialogsAction = SetDialogAction | SetDialogsAction | SetStatusAction | SetNotificationAction | SetAuthStatusAction;
 
 export type DialogsThunkAction = ThunkActionType<DialogsAction>;
 

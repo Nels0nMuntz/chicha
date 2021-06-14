@@ -9,8 +9,7 @@ export interface IDialog {
 
 export interface IDialogDTO {
     id: IDialogDocument["_id"]
-    member_1: IUserDTO
-    member_2: IUserDTO
+    member: IUserDTO
     messages: Array<IMessageDTO| null>
 }
 
@@ -68,10 +67,10 @@ export class DialogMap {
     })
 
     public static toDTO = (dialog: IDialogPopulated, userId: string): IDialogDTO => {
+        const member = dialog.memberId_1.id === userId ? dialog.memberId_2 : dialog.memberId_1;
         return {
             id: dialog.id,
-            member_1: UserMap.toDTO(dialog.memberId_1),
-            member_2: UserMap.toDTO(dialog.memberId_2),
+            member: UserMap.toDTO(member),
             messages: dialog.messages.map(message => message && MessageMap.toDTO(message))
         };
     }

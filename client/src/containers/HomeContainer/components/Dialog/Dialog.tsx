@@ -23,9 +23,10 @@ type DialogProps = {
     firstName: string
     lastName: string
     avatar: string
+    lastMessage: string | null
 };
 
-const Dialog: React.FC<DialogProps> = ({ firstName, lastName, avatar }) => {
+const Dialog: React.FC<DialogProps> = ({ firstName, lastName, avatar, lastMessage }) => {
 
     const classes = useStyles();
 
@@ -45,7 +46,7 @@ const Dialog: React.FC<DialogProps> = ({ firstName, lastName, avatar }) => {
                     <div className={style.user_date}>Сейчас</div>
                 </div>
                 <div className={style.dialog_infoRow}>
-                    <div className={style.dialog_message}> </div>
+                    <div className={style.dialog_message}>{lastMessage}</div>
                     <div>
                         <Badge
                             badgeContent={28}

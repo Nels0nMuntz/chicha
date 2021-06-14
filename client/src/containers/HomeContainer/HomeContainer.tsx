@@ -5,36 +5,28 @@ import { useHistory } from 'react-router-dom';
 import { RootState } from '../../store';
 import { Preloader } from '../../components';
 import { HeaderSidebar, SearchField, DialogsTrackContainer, Message, SendForm } from './components';
+import { getDialogsThunk } from './../../store/dialogs/thunks';
 
 import style from './HomeContainer.module.scss';
-import { getDialogsThunk } from './../../store/dialogs/thunks';
 
 
 const HomeContainer: React.FC = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const signinStatus = useSelector((state: RootState) => state.auth.signinStatus);
-    const isLoading = signinStatus === 'INITIAL' || signinStatus === 'RUNNING';
+    const authStatus = useSelector((state: RootState) => state.auth.authStatus);
+    const dialogsStatus = useSelector((state: RootState) => state.dialogs.status);
+    const isLoading = authStatus === 'INITIAL' || authStatus === 'RUNNING';
+    console.log(authStatus);
+    
 
     React.useEffect(() => {
-        switch (signinStatus) {
-            case 'FAILD':
-                history.push('/auth/signin');
-                break;
-            // case 'INITIAL':
+        if(authStatus === 'FAILD') history.push('/auth/signin');
+    }, [authStatus, dispatch, history]);
 
-            // case Status.UNKNOWN:
-            //     dispatch(setIsLoadingAC(true));
-            //     dispatch(updateAuthDataThunk());
-            //     break;
-            // case Status.SUCCESS:
-            //     dispatch(getDialogsThunk())
-            //     break;
-            default:
-                break;
-        }
-    }, [signinStatus, dispatch, history]);
+    React.useEffect(() => {
+        if(dialogsStatus === 'INITIAL') dispatch(getDialogsThunk());
+    }, [dialogsStatus, dispatch])
 
     if (isLoading) return <Preloader />;
 

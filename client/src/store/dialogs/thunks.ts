@@ -1,18 +1,19 @@
-import { dialogService, messageService } from "../../services";
+import { dialogService } from "../../services";
 import { DialogsThunkAction, DialogsThunkDispatch } from "./types";
-import { setDialogsAC, setLastMessageAC } from './actions';
-import { setIsLoadingAC } from "../loading/actions";
+import { setDialogAC, setDialogsAC, setDialogsStatusAC } from './actions';
 import { setNotificationAC } from "../notification/actions";
+import { SetAuthStatusAC } from "../auth/actions";
 
 
 export const getDialogsThunk = () : DialogsThunkAction => async  (dispatch: DialogsThunkDispatch) => {
     try {
-        const { data: dialogs } = await dialogService.getDialogs();
-        const dialogIds = dialogs.map(dialog => dialog.id);
-        const { data: messages } = await messageService.getAllLast(dialogIds)
-        dispatch(setDialogsAC(dialogs));  
-        dispatch(setLastMessageAC(messages));  
-        dispatch(setIsLoadingAC(false));
+        dispatch(setDialogsStatusAC('RUNNING'));
+        const { status, data } = await dialogService.getDialogs();
+        if(status === 200){
+            dispatch(SetAuthStatusAC('SUCCESS'))
+            dispatch(setDialogsAC(data));  
+            dispatch(setDialogsStatusAC('SUCCESS'));
+        }
     } catch (error) {
         console.log(error);   
         dispatch(setNotificationAC({
@@ -20,5 +21,23 @@ export const getDialogsThunk = () : DialogsThunkAction => async  (dispatch: Dial
             message: error.message,
             isOpen: true
         }))    
+    }
+};
+
+export const getDialogThunk = (id: string) : DialogsThunkAction => async  (dispatch: DialogsThunkDispatch) => {
+    try {
+        dispatch(setDialogsStatusAC('RUNNING'));
+        const { status, data } = await dialogService.index(id);
+        if(status === 200){
+            dispatch(setDialogsStatusAC('SUCCESS'));
+            dispatch(setDialogAC(data));
+        }
+    } catch (error) {
+        console.log(error);   
+        dispatch(setNotificationAC({
+            status: 'FAILD',
+            message: error.message,
+            isOpen: true
+        })) 
     }
 };

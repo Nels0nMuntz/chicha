@@ -13,11 +13,12 @@ type DialogsTrackProps = {
 const DialogsTrack: React.FC<DialogsTrackProps> = ({ dialogs }) => {
     return (
         <div className={style.dialogs_track}>
-            {dialogs.map(({ participant }, i) => (
+            {dialogs.map(({ id, member, messages }, i) => (
                 <Dialog
-                    firstName={participant.firstName}
-                    lastName={participant.lastName}
-                    avatar={participant.avatar} 
+                    firstName={member.firstName}
+                    lastName={member.lastName}
+                    avatar={member.avatar} 
+                    lastMessage={messages[0]?.text || null}
                     key={i}
                 />
             ))}

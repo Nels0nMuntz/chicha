@@ -1,12 +1,12 @@
-import { SwitchNotificationAC, ConfigureNotificationAC } from "./types";
+import { SwitchNotificationAC, SetNotificationAC } from "./types";
 
 export const switchNotificationAC: SwitchNotificationAC = (isOpen) => ({
     type: 'SWITCH_NOTIFICATION',
     payload: { isOpen }
 });
 
-export const setNotificationAC : ConfigureNotificationAC = ({ status, message, isOpen }) => ({
-    type: 'CONFIGURE_NOTIFICATION',
+export const setNotificationAC : SetNotificationAC = ({ status, message, isOpen }) => ({
+    type: 'SET_NOTIFICATION',
     payload: {
         status,
         message,
