@@ -5,8 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { SigninForm, StartPageLayout } from '../../components';
 import { RootState } from '../../store';
 import { ISigninData } from '../../store/auth/types';
-import { Status } from '../../types/types';
-import { fetchAuthDataThunk } from '../../store/auth/thunks';
+import { signinThunk } from '../../store/auth/thunks';
 import { setIsLoadingAC } from '../../store/loading/actions';
 
 
@@ -17,16 +16,14 @@ const SigninContainer: React.FC = () => {
 
     const onSubmit = (values: ISigninData) => { 
         dispatch(setIsLoadingAC(true));
-        dispatch(fetchAuthDataThunk(values));
+        dispatch(signinThunk(values));
     };
 
     const signinStatus = useSelector((state: RootState) => state.auth.signinStatus);
-    const isAuthSuccess = signinStatus === Status.SUCCESS;
-    const isAuthUnknown = signinStatus === Status.UNKNOWN;
 
     React.useEffect(() => { 
-        isAuthSuccess && history.push('/im');
-    }, [isAuthSuccess, history]);
+        if(signinStatus === 'SUCCESS') history.push('/im');
+    }, [signinStatus, history]);
 
     return (
         <StartPageLayout
@@ -34,7 +31,6 @@ const SigninContainer: React.FC = () => {
             subtitle="Пожалуйста, войдите в свой аккаунт"
         >
             <SigninForm 
-                isAuthUnknown={isAuthUnknown}
                 onSubmitForm={onSubmit}
             />
         </StartPageLayout>

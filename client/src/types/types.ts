@@ -3,11 +3,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { RootState } from "../store";
 
 
-export enum Status {
-    FAILD = 'Faild',
-    SUCCESS = 'Success',
-    UNKNOWN = 'Unknown'
-};
+export type Status = "INITIAL" | "FAILD" | "SUCCESS" | "RUNNING";
 
 export type ThunkActionType<T extends AnyAction> = ThunkAction<Promise<void>, RootState, unknown, T>;
 

@@ -2,8 +2,7 @@ import { dialogService, messageService } from "../../services";
 import { DialogsThunkAction, DialogsThunkDispatch } from "./types";
 import { setDialogsAC, setLastMessageAC } from './actions';
 import { setIsLoadingAC } from "../loading/actions";
-import { configureNotificationAC } from "../notification/actions";
-import { Status } from "../../types/types";
+import { setNotificationAC } from "../notification/actions";
 
 
 export const getDialogsThunk = () : DialogsThunkAction => async  (dispatch: DialogsThunkDispatch) => {
@@ -16,8 +15,8 @@ export const getDialogsThunk = () : DialogsThunkAction => async  (dispatch: Dial
         dispatch(setIsLoadingAC(false));
     } catch (error) {
         console.log(error);   
-        dispatch(configureNotificationAC({
-            status: Status.FAILD,
+        dispatch(setNotificationAC({
+            status: 'FAILD',
             message: error.message,
             isOpen: true
         }))    

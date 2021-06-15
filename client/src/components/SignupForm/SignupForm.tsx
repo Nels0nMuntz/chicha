@@ -1,23 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 
 import FormTextField from '../TextField/FormTextField';
 import MainButton from '../MainButton/MainButton';
 import { validator, isEmpty } from '../../shared';
-import { ErrorFieldDetails, ISignupData } from '../../store/auth/types';
+import { ISignupData } from '../../store/auth/types';
 import PhoneInput from './../TextField/PhoneInput';
+import { RootState } from '../../store';
 
 
 const validate = validator.signup;
 
 type SignupFormProps = {
-    errorFields: Array<ErrorFieldDetails>
-    isAuthUnknown: boolean
     onSubmitForm: (values: ISignupData) => void
 };
 
-const SignupForm: React.FC<SignupFormProps> = ({ errorFields, isAuthUnknown, onSubmitForm }) => {
+const SignupForm: React.FC<SignupFormProps> = ({ onSubmitForm }) => {
 
     const formik = useFormik({
         initialValues: {
@@ -35,16 +35,19 @@ const SignupForm: React.FC<SignupFormProps> = ({ errorFields, isAuthUnknown, onS
     const onChangePhoneInput = (value: string) => {      
         formik.setFieldValue('phoneNumber', value);
     }; 
+
+    const signinStatus = useSelector((state: RootState) => state.auth.signinStatus);
+    const errorFields = useSelector((state: RootState) => state.auth.errorFields);
     
     const isTouched = !isEmpty(formik.touched);
 
     React.useEffect(() => {
-        if (!isAuthUnknown) formik.setSubmitting(false);
-    }, [isAuthUnknown, formik.submitCount]);
+        if (signinStatus !== 'RUNNING') formik.setSubmitting(false);
+    }, [signinStatus, formik.submitCount]);
 
     React.useEffect(() => {
         errorFields.forEach(({ param, msg }) => formik.setFieldError(param, msg))
-    }, [errorFields]);
+    }, [errorFields, formik]);
 
     return (
 

@@ -1,43 +1,54 @@
 import { Document, Schema, Model, model } from 'mongoose';
+import { IMessageDocument, IMessageDTO, MessageMap } from './MessageModel';
 import { IUserDocument, IUserDTO, UserMap } from "./UserModel";
 
 export interface IDialog {
-    participant_1: string
-    participant_2: string
+    memberId_1: string
+    memberId_2: string
 }
 
 export interface IDialogDTO {
     id: IDialogDocument["_id"]
-    participant: IUserDTO
+    member_1: IUserDTO
+    member_2: IUserDTO
+    messages: Array<IMessageDTO| null>
 }
 
 export interface IDialogDomain {
-    participant_1: IUserDocument["_id"]
-    participant_2: IUserDocument["_id"]
+    memberId_1: IUserDocument["_id"]
+    memberId_2: IUserDocument["_id"]
+    messages: []
 }
 
 export interface IDialogDocument extends Document, IDialogDomain { };
 
 export interface IDialogPopulated {
     id?: IUserDocument["_id"]
-    participant_1: IUserDocument
-    participant_2: IUserDocument
+    memberId_1: IUserDocument
+    memberId_2: IUserDocument
+    messages: Array<IMessageDocument | null>
 }
 
 export interface IDialogModel extends Model<IDialogDocument> { };
 
 const DialogSchema = new Schema(
     {
-        participant_1: {
+        memberId_1: {
             type: Schema.Types.ObjectId,
             ref: "User",
             required: true
         },
-        participant_2: {
+        memberId_2: {
             type: Schema.Types.ObjectId,
             ref: "User",
             required: true
-        }
+        },
+        messages: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Message",
+            }
+        ]
     },
     {
         timestamps: true
@@ -51,19 +62,18 @@ export default DialogModel;
 export class DialogMap {
 
     public static toDomain = (dialog: IDialog): IDialogDomain => ({
-        participant_1: dialog.participant_1,
-        participant_2: dialog.participant_2
+        memberId_1: dialog.memberId_1,
+        memberId_2: dialog.memberId_2,
+        messages: []
     })
 
     public static toDTO = (dialog: IDialogPopulated, userId: string): IDialogDTO => {
-        const dialogDto = {
+        return {
             id: dialog.id,
-            participant: dialog.participant_1.id !== userId ? dialog.participant_1 : dialog.participant_2
-        };        
-        return ({
-            ...dialogDto,
-            participant: UserMap.toDTO(dialogDto.participant)
-        })
+            member_1: UserMap.toDTO(dialog.memberId_1),
+            member_2: UserMap.toDTO(dialog.memberId_2),
+            messages: dialog.messages.map(message => message && MessageMap.toDTO(message))
+        };
     }
 
 };

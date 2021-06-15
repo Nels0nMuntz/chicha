@@ -3,11 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { RootState } from '../../store';
-import { Status } from '../../types/types';
 import { Preloader } from '../../components';
-import { updateAuthDataThunk } from '../../store/auth/thunks';
 import { HeaderSidebar, SearchField, DialogsTrackContainer, Message, SendForm } from './components';
-import { setIsLoadingAC } from './../../store/loading/actions';
 
 import style from './HomeContainer.module.scss';
 import { getDialogsThunk } from './../../store/dialogs/thunks';
@@ -17,28 +14,29 @@ const HomeContainer: React.FC = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const isLoading = useSelector((state: RootState) => state.loading.isloading);
     const signinStatus = useSelector((state: RootState) => state.auth.signinStatus);
-    const isAuthorized = signinStatus === Status.SUCCESS;
+    const isLoading = signinStatus === 'INITIAL' || signinStatus === 'RUNNING';
 
     React.useEffect(() => {
         switch (signinStatus) {
-            case Status.FAILD:
+            case 'FAILD':
                 history.push('/auth/signin');
                 break;
-            case Status.UNKNOWN:
-                dispatch(setIsLoadingAC(true));
-                dispatch(updateAuthDataThunk());
-                break;
-            case Status.SUCCESS:
-                dispatch(getDialogsThunk())
-                break;
+            // case 'INITIAL':
+
+            // case Status.UNKNOWN:
+            //     dispatch(setIsLoadingAC(true));
+            //     dispatch(updateAuthDataThunk());
+            //     break;
+            // case Status.SUCCESS:
+            //     dispatch(getDialogsThunk())
+            //     break;
             default:
                 break;
         }
     }, [signinStatus, dispatch, history]);
 
-    if (!isAuthorized || isLoading) return <Preloader />;
+    if (isLoading) return <Preloader />;
 
     return (
         <div className={style.home_wrapper}>

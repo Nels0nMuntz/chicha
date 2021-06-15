@@ -5,7 +5,7 @@ export const switchNotificationAC: SwitchNotificationAC = (isOpen) => ({
     payload: { isOpen }
 });
 
-export const configureNotificationAC : ConfigureNotificationAC = ({ status, message, isOpen }) => ({
+export const setNotificationAC : ConfigureNotificationAC = ({ status, message, isOpen }) => ({
     type: 'CONFIGURE_NOTIFICATION',
     payload: {
         status,

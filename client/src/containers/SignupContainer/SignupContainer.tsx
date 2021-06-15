@@ -4,28 +4,24 @@ import { useHistory } from 'react-router-dom';
 
 import { SignupForm, StartPageLayout } from '../../components';
 import { RootState } from '../../store';
-import { sendAuthDataThunk } from '../../store/auth/thunks';
+import { signupThunk } from '../../store/auth/thunks';
 import { ISignupData } from '../../store/auth/types';
-import { Status } from '../../types/types';
 
 
 const SignupContainer: React.FC = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const errorFields = useSelector((state: RootState) => state.auth.errorFields);
     const signupStatus = useSelector((state: RootState) => state.auth.signupStatus);
-    const isAuthUnknown = signupStatus === Status.UNKNOWN;
-    const isAuthSuccess = signupStatus === Status.SUCCESS;
 
     const onSubmit = (values: ISignupData) => {
         const normalized = normalizeSignupData(values);
-        dispatch(sendAuthDataThunk(normalized));
+        dispatch(signupThunk(normalized));
     };
 
     React.useEffect(() => {
-        if(isAuthSuccess) history.push('/auth/signin');
-    }, [isAuthSuccess, history]);
+        if(signupStatus === 'SUCCESS') history.push('/auth/signin');
+    }, [signupStatus, history]);
 
     return (
         <StartPageLayout
@@ -33,8 +29,6 @@ const SignupContainer: React.FC = () => {
             subtitle="Для входа в чат, вам нужно зарегистрироваться"
         >
             <SignupForm
-                errorFields={errorFields}
-                isAuthUnknown={isAuthUnknown}
                 onSubmitForm={onSubmit}
             />
         </StartPageLayout>

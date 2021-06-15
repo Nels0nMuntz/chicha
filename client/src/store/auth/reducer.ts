@@ -12,8 +12,8 @@ const initialState: IInitialState = {
         phoneNumber: '',
         avatar: ''
     },
-    signinStatus: Status.UNKNOWN,
-    signupStatus: Status.UNKNOWN,
+    signinStatus: 'INITIAL',
+    signupStatus: 'INITIAL',
     errorFields: [],
 };
 

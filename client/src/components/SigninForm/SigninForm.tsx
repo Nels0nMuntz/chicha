@@ -1,21 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 
 import FormTextField from '../TextField/FormTextField';
 import MainButton from '../MainButton/MainButton';
 import { isEmpty, validator } from '../../shared'
 import { ISigninData } from '../../store/auth/types';
+import { RootState } from '../../store';
 
 
 const validate = validator.signin;
 
 type SigninFormProps = {
-    isAuthUnknown: boolean
     onSubmitForm: (values: ISigninData) => void;
 };
 
-const SigninForm: React.FC<SigninFormProps> = ({ isAuthUnknown, onSubmitForm }) => {
+const SigninForm: React.FC<SigninFormProps> = ({ onSubmitForm }) => {
 
     const formik = useFormik({
         initialValues: {
@@ -26,11 +27,13 @@ const SigninForm: React.FC<SigninFormProps> = ({ isAuthUnknown, onSubmitForm }) 
         onSubmit: values => onSubmitForm(values)
     });
 
+    const signinStatus = useSelector((state: RootState) => state.auth.signinStatus);
+
     const isTouched = !isEmpty(formik.touched);
 
     React.useEffect(() => {
-        if (!isAuthUnknown) formik.setSubmitting(false);
-    }, [isAuthUnknown, formik.submitCount]);
+        if (signinStatus !== 'RUNNING') formik.setSubmitting(false);
+    }, [signinStatus, formik.submitCount]);
 
     return (
         <form onSubmit={formik.handleSubmit}>

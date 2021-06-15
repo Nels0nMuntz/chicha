@@ -6,7 +6,7 @@ interface IDialogRepository extends IRepository<IDialog> {
     exists(id: string): Promise<boolean>
     save(dialog: IDialog): Promise<IDialogPopulated>
     delete(id: string): Promise<IDialogDocument>
-    findAllById(id: string): Promise<Array<IDialogPopulated>>
+    findAllByMemberId(id: string): Promise<Array<IDialogPopulated>>
 };
 
 class DialogRepository implements IDialogRepository {
@@ -25,8 +25,8 @@ class DialogRepository implements IDialogRepository {
     public save = async (dialog: IDialog): Promise<IDialogPopulated> => {
         const document = await this.model.create(dialog);
         const populated = await this.model.findById(document.id)
-            .populate('participant_1')
-            .populate('participant_2');
+            .populate('memberId_1')
+            .populate('memberId_2');
         if (!populated) throw new Error('Ошибка создания диалога');
         return populated;
     }
@@ -37,16 +37,16 @@ class DialogRepository implements IDialogRepository {
         return document;
     }
 
-    public findAllById = async (id: string): Promise<Array<IDialogPopulated>> => {
+    public findAllByMemberId = async (id: string): Promise<Array<IDialogPopulated>> => {
         const documents = await this.model.find({
             $or: [
-                { participant_1: id },
-                { participant_2: id },
+                { memberId_1: id },
+                { memberId_2: id },
             ]
         })
-            .populate('participant_1')
-            .populate('participant_2');
-        return documents;
+            .populate('memberId_1')
+            .populate('memberId_2');
+        return documents as Array<IDialogPopulated>;
     }
 
 };

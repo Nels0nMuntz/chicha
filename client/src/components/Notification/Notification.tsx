@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { RootState } from '../../store';
-import { switchNotificationAC } from '../../store/notification/actions'
-import { Status } from '../../types/types';
+import { switchNotificationAC } from '../../store/notification/actions';
 
 
 const TransitionLeft = (props: TransitionProps) => {
@@ -28,7 +27,7 @@ const Notification: React.FC = () => {
         (status, message, isOpen) => ({ status, message, isOpen })
     ));
 
-    const alertStatus = config.status === Status.SUCCESS ? 'success' : config.status === Status.FAILD ? 'error' : 'info';
+    const alertStatus = config.status === 'SUCCESS' ? 'success' : config.status === 'FAILD' ? 'error' : 'info';
 
     const onClose = () => { dispatch(switchNotificationAC(false)) };
 

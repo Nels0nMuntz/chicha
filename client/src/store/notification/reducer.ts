@@ -1,8 +1,7 @@
-import { Status } from "../../types/types";
 import { IInitialState, NotificationAction } from "./types";
 
 const initialState: IInitialState = {
-    status: Status.UNKNOWN,
+    status: 'INITIAL',
     message: [],
     isOpen: false,
     params: [],
