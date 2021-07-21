@@ -1,9 +1,9 @@
 import express from 'express';
 import { connectDB } from "./core"
 import dotenv from 'dotenv';
-import RootRouter from './routers/rootRouter';
 import bodyParser from 'body-parser';
 import { exceptionHandlerMW } from './middlewares';
+import { rootRouter } from './routers';
 
 
 dotenv.config();
@@ -18,7 +18,7 @@ app.get("/check", (req: express.Request, res: express.Response) => {
     res.send("API is working!!");
 });
 
-app.use('/', RootRouter);
+app.use('/', rootRouter);
 
 app.use(exceptionHandlerMW)
 

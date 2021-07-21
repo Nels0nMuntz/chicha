@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { checkAuthMW } from '../middlewares';
-import AuthRouter from './AuthRouter';
+import AuthRouter from './authRouter';
 import DialogRouter from './dialogRouter';
 import MessageRouter from './messageRouter';
-import UserRouter from './UserRouter';
+import UserRouter from './userRouter';
 
 
 class RootRouter {
@@ -29,6 +29,8 @@ class RootRouter {
         this.router.use('/dialogs', checkAuthMW, this.dialogRouter.router);
         this.router.use('/messages', checkAuthMW, this.messageRouter.router)
     }
-}
+};
 
-export default new RootRouter().router;
+const rootRouter = new RootRouter().router;
+
+export default rootRouter;
