@@ -1,12 +1,18 @@
 // vendor
 import React from 'react';
-// custom
+// internal
 import { SignUpContainer } from '../containers';
+import { AuthLayout } from '../components';
 
 
 const SignUpPage : React.FC = () => {
     return (
-        <SignUpContainer/>
+        <AuthLayout
+            title="Регистрация"
+            subtitle="Для входа в чат, вам нужно зарегистрироваться"
+        >
+            <SignUpContainer/>
+        </AuthLayout>
     )
 };
 

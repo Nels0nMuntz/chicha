@@ -1,27 +1,68 @@
-// vendors
+// vendor
 import React from 'react';
-import { useFormik } from 'formik';
 // internal
-import { AuthLayout } from '../components';
+import { IUseFormConfig, SignUpFormValidationSchema, useForm } from '../../../shared';
+import SignUpForm from '../components/SignUpForm/SignUpForm';
 import { ISignUpForm } from '../models';
 
 
 const SignUpContainer: React.FC = () => {
 
-    // const formik = useFormik({
-    //     initialValues: {
-    //         email: '',
+    const formConfig: IUseFormConfig<ISignUpForm> = {
+        fields: {
+            email: {
+                id: 'user-email',
+                initialValue: '',
+                label: "Email",
+                name: "email",
+                type: "text",
+            },
+            firstName: {
+                id: "user-first-name",
+                initialValue: "",
+                label: "First Name",
+                name: "firstName",
+                type: "text",
+            },
+            lastName: {
+                id: "user-last-name",
+                initialValue: "",
+                label: "Last Name",
+                name: "lastName",
+                type: "text",
+            },
+            phoneNumber: {
+                id: "user-phone-number",
+                initialValue: "",
+                label: "Phone Number",
+                name: "phoneNumber",
+                type: "tel",
+            },
+            password: {
+                id: "user-password",
+                initialValue: "",
+                label: "Password",
+                name: "password",
+                type: "password",
+            },
+            paswordConfirm: {
+                id: "user-repeat-password",
+                initialValue: "",
+                label: "Repaet password",
+                name: "repeatPassword",
+                type: "password",
+            },
+        },
+        validationShema: SignUpFormValidationSchema,
+        onSubmit: values => console.log(values),
+    };
 
-    //     },
-    //     onSubmit: (values) => console.log(values)
-    // })
-
-    // console.log(formik);
+    const formData = useForm(formConfig);
 
     return (
-        <AuthLayout
-            title="Регистрация"
-            subtitle="Для входа в чат, вам нужно зарегистрироваться"
+        <SignUpForm
+            fields={formConfig.fields}
+            formData={formData}
         />
     )
 };

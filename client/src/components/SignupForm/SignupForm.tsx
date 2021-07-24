@@ -5,13 +5,11 @@ import { useSelector } from 'react-redux';
 
 import FormTextField from '../TextField/FormTextField';
 import MainButton from '../MainButton/MainButton';
-import { validator, isEmpty } from '../../shared';
+import { isEmpty } from '../../shared';
 import { ISignupData } from '../../store/auth/types';
 import PhoneInput from './../TextField/PhoneInput';
 import { RootState } from '../../store';
 
-
-const validate = validator.signup;
 
 type SignupFormProps = {
     onSubmitForm: (values: ISignupData) => void
@@ -28,7 +26,6 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSubmitForm }) => {
             password: '',
             passwordRepeat: '',
         },
-        validate,
         onSubmit: values => onSubmitForm(values)
     });
 

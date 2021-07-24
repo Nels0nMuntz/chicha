@@ -1,23 +1,10 @@
-import { ISigninData, ISignupData } from '../../store/auth/types';
+import * as Yup from 'yup';
+import { Assign, ObjectShape } from 'yup/lib/object';
+import { RequiredStringSchema } from 'yup/lib/string';
 
-interface ISigninFormErrors {
-    email?: string
-    password?: string
-};
-interface ISignupFormErrors {
-    email?: string,
-    firstName?: string,
-    lastName?: string,
-    phoneNumber?: string,
-    password?: string,
-    passwordRepeat?: string,
-};
+import { ISignInForm, ISignUpForm } from '../../features/auth/models';
+import { regExpPatterns as patterns } from '../constants/regExpPatterns';
 
-const patterns = {
-    cyrillic: /^([A-Z][a-z\-']{1,50})|([А-ЯЁIЇҐЄ][а-яёіїґє\-']{1,50})$/,
-    password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=(.*[a-zA-Z]){4}).{8,20}$/,
-    email: /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/
-};
 
 const messages = {
     empty: "Необходимо заполнить поле",
@@ -27,19 +14,71 @@ const messages = {
     password: {
         error: {
             wrongChar: "Пароль должен содержать заглавные и строчные символы латинского алфавита и цифры",
-            wrongLenght: "Пароль должен состоять из 8-20 символов"
+            minLenght: "Пароль должен состоять минимум из 8 символов",
+            maxLenght: "Пароль должен состоять максимум из 20 символов",
         },
         notMatch: "Пароли не совпадают",
     },
-    name: {
-        error: "Неверный формат"
+    firstName: {
+        error: "Неверный формат имени"
+    },
+    lastName: {
+        error: "Неверный формат фамилии"
     },
     phoneNumber: {
         error: 'Неверный формат номера телефона'
     }
 };
 
-const validator = {
+type  FormValidationSchemaShape<T> = {
+    [P in keyof T]: RequiredStringSchema<string | undefined, Record<string, any>>
+};
+
+export interface FormValidationSchema<T> extends Yup.ObjectSchema<Assign<ObjectShape, FormValidationSchemaShape<T>>> {};
+
+export const SignUpFormValidationSchema : FormValidationSchema<ISignUpForm> = Yup.object().shape({
+    email: Yup
+        .string()
+        .matches(patterns.email, messages.email.error)
+        .required(messages.empty),
+    firstName: Yup
+        .string()
+        .matches(patterns.cyrillic, messages.firstName.error)
+        .required(messages.empty),
+    lastName: Yup
+        .string()
+        .matches(patterns.cyrillic, messages.lastName.error)
+        .required(messages.empty),
+    phoneNumber: Yup
+        .string()
+        .min(18, messages.phoneNumber.error)
+        .required(messages.empty),
+    password: Yup
+        .string()
+        .min(8, messages.password.error.minLenght)
+        .max(20, messages.password.error.maxLenght)
+        .matches(patterns.password, messages.password.error.wrongChar)
+        .required(messages.empty),
+    paswordConfirm: Yup
+        .string()
+        .oneOf([Yup.ref('password'), null], messages.password.notMatch)
+        .required(messages.empty),
+});
+
+export const SignInFormValidationSchema : FormValidationSchema<ISignInForm> = Yup.object().shape({
+    email: Yup
+        .string()
+        .matches(patterns.email, messages.email.error)
+        .required(messages.empty),
+    password: Yup
+        .string()
+        .min(8, messages.password.error.minLenght)
+        .max(20, messages.password.error.maxLenght)
+        .matches(patterns.password, messages.password.error.wrongChar)
+        .required(messages.empty),
+});
+
+/*const validator = {
     signin: (values: ISigninData): ISigninFormErrors => {
 
         const errors: ISigninFormErrors = {};
@@ -104,4 +143,4 @@ const validator = {
     },
 };
 
-export default validator;
+export default validator; */

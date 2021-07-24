@@ -1,5 +1,5 @@
 // validators
-export { default as validator } from "./validator/validator";
+export * from "./validators/validationSchemas";
 
 // utils
 export { default as isEmpty } from "./helpers/isEmpty";

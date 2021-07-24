@@ -1,22 +1,32 @@
 // vendors
-import { FormikValues, useFormik } from 'formik';
+import { useFormik } from 'formik';
 // internal
 import { IUseFormConfig, IUseFormData } from '../../shared';
+import { IUseFormField } from '../models/useFormConfig.model';
 
 
-export const useForm = <Values extends FormikValues = FormikValues>(props: IUseFormConfig) : IUseFormData<Values> => {
+export const useForm = <T extends object>(props: IUseFormConfig<T>) : IUseFormData<T> => {
 
-    const initialValues = props.fields.reduce<Values>((prev, curr) => ({ ...prev, [curr.name]: curr.initialValue }), {} as Values);
+    const initialValues = Object.values<IUseFormField>(props.fields).reduce((prev, curr) => {
+        return {
+            ...prev,
+            [curr?.name]: curr?.initialValue,
+        }
+    }, {} as T);
 
-    const formik = useFormik<Values>({
+    const formik = useFormik<T>({
         initialValues,
-        onSubmit: (values) => console.log(values)
+        validationSchema: props.validationShema,
+        onSubmit: props.onSubmit,
     });
 
+    const { touched, errors, getFieldProps, handleSubmit, setFieldValue } = formik;
+
     return {
-        errors: formik.errors,
-        touched: formik.touched,
-        getFieldProps: formik.getFieldProps,
-        handleSubmit: formik.handleSubmit,
+        errors,
+        touched,
+        getFieldProps,
+        handleSubmit,
+        setFieldValue,
     };
 };

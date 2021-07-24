@@ -1,29 +1,42 @@
 // vendor
 import React from 'react';
+import { Link } from 'react-router-dom';
 // internal
-import { ISignUpForm } from '../../models';
-import { IUseFormData, TextField, IUseFormField } from '../../../../shared';
+import { ISignInForm } from '../../models';
+import { IUseFormData, TextField, IUseFormFields } from '../../../../shared';
 
 
 interface ISignInFormProps {
-    fields: IUseFormField[]
-    formData: IUseFormData<ISignUpForm>
-}
+    fields: IUseFormFields<ISignInForm>
+    formData: IUseFormData<ISignInForm>
+};
 
 const SignInForm: React.FC<ISignInFormProps> = ({ fields, formData }) => {
+    // console.log(formData);
+    
     return (
         <form onSubmit={formData.handleSubmit}>
-            {fields.map(field => (
-                <TextField
-                    id={field.id}
-                    type={field.type}
-                    label={field.label}
-                    helperText={formData.touched.email && formData.errors.email ? formData.errors.email : " "}
-                    isTouched={formData.touched.email ? true : false}
-                    isValid={formData.errors.email ? false : true}
-                    {...formData.getFieldProps("email")}
-                />
-            ))}
+            {Object.values(fields).map(field => {
+                const name = field.name as keyof ISignInForm;
+                return (
+                    <TextField
+                        key={field.name}
+                        id={field.id}
+                        type={field.type}
+                        label={field.label}
+                        helperText={formData.touched[name] && formData.errors[name] ? formData.errors[name] || " " : " "}
+                        isTouched={formData.touched[name] ? true : false}
+                        isValid={formData.errors[name] ? false : true}
+                        {...formData.getFieldProps(name)}
+                    />
+                )
+            })}
+            <Link
+                to="/auth/signup"
+                className="form-redirect-link"
+            >
+                Зарегистрироваться
+            </Link>
         </form>
     )
 };
