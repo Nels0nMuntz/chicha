@@ -4,7 +4,6 @@ import thunk from "redux-thunk";
 import user from './user/reducer';
 import auth from './auth/reducer';
 import loading from './loading/reducer';
-import notification from './notification/reducer';
 import dialogs from './dialogs/reducer';
 
 
@@ -12,7 +11,6 @@ const rootReducer = combineReducers({
     user,
     auth,
     loading,
-    notification,
     dialogs
 });
 

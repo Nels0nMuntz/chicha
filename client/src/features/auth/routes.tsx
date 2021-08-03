@@ -1,9 +1,11 @@
 import React from "react";
-import { Route } from "react-router-dom";
 import { SignInPage, SignUpPage } from "./pages";
 import { AUTH_SIGNIN_PAGE_URL, AUTH_SIGNUP_PAGE_URL } from "./urls";
 
+import { PublicRoute } from '../../shared';
+
+
 export const AuthRoutes = [
-    <Route key="auth-signin-page" path={AUTH_SIGNIN_PAGE_URL.urlTemplate} component={SignInPage} exact />,
-    <Route key="auth-signup-page" path={AUTH_SIGNUP_PAGE_URL.urlTemplate} component={SignUpPage} exact />
+    <PublicRoute key="auth-signin-page" path={AUTH_SIGNIN_PAGE_URL.urlTemplate} component={SignInPage} exact />,
+    <PublicRoute key="auth-signup-page" path={AUTH_SIGNUP_PAGE_URL.urlTemplate} component={SignUpPage} exact />
 ];

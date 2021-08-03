@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { LocalStorageService } from '../services';
+import axios, { AxiosRequestConfig } from 'axios';
+import { localStorageService } from '../services';
 
 
 const axiosInstance = axios.create({
@@ -10,12 +10,23 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-    config => {
-        const accessToken = LocalStorageService.getAccessToken();        
+    async (config): Promise<AxiosRequestConfig> => {
+        const accessToken = localStorageService.getAccessToken();        
         if(accessToken) config.headers["Authorization"] = `Bearer ${accessToken}`;
         return config;
     },
-    error => Promise.reject(error)
+    error => Promise.reject(error),
+);
+
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if(error.response.status === 401){
+            localStorageService.removeAccessToken();
+            window.location.href = '/auth/signin';
+        };
+        return error;
+    },
 );
 
 export default axiosInstance;

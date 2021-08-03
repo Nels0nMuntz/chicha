@@ -4,15 +4,15 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
-import store from './store';
+import { store } from './app-state';
 
 import './index.scss';
 
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-        <App />
-    </Router>  
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

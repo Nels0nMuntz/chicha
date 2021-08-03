@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, } from "react-router-dom";
 import { AppRoutes } from './app-routes';
-import { Notification } from './components';
 
 
 const App: React.FC = () => {
@@ -11,7 +10,6 @@ const App: React.FC = () => {
       <Switch>
         {AppRoutes}
       </Switch>
-      <Notification />
     </div>
   );
 };

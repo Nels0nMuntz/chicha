@@ -1,5 +1,5 @@
 import { AxiosResponseError } from "../../types/types";
-import { authService, LocalStorageService } from "../../services";
+import { authService, localStorageService } from "../../services";
 import { ISigninData, ISignupData, AuthThunkAction, AuthThunkDispatch, ErrorFieldDetails } from "./types";
 import { setAuthDataAC, setSigninStatusAC, setSignupStatusAC, setErrorFieldsAC } from './actions';
 import { setNotificationAC } from "../notification/actions";
@@ -18,7 +18,7 @@ export const signinThunk = (signinData: ISigninData): AuthThunkAction => {
                 message: message,
                 isOpen: true
             }));
-            LocalStorageService.setAccessToken(data.accessToken);
+            localStorageService.setAccessToken(data.accessToken);
         } catch (error) {
             console.log(error.message);
             dispatch(setSigninStatusAC('FAILD'));
