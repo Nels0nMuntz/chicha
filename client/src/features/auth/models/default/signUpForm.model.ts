@@ -1,4 +1,6 @@
-export interface ISignUpForm {
+import { IUseFormValues } from '../../../../shared';
+
+export interface ISignUpForm extends IUseFormValues {
     email: string
     firstName: string
     lastName: string

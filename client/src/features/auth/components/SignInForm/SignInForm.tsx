@@ -1,9 +1,8 @@
-// vendor
 import React from 'react';
 import { Link } from 'react-router-dom';
-// internal
+
 import { ISignInForm } from '../../models';
-import { IUseFormData, TextField, IUseFormFields } from '../../../../shared';
+import { IUseFormData, TextField, IUseFormFields, SubmitButton } from '../../../../shared';
 
 
 interface ISignInFormProps {
@@ -12,12 +11,11 @@ interface ISignInFormProps {
 };
 
 const SignInForm: React.FC<ISignInFormProps> = ({ fields, formData }) => {
-    // console.log(formData);
     
     return (
         <form onSubmit={formData.handleSubmit}>
             {Object.values(fields).map(field => {
-                const name = field.name as keyof ISignInForm;
+                const name = field.name;
                 return (
                     <TextField
                         key={field.name}
@@ -31,6 +29,11 @@ const SignInForm: React.FC<ISignInFormProps> = ({ fields, formData }) => {
                     />
                 )
             })}
+            <SubmitButton
+                title="войти в аккаунт"
+                status="initia"
+                type={formData.isValid && formData.dirty ? 'submit' : 'button'}
+            />
             <Link
                 to="/auth/signup"
                 className="form-redirect-link"

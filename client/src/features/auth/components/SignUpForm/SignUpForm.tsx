@@ -20,7 +20,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ fields, formData }) => {
     return (
         <form onSubmit={formData.handleSubmit}>
             {Object.values(fields).map(field => {
-                const name = field.name as keyof ISignUpForm;
+                const name = field.name;
                 if (field.type === "tel") {
                     return (
                         <PhoneField

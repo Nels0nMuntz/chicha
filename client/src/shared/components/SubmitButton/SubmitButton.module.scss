@@ -1,0 +1,25 @@
+.button{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    margin-top: 5px;
+    min-height: 57px;
+    background-color: #4CA5FF;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: background-color 0.125s linear;
+    cursor: pointer;
+    &:hover{
+        background-color: darken($color: #4CA5FF, $amount: 10%);
+    }
+}
+.button.cursorAuto{
+    cursor: auto;
+    &:hover{
+        background-color: #4CA5FF;
+    }
+}

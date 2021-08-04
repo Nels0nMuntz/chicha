@@ -1,0 +1,1 @@
+export interface IUseFormValues extends Record<string, string> {};

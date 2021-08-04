@@ -2,7 +2,6 @@ import * as Yup from 'yup';
 import { Assign, ObjectShape } from 'yup/lib/object';
 import { RequiredStringSchema } from 'yup/lib/string';
 
-import { ISignInForm, ISignUpForm } from '../../features/auth/models';
 import { regExpPatterns as patterns } from '../constants/regExpPatterns';
 
 
@@ -36,7 +35,7 @@ type  FormValidationSchemaShape<T> = {
 
 export interface FormValidationSchema<T> extends Yup.ObjectSchema<Assign<ObjectShape, FormValidationSchemaShape<T>>> {};
 
-export const SignUpFormValidationSchema : FormValidationSchema<ISignUpForm> = Yup.object().shape({
+export const SignUpFormValidationSchema = Yup.object().shape({
     email: Yup
         .string()
         .matches(patterns.email, messages.email.error)
@@ -65,7 +64,7 @@ export const SignUpFormValidationSchema : FormValidationSchema<ISignUpForm> = Yu
         .required(messages.empty),
 });
 
-export const SignInFormValidationSchema : FormValidationSchema<ISignInForm> = Yup.object().shape({
+export const SignInFormValidationSchema = Yup.object().shape({
     email: Yup
         .string()
         .matches(patterns.email, messages.email.error)

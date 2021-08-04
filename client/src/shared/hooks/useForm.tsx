@@ -1,11 +1,9 @@
-// vendors
 import { useFormik } from 'formik';
-// internal
-import { IUseFormConfig, IUseFormData } from '../../shared';
-import { IUseFormField } from '../models/useFormConfig.model';
+
+import { IUseFormConfig, IUseFormData, IUseFormField, IUseFormValues } from '../../shared';
 
 
-export const useForm = <T extends object>(props: IUseFormConfig<T>) : IUseFormData<T> => {
+export const useForm = <T extends IUseFormValues>(props: IUseFormConfig<T>) : IUseFormData<T> => {
 
     const initialValues = Object.values<IUseFormField>(props.fields).reduce((prev, curr) => {
         return {
@@ -18,13 +16,23 @@ export const useForm = <T extends object>(props: IUseFormConfig<T>) : IUseFormDa
         initialValues,
         validationSchema: props.validationShema,
         onSubmit: props.onSubmit,
-    });
+    });   
 
-    const { touched, errors, getFieldProps, handleSubmit, setFieldValue } = formik;
+    const { 
+        touched, 
+        errors, 
+        isValid,
+        dirty,
+        getFieldProps, 
+        handleSubmit, 
+        setFieldValue 
+    } = formik;
 
     return {
         errors,
         touched,
+        isValid,
+        dirty,
         getFieldProps,
         handleSubmit,
         setFieldValue,
